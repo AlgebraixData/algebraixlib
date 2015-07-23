@@ -11,4 +11,6 @@ docs/_build/
 # PyCharm
 .idea
 
+#PyPI account information
 .pypirc
+algebraixlib.egg-info
