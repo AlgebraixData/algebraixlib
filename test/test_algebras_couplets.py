@@ -1,7 +1,7 @@
 """Test the algebras.couplets module."""
 
-# $Id: test_algebras_couplets.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: test_algebras_couplets.py 22698 2015-07-28 17:09:23Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 12:09:23 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -28,12 +28,12 @@ from algebraixlib.algebras.couplets import \
     compose, transpose
 
 
-_couplet_a_to_b = Couplet(right='a', left='b')
-_couplet_b_to_a = Couplet(right='b', left='a')
-_couplet_b_to_c = Couplet(right='b', left='c')
-_couplet_c_to_d = Couplet(right='c', left='d')
-_couplet_a_to_c = Couplet(right='a', left='c')
-_couplet_b_to_d = Couplet(right='b', left='d')
+_couplet_b_to_a = Couplet(left='b', right='a')
+_couplet_a_to_b = Couplet(left='a', right='b')
+_couplet_c_to_b = Couplet(left='c', right='b')
+_couplet_d_to_c = Couplet(left='d', right='c')
+_couplet_c_to_a = Couplet(left='c', right='a')
+_couplet_d_to_b = Couplet(left='d', right='b')
 
 
 class CoupletsTest(unittest.TestCase):
@@ -46,6 +46,7 @@ class CoupletsTest(unittest.TestCase):
         self.assertEqual(get_absolute_ground_set(), CartesianProduct(GenesisSetA(), GenesisSetA()))
         self.assertEqual(get_name(), 'Couplets(M): (M x M)')
 
+    # noinspection PyTypeChecker
     def test_membership(self):
         self.assertTrue(is_member(Couplet(1, 2)))
         self.assertFalse(is_member(Atom(3)))
@@ -63,20 +64,20 @@ class CoupletsTest(unittest.TestCase):
         RaiseOnUndef.set_level(1)
         self.assertRaises(UndefException, lambda: compose(Set('a', 'b'), Set('c', 'd')))
         RaiseOnUndef.reset()
-        # a^b * b^c = a^c
-        result = compose(_couplet_a_to_b, _couplet_b_to_c)
-        self.assertEqual(result, _couplet_a_to_c)
-        # b^c * c^d = b^d
-        result = compose(_couplet_b_to_c, _couplet_c_to_d)
-        self.assertEqual(result, _couplet_b_to_d)
-        # a^b * c^d = Undef (b != c)
-        result = compose(_couplet_a_to_b, _couplet_c_to_d)
+
+        result = compose(_couplet_b_to_a, _couplet_c_to_b)
+        self.assertEqual(result, _couplet_c_to_a)
+
+        result = compose(_couplet_c_to_b, _couplet_d_to_c)
+        self.assertEqual(result, _couplet_d_to_b)
+
+        result = compose(_couplet_b_to_a, _couplet_d_to_c)
         self.assertIs(result, Undef())
         RaiseOnUndef.set_level(2)
-        self.assertRaises(UndefException, lambda: compose(_couplet_a_to_b, _couplet_c_to_d))
+        self.assertRaises(UndefException, lambda: compose(_couplet_b_to_a, _couplet_d_to_c))
         RaiseOnUndef.reset()
-        # b^c * a^b = Undef (not commutative)
-        result = compose(_couplet_b_to_c, _couplet_a_to_b)
+
+        result = compose(_couplet_c_to_b, _couplet_b_to_a)
         self.assertIs(result, Undef())
 
     def test_transpose(self):
@@ -87,9 +88,9 @@ class CoupletsTest(unittest.TestCase):
         RaiseOnUndef.set_level(1)
         self.assertRaises(UndefException, lambda: transpose(Set('a', 'b')))
         RaiseOnUndef.reset()
-        # T(a^b) = b^a
-        result = transpose(_couplet_a_to_b)
-        self.assertEqual(result, _couplet_b_to_a)
+
+        result = transpose(_couplet_b_to_a)
+        self.assertEqual(result, _couplet_a_to_b)
 
 
 # --------------------------------------------------------------------------------------------------

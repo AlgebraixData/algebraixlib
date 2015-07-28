@@ -1,7 +1,22 @@
-"""The top-level package for algebraixlib."""
+r"""The top-level package for the library ``algebraixlib``.
 
-# $Id: __init__.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+Sub-packages:
+
+-   :mod:`~.algebras`: Modules that represent :term:`algebra`\s and their operations.
+-   :mod:`~.io`: Modules with facilities for importing and exporting data.
+-   :mod:`~.mathobjects`: Modules that define the classes that represent data.
+-   :mod:`~.util`: Miscellaneous utility modules.
+
+Modules:
+
+-   :mod:`~.extension`: Facilities for extending operations from one :term:`algebra` to another.
+-   :mod:`~.partition`: Operations for partitioning :term:`set`\s and :term:`multiset`\s.
+-   :mod:`~.structure`: Representation of the structure of a `MathObject`.
+-   :mod:`~.undef`: Facilities for representing and working with the concept of "undefined".
+"""
+
+# $Id: __init__.py 22702 2015-07-28 20:20:56Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

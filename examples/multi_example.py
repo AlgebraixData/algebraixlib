@@ -1,6 +1,8 @@
-"""This module contains the example code for the algebras created for representing data which has multiples."""
+"""This module contains the example code for the algebras created for representing data which has
+multiples.
+"""
 
-# $Id: multi_example.py 22614 2015-07-15 18:14:53Z gfiedler $
+# $Id: multi_example.py 22698 2015-07-28 17:09:23Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
@@ -33,7 +35,8 @@ print('=> EVALUATES TO ' + str(simple_union))
 
 ms_3 = _mo.Multiset({'a': 3, 'b': 3, 'c': 1})
 if ms_3 == simple_union:
-    print("multiset's union takes the max of all the multiples merges the arguments into one result multiset.\n")
+    print("multiset's union takes the max of all the multiples merges the arguments into one "
+          "result multiset.\n")
 
 # Multiset Intersect Operation Example
 simple_intersect = _multisets.intersect(ms_1, ms_2)
@@ -43,7 +46,8 @@ print('=> EVALUATES TO ' + str(simple_intersect))
 
 ms_4 = _mo.Multiset({'b': 2})
 if ms_4 == simple_intersect:
-    print("multiset's intersect takes the min of all the multiples merges the arguments into one result multiset.\n")
+    print("multiset's intersect takes the min of all the multiples merges the arguments into one "
+          "result multiset.\n")
 
 # Multiset Addition operation Example
 simple_addition = _multisets.addition(ms_1, ms_2)
@@ -53,7 +57,8 @@ print('=> EVALUATES TO ' + str(simple_addition))
 
 ms_5 = _mo.Multiset({'a': 3, 'b': 5, 'c': 1})
 if ms_5 == simple_addition:
-    print("multiset's addition sums all the multiples of like values in the arguments into one result multiset.\n")
+    print("multiset's addition sums all the multiples of like values in the arguments into one "
+          "result multiset.\n")
 
 # Multiset Intersect Operation Example
 simple_minus = _multisets.minus(ms_1, ms_2)
@@ -117,16 +122,17 @@ simple_cross_union_1 = _multiclans.cross_union(mc_1, mc_2)
 print(str(mc_1) + ' CROSS UNION ' + str(mc_2))
 print('=> EVALUATES TO ' + str(simple_cross_union_1))
 
-print("multiclan's cross union applies the relation's union for all relations in the multiclan of each argument.  "
-      "Again the resulting multiple is the product of the two relations multiples.\n")
+print("multiclan's cross union applies the relation's union for all relations in the multiclan of "
+      "each argument. Again the resulting multiple is the product of the two relations multiples."
+      "\n")
 
 simple_cross_union_2 = _multiclans.cross_union(mc_3, mc_4)
 
 print(str(mc_3) + ' CROSS UNION ' + str(mc_4))
 print('=> EVALUATES TO ' + str(simple_cross_union_2))
 
-print("multiclan's cross union like other operations can yield the same result for different inner relation unions"
-      "These same results are summed together.\n")
+print("multiclan's cross union like other operations can yield the same result for different inner "
+      "relation unions. These same results are summed together.\n")
 
 # Multiset Cross Intersect Operation Example
 simple_cross_intersect_1 = _multiclans.cross_intersect(mc_1, mc_2)
@@ -134,8 +140,9 @@ simple_cross_intersect_1 = _multiclans.cross_intersect(mc_1, mc_2)
 print(str(mc_1) + ' CROSS INTERSECT ' + str(mc_2))
 print('=> EVALUATES TO ' + str(simple_cross_intersect_1))
 
-print("multiclan's cross intersect applies relation's intersect for all relations in the multiclan of each argument."
-      "Again the resulting multiple is the product of the two relations multiples.\n")
+print("multiclan's cross intersect applies relation's intersect for all relations in the multiclan "
+      "of each argument. Again the resulting multiple is the product of the two relations "
+      "multiples.\n")
 
 simple_cross_intersect_2 = _multiclans.cross_intersect(mc_3, mc_4)
 

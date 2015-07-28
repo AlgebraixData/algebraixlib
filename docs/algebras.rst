@@ -1,6 +1,6 @@
 .. Algebraix Technology Core Library documentation.
-   $Id: algebras.rst 22614 2015-07-15 18:14:53Z gfiedler $
-   Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+   $Id: algebras.rst 22671 2015-07-24 19:46:29Z mhaque $
+   Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-24 14:46:29 -0500 (Fri, 24 Jul 2015) $
 
    This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 
@@ -152,16 +152,15 @@ Multiset
 **Definition**
 
 A **multiset** is a set that allows multiple instances of any given element.  We define it as a
-function from |set M| to the nonnegative integers, or from a given :term:`subset` of
-|set M| to the positive integers.  In particular, we call :math:`\dot{S}` a multiset of :math:`M`
-if for any :math:`x\in M` we have :math:`\dot{S}(x)` is a nonnegative integer that we call the
-**multiplicity** of :math:`x`.
+function from a given :term:`subset` of |set M| to the positive integers.  In particular, we call
+:math:`\dot{S}` a multiset of :math:`M` if for certain :math:`x\in M` we have :math:`\dot{S}(x)`
+is a positive integer that we call the **multiplicity** of :math:`x`.
 
 **Example**
 
 Let :math:`M=\{a,b,c\}` and :math:`\dot{S}` represent the multiset :math:`\{a,a,a,b,b\}`, then
-we have :math:`\dot{S}(a)=3`, :math:`\dot{S}(b)=2`, and :math:`\dot{S}(c)=0`.  In this case
-:math:`a` has multiplicity 3, and :math:`b` has multiplicity 2.
+we have :math:`\dot{S}(a)=3`, :math:`\dot{S}(b)=2`, and :math:`\dot{S}(c)` is not defined.  In
+this case :math:`a` has multiplicity 3, and :math:`b` has multiplicity 2.
 
 .. _algebraofmultisets:
 
@@ -170,8 +169,9 @@ Multiset Algebra
 **Definition**
 
 Let :math:`\dot{P}(M)` represent the set of all multisets of :math:`M`.  Using the definitions of
-:term:`union`, :term:`addition`, :term:`intersection`, and :term:`subset` as applied to multisets
-we have an algebra on multisets with the following signature:
+:term:`multiset union`, :term:`multiset addition`, :term:`multiset intersection`, and
+:term:`submultiset` as applied to multisets we have an algebra on multisets with the following
+signature:
 
 .. math::  \bigg[\dot{P}(M), [\cup,\varnothing], [+,\varnothing],\cap,\subset \bigg].
 
@@ -238,17 +238,19 @@ is sets of sets :term:`couplet`\s. Its ground set is therefore the second :term:
 operations of :term:`cross-union` and :term:`cross-intersection` can be applied, in addition to
 the operations on an :term:`algebra of sets`. Moreover, the operations :term:`transposition` and
 :term:`composition` from the :term:`algebra of relations` extend in a natural way to the
-algebra of clans.  We also include :term:`substriction`, :term:`superstriction`, and
-:term:`cross-superstriction`.  As a result, it has the following signature:
+algebra of clans.  We also include :term:`substriction`, :term:`superstriction`,
+:term:`cross-substriction` and :term:`cross-superstriction`.  As a result, it has the following
+signature:
 
 .. math::
     \bigg[ P^{2}(M \times M),[\cup ,\varnothing ],[\mathbb{\cap },P(M \times M)],
     [\blacktriangledown ,\{\varnothing\}],[\mathbb{\blacktriangle },\{M \times M\}],
-    \triangleleft, \triangleright, \blacktriangleright, \subset , \prime \bigg].
+    \vartriangleleft, \vartriangleright, \blacktriangleleft, \blacktriangleright, \subset , \prime
+    \bigg].
 
 Note that included in the operations of union and cross-union are the special
 :term:`left-functional` and :term:`right-functional` cases of
-:term:`left-functional cross-union` and :term:`right-functional cross-union`.
+:term:`cross-left-functional union` and :term:`cross-right-functional union`.
 
 .. _algebraofmultclan:
 
@@ -265,10 +267,14 @@ of relations.  Combining the multiset algebra with the clan algebra we have
 .. math::
     \bigg[ \dot{P}(P(M \times M)),[\cup ,\varnothing ],[+,\varnothing],\mathbb{\cap },
     [\blacktriangledown ,\{\varnothing\}],[\mathbb{\blacktriangle },\{M \times M\}],
-    \triangleleft, \triangleright, \blacktriangleright, \subset , \prime \bigg].
+    \vartriangleleft, \vartriangleright, \blacktriangleleft, \blacktriangleright, \subset \bigg].
 
-As in the case of clans, the operations of :term:`left-functional cross-union` and
-:term:`right-functional cross-union` are implied.
+Here the binary operations are all :term:`binary multi-extension`\s of the operations from the
+algebra of clans, with the exception of multiset addition, and subset is replaced with submultiset.
+For example, cross-substriction is replaced with :term:`multi-cross-substriction`.  Note that there
+is no extension of the :term:`complement` operation.  As in the case of clans, the multiset versions
+of the operations of :term:`cross-left-functional union` and :term:`cross-right-functional union`
+are implied.
 
 .. |set M| replace:: :term:`set M` (:math:`M`)
 

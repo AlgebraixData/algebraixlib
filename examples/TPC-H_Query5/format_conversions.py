@@ -4,8 +4,8 @@ The data that we use in our IPython notebooks and the query code has already bee
 functions are only provided in case you want to run the tests (or similar code) on different data.
 """
 
-# $Id: format_conversions.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: format_conversions.py 22698 2015-07-28 17:09:23Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 12:09:23 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -196,6 +196,6 @@ if __name__ == '__main__':
         'orders.tbl', ['orderkey', 'custkey', 'orderstatus', 'totalprice', 'orderdate',
                        'orderpriority', 'clerk', 'shippriority', 'comment'])
     convert_table_to_csv(
-        'lineitem.tbl', ['orderkey', 'partkey', 'suppkey', 'linenumber','quantity', 'extendedprice',
-                         'discount', 'tax', 'returnflag', 'linestatus', 'shipdate', 'commitdate',
-                         'receiptdate', 'shipinstruct', 'shipmode', 'comment'])
+        'lineitem.tbl', ['orderkey', 'partkey', 'suppkey', 'linenumber', 'quantity',
+            'extendedprice', 'discount', 'tax', 'returnflag', 'linestatus', 'shipdate',
+            'commitdate', 'receiptdate', 'shipinstruct', 'shipmode', 'comment'])

@@ -2,42 +2,40 @@ r"""
 The Structure of a `MathObject`
 ===============================
 
-.. note:: Not fully up to the latest standard.
-
 This module provides facilities to represent the structure of a `MathObject`. What we call
-'structure' is a representation of the minimal power set a given math object belongs to (or should
-belong to) that can be expressed with the following elements.
+'structure' is a representation of the minimal :term:`power set` a given `MathObject` belongs to
+(or should belong to) that can be expressed with the following elements.
 
 The structural elements we use are:
 
--   `CartesianProduct`: The ground set of a :class:`~.Couplet` is the cartesian product of the
-    ground sets of the left and right component.
--   `PowerSet`: The ground set of a :class:`~.Set` is the power set of the ground set of its
+-   `CartesianProduct`: The :term:`ground set` of a :class:`~.Couplet` is the :term:`Cartesian
+    product` of the ground sets of the :term:`left` and :term:`right component`.
+-   `PowerSet`: The ground set of a :term:`set` is the :term:`power set` of the ground set of its
     elements.
--   :class:`~Union`: The ground set of the elements of a :class:`~.Set` is the union of the ground
-    sets of the individual elements.
+-   :class:`~Union`: The ground set of the elements of a :term:`set` is the :term:`union` of the
+    ground sets of the individual elements.
 
 Depending on the type of structure, we use one or two genesis sets:
 
--   `GenesisSetA`: The set :math:`A` is the ground set of an :class:`~.Atom`.
--   `GenesisSetM`: The set :math:`M` is the ground set of a `MathObject` (any object in our
-    algebra).
+-   `GenesisSetA`: The :term:`set A` (:math:`A`) is the :term:`set` of all :class:`~.Atom`\s.
+-   `GenesisSetM`: The term:`set M` (:math:`M`) is the ground set of all `MathObject`\s that can be
+    represented in a given system.
 
-In addition to these there is the structure of an empty set. It is represented by an instance of
+In addition to these, there is the structure of an empty set. It is represented by an instance of
 `Structure` and is the only case that is represented by an instance of that class. It is a subset
 of all other structures.
 
-.. note:: :math:`M` is finite; essentially it is the set of all instances of `MathObject` that fit
-    into a given system. This also implies that there is a power set :math:`P(M)` that is *not* an
-    element of :math:`M`. (It follows that not *every* 'set of math objects' is an element of
-    :math:`M`.) Since :math:`A \subset M`, :math:`A` is of course also finite.
-
+.. note:: The :term:`set M` (:math:`M`) is finite; essentially it is the set of all instances of
+    `MathObject` that fit into a given system. This also implies that there is a power set
+    :math:`P(M)` that is *not* an element of :math:`M`. (It follows that not *every* 'set of math
+    objects' is an element of :math:`M`.) Since :math:`A \subset M`, :math:`A` is of course also
+    finite.
 
 Corresponding to the two genesis sets, we use two different forms to represent the structure of a
 `MathObject`:
 
--   **Absolute structure**: An absolute structure does not contain a reference to the set :math:`M`.
-    The structures of instances of :class:`~.Set` are always absolute structures.
+-   **Absolute structure**: An :term:`absolute` structure does not contain a reference to the set
+    :math:`M`.
 -   **Relative structure**: A relative structure contains a reference to the set :math:`M`. Such
     structures are typically used to compare absolute structures against them, to see whether a
     given absolute structure fulfills a minimal structural criterion.
@@ -59,8 +57,8 @@ API
 
 """
 
-# $Id: structure.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: structure.py 22691 2015-07-27 22:46:23Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-27 17:46:23 -0500 (Mon, 27 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -77,13 +75,14 @@ API
 import abc as _abc
 import collections as _collections
 
-from algebraixlib.util.miscellaneous import get_full_class_name as _get_full_class_name
-from algebraixlib.util.miscellaneous import get_hash as _get_hash
-from algebraixlib.util.miscellaneous import get_single_iter_elem as _get_single_iter_elem
+import algebraixlib.util.miscellaneous as _misc
 
+
+# --------------------------------------------------------------------------------------------------
 
 class Structure(object):
-    """Represent the ground set of a `MathObject` in structural terms.
+    """Represent the :term:`ground set` of a `MathObject` in structural terms. An instance of this
+    class is the empty :term:`set`.
 
     .. note:: This class serves a double purpose. On one hand it is the base class for all nodes in
         the structure tree, and on the other hand it is the representative of the whole tree (where
@@ -121,16 +120,6 @@ class Structure(object):
         assert isinstance(other, Structure)
         return type(other) == Structure
 
-    @_abc.abstractmethod
-    def get_repr(self) -> str:
-        """Return the instance's code representation."""
-        return 'Structure()'
-
-    @_abc.abstractmethod
-    def get_str(self) -> str:
-        """Return the instance's string representation."""
-        return '{}'
-
     # ----------------------------------------------------------------------------------------------
 
     def __eq__(self, other):
@@ -150,21 +139,21 @@ class Structure(object):
         """Return a hash based on the member values. (It must match the implementation of `is_same`,
         to which `__eq__` redirects equality comparisons.)
         """
-        return hash(_get_full_class_name(self))
+        return hash(_misc.get_full_class_name(self))
 
     @_abc.abstractmethod
     def __repr__(self):
         """Return the instance's code representation."""
-        return self.get_repr()
+        return 'Structure()'
 
     @_abc.abstractmethod
     def __str__(self):
         """Return the instance's string representation."""
-        return self.get_str()
+        return '{}'
 
 
 class GenesisSetA(Structure):
-    """The set of all atoms. Is functionally a singleton."""
+    r"""The set of all :term:`atom`\s. Is functionally a singleton."""
 
     def is_subset(self, other: Structure) -> bool:
         """Return ``True`` if ``self`` is a subset of ``other``.
@@ -193,33 +182,25 @@ class GenesisSetA(Structure):
         assert isinstance(other, Structure)
         return type(other) == GenesisSetA
 
-    def get_repr(self) -> str:
-        """Return the instance's code representation. Is always 'GenesisSetA()'."""
-        return 'GenesisSetA()'
-
-    def get_str(self) -> str:
-        """Return the instance's string representation. Is always ``'A'``."""
-        return 'A'
-
     # ----------------------------------------------------------------------------------------------
 
     def __hash__(self):
         """Return a hash based on the member values. (It must match the implementation of `is_same`,
         to which `Structure.__eq__` redirects equality comparisons.)
         """
-        return hash(_get_full_class_name(self))
+        return hash(_misc.get_full_class_name(self))
 
     def __repr__(self):
         """Return the instance's code representation."""
-        return self.get_repr()
+        return 'GenesisSetA()'
 
     def __str__(self):
         """Return the instance's string representation."""
-        return self.get_str()
+        return 'A'
 
 
 class GenesisSetM(Structure):
-    r"""The set of all math objects. Is functionally a singleton.
+    r"""The set of all instances of `MathObject`. Is functionally a singleton.
 
     .. note:: The set :math:`M` being a superset of :math:`A` means that subset checking (especially
         in :class:`~Union`) needs to 'know' about this relationship and take it into account.
@@ -255,34 +236,25 @@ class GenesisSetM(Structure):
         assert isinstance(other, Structure)
         return type(other) == GenesisSetM
 
-    def get_repr(self) -> str:
-        """Return the instance's code representation. Is always ``'GenesisSetM()'``."""
-        return 'GenesisSetM()'
-
-    def get_str(self) -> str:
-        """Return the instance's string representation. Is always ``'M'``."""
-        return 'M'
-
     # ----------------------------------------------------------------------------------------------
 
     def __hash__(self):
         """Return a hash based on the member values. (It must match the implementation of `is_same`,
         to which `Structure.__eq__` redirects equality comparisons.)
         """
-        return hash(_get_full_class_name(self))
+        return hash(_misc.get_full_class_name(self))
 
     def __repr__(self):
         """Return the instance's code representation."""
-        return self.get_repr()
+        return 'GenesisSetM()'
 
     def __str__(self):
         """Return the instance's string representation."""
-        return self.get_str()
+        return 'M'
 
 
 class GenesisSetN(Structure):
-    r"""The set of all numerals. Is functionally a single number.
-     """
+    r"""The set of all integers. Is functionally a singleton."""
 
     def is_subset(self, other: Structure) -> bool:
         """Return ``True`` if ``self`` is a subset of ``other``.
@@ -297,7 +269,7 @@ class GenesisSetN(Structure):
         """Return the number of power set levels between ``self`` and ``other``.
 
         :param other: Must be an instance of `Structure`.
-        :return: An integer >= 0. Is always 0 for type `GenesisSetM`.
+        :return: An integer >= 0. Is always 0 for type `GenesisSetN`.
         """
         assert isinstance(other, Structure)
         return 0
@@ -311,41 +283,32 @@ class GenesisSetN(Structure):
         assert isinstance(other, Structure)
         return type(other) == GenesisSetN
 
-    def get_repr(self) -> str:
-        """Return the instance's code representation. Is always ``'GenesisSetN()'``."""
-        return 'GenesisSetN()'
-
-    def get_str(self) -> str:
-        """Return the instance's string representation. Is always ``'M'``."""
-        return 'N'
-
     # ----------------------------------------------------------------------------------------------
 
     def __hash__(self):
         """Return a hash based on the member values. (It must match the implementation of `is_same`,
         to which `Structure.__eq__` redirects equality comparisons.)
         """
-        return hash(_get_full_class_name(self))
+        return hash(_misc.get_full_class_name(self))
 
     def __repr__(self):
         """Return the instance's code representation."""
-        return self.get_repr()
+        return 'GenesisSetN()'
 
     def __str__(self):
         """Return the instance's string representation."""
-        return self.get_str()
+        return 'N'
 
 
 class CartesianProduct(Structure):
-    """Represent the cartesian product node of a structure."""
+    """Represent the :term:`Cartesian product` node of a structure."""
 
     def __init__(self, left, right):
-        """Create an instance of `CartesianProduct`.
-
-        :param left: The ground set of the left component of a couplet. Must be an instance of
-            `Structure`.
-        :param right: The ground set of the right component of a couplet. Must be an instance of
-            `Structure`.
+        """
+        :param left: The :term:`ground set` of the :term:`left component` of a :term:`couplet`. Must
+            be an instance of `Structure`.
+        :param right: The ground set of the :term:`right component` of a couplet. Must be an
+            instance of `Structure`.
         """
         right_is_struct = isinstance(right, Structure)
         right_not_struct = type(right) != Structure
@@ -356,18 +319,18 @@ class CartesianProduct(Structure):
 
     @property
     def left(self) -> Structure:
-        """Read-only access to the left structure."""
+        """Read-only access to the :term:`left` structure."""
         return self._left
 
     @property
     def right(self) -> Structure:
-        """Read-only access to the right structure."""
+        """Read-only access to the :term:`right` structure."""
         return self._right
 
     def is_subset(self, other: Structure) -> bool:
         """Return ``True`` if ``self`` is a subset of ``other``.
 
-        In order for ``self`` to be a subset of ``other``, ``other`` must be:
+        In order for ``self`` to be a :term:`subset` of ``other``, ``other`` must be:
 
         -   A `CartesianProduct` and both left and right components must be subsets of left and
             right components of ``other``, or
@@ -376,7 +339,7 @@ class CartesianProduct(Structure):
         -   `GenesisSetM` (everything in our system is a subset of :math:`M`).
 
         :param other: Must be an instance of `Structure`.
-        :return: ``True`` if ``self`` is a subset of ``other``.
+        :return: ``True`` if ``self`` is a :term:`subset` of ``other``.
         """
         assert isinstance(other, Structure)
 
@@ -414,41 +377,33 @@ class CartesianProduct(Structure):
             return (self.left == other.left) and (self.right == other.right)
         return False
 
-    def get_repr(self) -> str:
-        """Return the instance's code representation."""
-        return 'CartesianProduct(left={left}, right={right})'.format(
-            left=repr(self.left), right=repr(self.right))
-
-    def get_str(self) -> str:
-        """Return the instance's string representation."""
-        return '({left} x {right})'.format(left=str(self.left), right=str(self.right))
-
     # ----------------------------------------------------------------------------------------------
 
     def __hash__(self):
         """Return a hash based on the member values. (It must match the implementation of `is_same`,
         to which `Structure.__eq__` redirects equality comparisons.) Is always cached.
         """
-        return _get_hash(_get_full_class_name(self), self.left, self.right)
+        return _misc.get_hash(_misc.get_full_class_name(self), self.left, self.right)
 
     def __repr__(self):
         """Return the instance's code representation."""
-        return self.get_repr()
+        return 'CartesianProduct(left={left}, right={right})'.format(
+            left=repr(self.left), right=repr(self.right))
 
     def __str__(self):
         """Return the instance's string representation."""
-        return self.get_str()
+        return '({left} x {right})'.format(left=str(self.left), right=str(self.right))
 
 
 class Union(Structure):
-    """Represent the union node of a structure."""
+    """Represent the :term:`union` node of a structure.
+
+    No member of this instance is a :term:`subset` of another member, and no member of this union
+    is a union itself (union arguments get 'unioned into' this union).
+    """
 
     def __init__(self, iterable):
-        """Create an instance of :class:`~Union`.
-
-        The result is so that no member of this union is a subset of another member, and no member
-        of this union is a union itself (union arguments get 'unioned into' this union).
-
+        """
         :param iterable: An `Iterable
             <https://docs.python.org/3.4/library/collections.abc.html?highlight=iterable#collections.abc.Iterable>`_
             of one or more sets to be unioned. All elements must be an instance of `Structure`.
@@ -488,9 +443,9 @@ class Union(Structure):
         return self._data
 
     def is_subset(self, other: Structure) -> bool:
-        """Return ``True`` if ``self`` is a subset of ``other``.
+        """Return ``True`` if ``self`` is a :term:`subset` of ``other``.
 
-        Is ``True`` if every element of this union is a subset of ``other``:
+        Is ``True`` if every element of this :term:`union` is a subset of ``other``:
 
         -   If ``other`` is a union, we compare against each element of it.
         -   If ``other`` is not a union, we compare directly against it.
@@ -542,23 +497,10 @@ class Union(Structure):
         else:
             if len(self.data) == 1:
                 # Compare the one element against 'other'.
-                return _get_single_iter_elem(self.data).is_same(other)
+                return _misc.get_single_iter_elem(self.data).is_same(other)
             else:
                 # self is a 'real' union, so the 'other' must also be a union.
                 return False
-
-    def get_repr(self) -> str:
-        """Return the instance's code representation."""
-        unsorted_strings = [repr(elem) for elem in self.data]
-        return 'Union([{elems}])'.format(elems=', '.join(elem for elem in sorted(unsorted_strings)))
-
-    def get_str(self):
-        """Return the instance's string representation."""
-        if len(self.data) == 1:
-            return str(_get_single_iter_elem(self.data))
-        else:
-            unsorted_strings = [str(elem) for elem in self.data]
-            return '({elems})'.format(elems=' U '.join(elem for elem in sorted(unsorted_strings)))
 
     # ----------------------------------------------------------------------------------------------
 
@@ -566,25 +508,29 @@ class Union(Structure):
         """Return a hash based on the member values. (It must match the implementation of `is_same`,
         to which `Structure.__eq__` redirects equality comparisons.) Is always cached.
         """
-        return _get_hash(_get_full_class_name(self), self.data)
+        return _misc.get_hash(_misc.get_full_class_name(self), self.data)
 
     def __repr__(self):
         """Return the instance's code representation."""
-        return self.get_repr()
+        unsorted_strings = [repr(elem) for elem in self.data]
+        return 'Union([{elems}])'.format(elems=', '.join(elem for elem in sorted(unsorted_strings)))
 
     def __str__(self):
         """Return the instance's string representation."""
-        return self.get_str()
+        if len(self.data) == 1:
+            return str(_misc.get_single_iter_elem(self.data))
+        else:
+            unsorted_strings = [str(elem) for elem in self.data]
+            return '({elems})'.format(elems=' U '.join(elem for elem in sorted(unsorted_strings)))
 
 
 class PowerSet(Structure):
-    """Represent the power set node of a structure."""
+    """Represent the :term:`power set` node of a structure."""
 
     def __init__(self, elements_struct):
-        """Create an instance of `PowerSet`.
-
-        :param elements_struct: The structure of the elements of the :class:`~.Set`. Must be an
-            instance of `Structure`.
+        """
+        :param elements_struct: The structure of the elements of the :term:`set` of which we are
+            representing the power set. Must be an instance of `Structure`.
         """
         assert isinstance(elements_struct, Structure)
         self._base_set = elements_struct
@@ -595,7 +541,7 @@ class PowerSet(Structure):
         return self._base_set
 
     def is_subset(self, other: Structure) -> bool:
-        """Return ``True`` if ``self`` is a subset of ``other``.
+        """Return ``True`` if ``self`` is a :term:`subset` of ``other``.
 
         :param other: Must be an instance of `Structure`.
         :return: ``True`` if ``self`` is a subset of ``other``.
@@ -608,7 +554,7 @@ class PowerSet(Structure):
         return False
 
     def get_powerset_level(self, other: Structure) -> int:
-        """Return the number of power set levels between ``self`` and ``other``.
+        """Return the number of :term:`power set` levels between ``self`` and ``other``.
 
         :param other: Must be an instance of `Structure`.
         :return: The number of power set levels (>= 0) that are between ``self`` and ``other``.
@@ -636,11 +582,19 @@ class PowerSet(Structure):
             return self._base_set == other._base_set
         return False
 
-    def get_repr(self) -> str:
+    # ----------------------------------------------------------------------------------------------
+
+    def __hash__(self):
+        """Return a hash based on the member values. (It must match the implementation of `is_same`,
+        to which `Structure.__eq__` redirects equality comparisons.) Is always cached.
+        """
+        return _misc.get_hash(_misc.get_full_class_name(self), self.base_set)
+
+    def __repr__(self):
         """Return the instance's code representation."""
         return 'PowerSet({elems})'.format(elems=repr(self._base_set))
 
-    def get_str(self) -> str:
+    def __str__(self):
         """Return the instance's string representation."""
         elem_str = str(self._base_set)
         # If the base set starts with a P (PowerSet) or a parenthesis, don't add parentheses.
@@ -648,19 +602,3 @@ class PowerSet(Structure):
             return 'P{elem}'.format(elem=elem_str)
         else:
             return 'P({elem})'.format(elem=elem_str)
-
-    # ----------------------------------------------------------------------------------------------
-
-    def __hash__(self):
-        """Return a hash based on the member values. (It must match the implementation of `is_same`,
-        to which `Structure.__eq__` redirects equality comparisons.) Is always cached.
-        """
-        return _get_hash(_get_full_class_name(self), self.base_set)
-
-    def __repr__(self):
-        """Return the instance's code representation."""
-        return self.get_repr()
-
-    def __str__(self):
-        """Return the instance's string representation."""
-        return self.get_str()

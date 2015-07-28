@@ -1,7 +1,7 @@
 """Test the algebras.sets module."""
 
-# $Id: test_algebras_multisets.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: test_algebras_multisets.py 22698 2015-07-28 17:09:23Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 12:09:23 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -74,18 +74,21 @@ class MultiSetsTest(unittest.TestCase):
         p3 = Multiset(_collections.Counter("ccc"))
         combined = Set({p1, p2, p3})
         result = big_union(combined)
-        self.assertEqual(result, Multiset(_collections.Counter("abc"*3)))
+        self.assertEqual(result, Multiset(_collections.Counter("abc" * 3)))
 
         result = big_intersect(Set(
-            {_multiset_magic, Multiset(_collections.Counter("abc"*3)),
+            {_multiset_magic, Multiset(_collections.Counter("abc" * 3)),
              Multiset("a", "a", "b", "c")}))
         self.assertEqual(result, Multiset(_collections.Counter("aabc")))
 
     def test_metadata(self):
-        self.assertEqual(get_ground_set(), PowerSet(CartesianProduct(GenesisSetM(), GenesisSetN())))
-        self.assertEqual(get_absolute_ground_set(), PowerSet(CartesianProduct(GenesisSetA(), GenesisSetN())))
+        self.assertEqual(get_ground_set(),
+            PowerSet(CartesianProduct(GenesisSetM(), GenesisSetN())))
+        self.assertEqual(get_absolute_ground_set(),
+            PowerSet(CartesianProduct(GenesisSetA(), GenesisSetN())))
         self.assertEqual(get_name(), 'Multisets(M): P(M x N)')
 
+    # noinspection PyTypeChecker
     def test_membership(self):
         self.assertTrue(is_member(Multiset()))
         self.assertTrue(is_member(Multiset(3)))

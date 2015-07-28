@@ -1,7 +1,7 @@
 """Test the algebras.relations module."""
 
-# $Id: test_algebras_relations.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: test_algebras_relations.py 22675 2015-07-24 21:01:36Z mhaque $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-24 16:01:36 -0500 (Fri, 24 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -55,13 +55,10 @@ class RelationsTest(unittest.TestCase):
         """Basic tests of relations.compose()."""
         self._check_wrong_argument_types_binary(compose)
         # Compose.
-        # {(1^a),(2^b),(3^c)} * {(a^x),(zzz^zzz),(c^y)}
         result = compose(ar['rel1'], ar['rel2'])
         self.assertEqual(result, ar['rel1comp2'])
-        # {(1^a),(2^b),(3^b)} * {(1^a),(2^b),(3^b)}
         result = compose(ar['rel1'], ar['rel1'])
         self.assertEqual(result, ar['rel1comp1'])
-        # {(a^x),(zzz^zzz),(c^y)} * {(a^x),(zzz^zzz),(c^y)}
         result = compose(ar['rel2'], ar['rel2'])
         self.assertEqual(result, ar['rel2comp2'])
 
@@ -90,14 +87,14 @@ class RelationsTest(unittest.TestCase):
 
     def test_functional_union(self):
         """Test relations.right_functional_union() which produces the union of two
-        relations where the result must be left functional."""
+        relations where the result must be functional."""
         self._check_wrong_argument_types_binary(functional_union)
 
-        # Union of left functional relations is the same as sets.union()
+        # Union of functional relations is the same as sets.union()
         result = functional_union(ar['rel1'], ar['rel2'])
         self.assertEqual(result, sets.union(ar['rel1'], ar['rel2']))
 
-        # Union of non-left functional relations is NOT the same as sets.union()
+        # Union of non-functional relations is NOT the same as sets.union()
         result = functional_union(ar['rel1'], ar['reldiag'])
         self.assertIs(result, Undef())
         self.assertIsNot(result, sets.union(ar['rel1'], ar['reldiag']))
@@ -166,13 +163,13 @@ class RelationsTest(unittest.TestCase):
                 result = get_right(ar[rel_name], left)
                 self.assertEqual(result.value, right)
 
-    def test_is_left_functional(self):
-        """Basic tests of relations.is_left_functional()."""
-        self.assertRaises(TypeError, lambda: is_left_functional(3))
-        self.assertIs(is_left_functional(Atom(3)), Undef())
+    def test_is_functional(self):
+        """Basic tests of relations.is_functional()."""
+        self.assertRaises(TypeError, lambda: is_functional(3))
+        self.assertIs(is_functional(Atom(3)), Undef())
         for rel_idx in range(1, 3):
             rel_name = 'rel' + str(rel_idx)
-            self.assertTrue(is_left_functional(ar[rel_name]))
+            self.assertTrue(is_functional(ar[rel_name]))
 
     def test_is_right_functional(self):
         """Basic tests of relations.is_right_functional()."""

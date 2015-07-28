@@ -1,7 +1,7 @@
 """Testing the io.rdf module."""
 
-# $Id: test_io_rdf.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: test_io_rdf.py 22690 2015-07-27 20:23:37Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-27 15:23:37 -0500 (Mon, 27 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -77,7 +77,7 @@ class RdfTest(unittest.TestCase):
         # not a clan
         not_graph = Atom('a')
         self.assertFalse(is_graph(not_graph))
-        # not left regular
+        # not regular
         not_graph = Set({Couplet('a', 1), Couplet('a', 2), Couplet('a', 3)})
         self.assertFalse(is_graph(not_graph))
         # left set is not spo
@@ -91,7 +91,7 @@ class RdfTest(unittest.TestCase):
         # not a clan
         not_graph = Atom('a')
         self.assertFalse(is_absolute_graph(not_graph))
-        # not left regular
+        # not regular
         not_graph = Set({Couplet('a', 1), Couplet('a', 2), Couplet('a', 3)})
         self.assertFalse(is_absolute_graph(not_graph))
         # left set is not spo
@@ -137,9 +137,6 @@ class RdfTest(unittest.TestCase):
 
     def test_import_graph(self):
         """Test importing clans from files and strings (function import_graph())."""
-        self.assertRaises(AssertionError, lambda: import_graph())
-        self.assertRaises(AssertionError, lambda: import_graph(input_file='1', input_data='2'))
-
         def check_graph(graph_mo, graph_ref):
             self.assertEqual(graph_mo.get_ground_set(), clans.get_absolute_ground_set())
             self.assertEqual(graph_mo.get_left_set(), Set('s', 'p', 'o'))
@@ -148,14 +145,12 @@ class RdfTest(unittest.TestCase):
         for graph_id in bg.keys():
             graph_data = bg[graph_id]
             if 'file' in graph_data:
-                graph = import_graph(input_file=graph_data['file']())
+                graph = import_graph(graph_data['file']())
                 check_graph(graph, graph_data['mo']())
             else:
                 assert 'graph' in graph_data
-                graph1 = import_graph(input_file=io.StringIO(graph_data['graph']()))
+                graph1 = import_graph(io.StringIO(graph_data['graph']()))
                 check_graph(graph1, graph_data['mo']())
-                graph2 = import_graph(input_data=graph_data['graph']())
-                check_graph(graph2, graph_data['mo']())
 
     def test_convert_identifier_to_mathobject(self):
         """Test the function _convert_identifier_to_mathobject()."""
@@ -242,7 +237,7 @@ class RdfTest(unittest.TestCase):
         graph_type_cnt = sample_graph.count('rdf:type')
 
         # Import the example graph as data algebra MathObject.
-        graph = import_graph(input_data=sample_graph, rdf_format='turtle')
+        graph = import_graph(io.StringIO(sample_graph), rdf_format='turtle')
         
         # Extract the triples that have a type and include their id
         triples_matched = triple_match(graph, '?id', URIRef('rdf:type'), '?type')

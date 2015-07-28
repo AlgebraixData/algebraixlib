@@ -1,6 +1,6 @@
 .. Algebraix Technology Core Library documentation.
-   $Id: index.rst 22620 2015-07-15 19:43:36Z gfiedler $
-   Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 14:43:36 -0500 (Wed, 15 Jul 2015) $
+   $Id: index.rst 22693 2015-07-28 15:15:37Z gfiedler $
+   Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 10:15:37 -0500 (Tue, 28 Jul 2015) $
 
    This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 
@@ -20,10 +20,12 @@ Algebraix Technology Core Library
 ``algebraixlib`` is a library that provides constructs and facilities to harness the fundamentals
 of data algebra. You find us:
 
-* On `PyPI`_. Install as ``pip install algebraixlib`` or download the package.
-* On `GitHub`_. Here you can get the full sources and use the bug tracker.
-* On `Wakari.io`_. Some of the IPython notebooks that are published on GitHub are available here.
-* On `Algebraix Data Corporation`_'s project page. Here you find support information.
+-   On `PyPI`_. Install as ``pip install algebraixlib`` (or ``pip install algebraixlib --user
+    <username>``) or download the package.
+-   On `GitHub`_. Here you can get the full sources and use the bug tracker.
+-   On Algebraix Data's `GitHub project page`_. Here you find support information.
+
+Also check out our tutorials and example code in the `examples`_ directory on GitHub.
 
 .. _Python API Documentation Guidelines:
     https://algebraix.atlassian.net/wiki/display/projX/Python+API+Documentation+Guidelines
@@ -35,10 +37,10 @@ of data algebra. You find us:
     http://pypi.python.org/pypi/algebraixlib
 .. _GitHub:
     http://github.com/AlgebraixData/algebraixlib
-.. _Wakari.io:
-    https://wakari.io/sharing/bundle/AlgebraixData/algebraixlib
-.. _Algebraix Data Corporation:
-    http://algebraixdata.com/algebraixlib/support
+.. _GitHub project page:
+    http://algebraixdata.github.io/algebraixlib/
+.. _Examples:
+    https://github.com/AlgebraixData/algebraixlib/tree/master/examples
 
 API Documentation
 -----------------

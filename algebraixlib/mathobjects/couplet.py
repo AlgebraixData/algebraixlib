@@ -1,7 +1,7 @@
-"""A math object that represents a couplet."""
+"""Provide the class :class:`~.Couplet`; it represents a :term:`couplet`."""
 
-# $Id: couplet.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: couplet.py 22702 2015-07-28 20:20:56Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -16,73 +16,74 @@
 # If not, see <http://www.gnu.org/licenses/>.
 # --------------------------------------------------------------------------------------------------
 import algebraixlib.structure as _structure
-from algebraixlib.util.miscellaneous import get_hash as _get_hash
+import algebraixlib.util.miscellaneous as _misc
 
 from algebraixlib.mathobjects.atom import auto_convert
 from algebraixlib.mathobjects.mathobject import MathObject
 
 
+# --------------------------------------------------------------------------------------------------
+
 class Couplet(MathObject):
-    """A couplet, consisting of a 'left component' `MathObject` and a 'right' `MathObject`."""
+    """A :term:`couplet` containing a :term:`left component` and a :term:`right component`."""
 
     def __init__(self, left, right=None, direct_load=False):
-        """Construct an instance, consisting of two `MathObject` instances ``left`` and
-        ``right``.
-
-        If either of the arguments is not a `MathObject`, make it an :class:`~.Atom` with the
-        argument as value.
+        """
+        :param left: The :term:`left component` of the couplet, and the default value for the
+            :term:`right component` (see ``right``). If this argument is not a `MathObject`, it is
+            converted into an :class:`~.Atom`.
+        :param right: (Optional) The :term:`right component` of the couplet. If this argument is
+            not a `MathObject`, it is converted into an :class:`~.Atom`. If this argument is
+            missing, the value of ``left`` is used and a :term:`reflexive` couplet where
+            :term:`left` and :term:`right` are the same is created.
+        :param direct_load: (Optional) Set to ``True`` if you know that both ``left`` and ``right``
+            are instances of `MathObject`.
         """
         super().__init__()
         if direct_load:
             assert isinstance(left, MathObject)
-            assert isinstance(right, MathObject)
             self._left = left
-            self._right = right
+            if right is None:
+                self._right = self._left
+            else:
+                assert isinstance(right, MathObject)
+                self._right = right
         else:
             self._left = auto_convert(left)
-            self._right = auto_convert(right)
+            if right is None:
+                self._right = self._left
+            else:
+                self._right = auto_convert(right)
         self._hash = 0
+        self._flags._not_relation = True
+        self._flags._not_clan = True
+        self._flags._not_multiclan = True
+
+    # ----------------------------------------------------------------------------------------------
+    # Characteristics of the instance.
 
     @property
-    def left(self):
-        """Read-only property; return the left component of this instance."""
+    def left(self) -> '( M )':
+        """Read-only property; return the :term:`left component` of this instance."""
         return self._left
 
     @property
-    def right(self):
-        """Read-only property; return the right of this instance."""
+    def right(self) -> '( M )':
+        """Read-only property; return the :term:`right component` of this instance."""
         return self._right
 
-    def get_ground_set(self):
-        """Return the ground set of the lowest-level algebra of this `MathObject`.
+    def get_ground_set(self) -> _structure.Structure:
+        """Return the :term:`ground set` of the lowest-level algebra of ``self``.
         """
         return _structure.CartesianProduct(
             self.left.get_ground_set(), self.right.get_ground_set())
 
-    def is_reflexive(self):
-        """Return ``True`` if this :class:`Couplet` is reflexive.
-
-        Reflexive means that left and right are equal.
-        """
+    def is_reflexive(self) -> bool:
+        """Return whether this :term:`couplet` is :term:`reflexive`."""
         return self.left == self.right
-
-    def is_symmetric(self):
-        """Return ``True`` if this :class:`Couplet` is symmetric.
-
-        Reflexive means that left and right are equal.
-        """
-        return self.left == self.right
-
-    def get_repr(self):
-        """Return the instance's code representation."""
-        return 'Couplet(left={left}, right={right})'.format(
-            left=repr(self.left), right=repr(self.right))
-
-    def get_str(self):
-        """Return the instance's string representation (the string representation of the value)."""
-        return '({left}->{right})'.format(left=str(self.left), right=str(self.right))
 
     # ----------------------------------------------------------------------------------------------
+    # (Python-)Special functions.
 
     def __eq__(self, other):
         """A value-based comparison for equality. Return ``True`` if type and both members match."""
@@ -102,13 +103,15 @@ class Couplet(MathObject):
     def __hash__(self):
         """Return a hash based on the value that is calculated on demand and cached."""
         if not self._hash:
-            self._hash = _get_hash('algebraixlib.mathobjects.couplet.Couplet', self.left, self.right)
+            self._hash = _misc.get_hash(
+                'algebraixlib.mathobjects.couplet.Couplet', self.left, self.right)
         return self._hash
 
     def __repr__(self):
         """Return the instance's code representation."""
-        return self.get_repr()
+        return 'Couplet(left={left}, right={right})'.format(
+            left=repr(self.left), right=repr(self.right))
 
     def __str__(self):
         """Return the instance's string representation."""
-        return self.get_str()
+        return '({left}->{right})'.format(left=str(self.left), right=str(self.right))

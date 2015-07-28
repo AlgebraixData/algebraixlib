@@ -1,7 +1,7 @@
 """Test the algebras.clans module."""
 
-# $Id: test_algebras_multiclans.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: test_algebras_multiclans.py 22675 2015-07-24 21:01:36Z mhaque $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-24 16:01:36 -0500 (Fri, 24 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -26,8 +26,8 @@ from algebraixlib.undef import RaiseOnUndef, Undef, UndefException
 
 from algebraixlib.algebras.multiclans import \
     get_ground_set, get_absolute_ground_set, get_name, is_member, is_absolute_member, \
-    compose, transpose, cross_union, functional_cross_union, \
-    right_functional_cross_union, cross_intersect, substrict, superstrict
+    compose, transpose, cross_union, cross_functional_union, \
+    cross_right_functional_union, cross_intersect, substrict, superstrict
 
 
 class MulticlansTest(unittest.TestCase):
@@ -76,26 +76,26 @@ class MulticlansTest(unittest.TestCase):
         result = cross_union(ac['clan1'], ac['clan2'])
         self.assertEqual(result, ac['clan1union2'])
 
-    def test_functional_cross_union(self):
-        """Basic tests of clans.functional_cross_union()."""
-        self._check_wrong_argument_types_binary(functional_cross_union)
-        # Left-functional cross union.
-        result = functional_cross_union(ac['clan1'], ac['clan2'])
+    def test_cross_functional_union(self):
+        """Basic tests of clans.cross_functional_union()."""
+        self._check_wrong_argument_types_binary(cross_functional_union)
+        # cross-functional union.
+        result = cross_functional_union(ac['clan1'], ac['clan2'])
         self.assertEqual(result, ac['clan1union2'])
-        result = functional_cross_union(ac['clan1'], ac['clan3'])
+        result = cross_functional_union(ac['clan1'], ac['clan3'])
         self.assertEqual(result, ac['clan1sfcu3'])
-        result = functional_cross_union(ac['clan1'], ac['clan4'])
+        result = cross_functional_union(ac['clan1'], ac['clan4'])
         self.assertEqual(result, ac['clan1sfcu4'])
 
-    def test_right_functional_cross_union(self):
-        """Basic tests of clans.right_functional_cross_union()."""
-        self._check_wrong_argument_types_binary(right_functional_cross_union)
-        # Right-functional cross union.
-        result = right_functional_cross_union(ac['clan1'], ac['clan2'])
+    def test_cross_right_functional_union(self):
+        """Basic tests of clans.cross_right_functional_union()."""
+        self._check_wrong_argument_types_binary(cross_right_functional_union)
+        # cross-right-functional union.
+        result = cross_right_functional_union(ac['clan1'], ac['clan2'])
         self.assertEqual(result, ac['clan1union2'])
-        result = right_functional_cross_union(ac['clan1'], ac['clan3'])
+        result = cross_right_functional_union(ac['clan1'], ac['clan3'])
         self.assertEqual(result, ac['clan1cfcu3'])
-        result = right_functional_cross_union(ac['clan1'], ac['clan4'])
+        result = cross_right_functional_union(ac['clan1'], ac['clan4'])
         self.assertEqual(result, ac['clan1cfcu4'])
 
     def test_intersect(self):

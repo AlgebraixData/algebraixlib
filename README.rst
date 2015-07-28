@@ -1,6 +1,6 @@
 .. Algebraix Technology Core Library documentation.
-   $Id: README.rst 22624 2015-07-15 21:35:12Z wholler $
-   Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 16:35:12 -0500 (Wed, 15 Jul 2015) $
+   $Id: README.rst 22693 2015-07-28 15:15:37Z gfiedler $
+   Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 10:15:37 -0500 (Tue, 28 Jul 2015) $
 
    This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 
@@ -24,7 +24,8 @@ of data algebra.
 
 Requirements
 ------------
-Python 3.4.3 or later.
+`Python`_  3.4.3 or later.
+`IPython Notebook`_ 3.2 or later for the IPython notebook tutorials and examples.
 
 How to Install
 --------------
@@ -32,6 +33,13 @@ If you already have Python installed and are familiar with installing packages, 
 ``algebraixlib`` with ``pip``::
 
 > pip install algebraixlib
+
+Additional user permissions may be necessary to complete the installation. In such a situation
+other options include installing the package to the home directory::
+
+> pip install algebraixlib --user <username> 
+
+or in a virtual environment, see `Creation of virtual environments`_.
 
 You can also manually download ``algebraixlib`` from `GitHub`_ or `PyPI`_. To install from a
 download, unpack it and run the following from the top-level source directory using the terminal::
@@ -42,8 +50,8 @@ Unit Tests
 ----------
 The unit tests require the following libraries be installed:
 
-* coverage
-* nose
+*   `nose`_
+*   `coverage`_
 
 To execute the unit tests, from the console, in the algebraixlib directory, use the command::
 
@@ -53,7 +61,7 @@ Document Build
 --------------
 The document builds require the following libraries be installed:
 
-* Sphinx (1.3 or later)
+*   `Sphinx`_ (1.3 or later)
 
 To execute the document builds, from the console, in the algebraixlib/docs directory, use command::
 
@@ -62,15 +70,16 @@ To execute the document builds, from the console, in the algebraixlib/docs direc
 Documentation and Support
 -------------------------
 
-* Find documentation at `Read the Docs`_.
-* Find the library on `PyPI`_.
-* Find the library on `GitHub`_.
-* Find the IPython notebooks at `Wakari.io`_.
-* Post questions about algebraixlib on `Stack Overflow`_ using the tag [algebraixlib].
-* Post questions about the mathematics of data algebra on `math.stackexchange`_ using the tag [data-algebra].
-* Contact us at `email`_
+*   Find documentation at `Read the Docs`_.
+*   Find the library on `PyPI`_.
+*   Find the library, the bugtracker and contribute on `GitHub`_.
+*   Find tutorials and example code in the `examples`_ directory on GitHub.
+*   Post questions about algebraixlib on `Stack Overflow`_ using the tag [algebraixlib].
+*   Post questions about the mathematics of data algebra on `math.stackexchange`_ using the tag
+    [data-algebra].
+*   Contact us at `email`_.
 
-There is also a book forthcoming about data algebra.
+See also our `GitHub project page`_. In addition, there is a book forthcoming about data algebra.
 
 Copyright
 ---------
@@ -90,23 +99,37 @@ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
 GNU Lesser General Public License for more details.
 
 
+.. _Python:
+    http://python.org
+.. _IPython Notebook:
+    http://ipython.org/notebook.html
 .. _email:
     mailto:algebraixlib@algebraixdata.com
 .. _Read the Docs:
     http://algebraixlib.rtfd.org/
+.. _Examples:
+    https://github.com/AlgebraixData/algebraixlib/tree/master/examples
 .. _PyPI:
     http://pypi.python.org/pypi/algebraixlib
+.. _nose:
+    https://pypi.python.org/pypi/nose/
+.. _coverage:
+    https://pypi.python.org/pypi/coverage
+.. _Sphinx:
+    https://pypi.python.org/pypi/Sphinx
 .. _GitHub:
     http://github.com/AlgebraixData/algebraixlib
-.. _Wakari.io:
-    https://wakari.io/sharing/bundle/AlgebraixData/algebraixlib
 .. _Stack Overflow:
     http://stackoverflow.com/
 .. _math.stackexchange:
     http://math.stackexchange.com/
+.. _GitHub project page:
+    http://algebraixdata.github.io/algebraixlib/
 .. _Version 3 of the GNU Lesser General Public License:
     http://www.gnu.org/licenses/lgpl-3.0-standalone.html
 .. _GNU Licenses:
     http://www.gnu.org/licenses/
 .. _Free Software Foundation:
     http://www.fsf.org/
+.. _Creation of virtual environments:
+    https://docs.python.org/3/library/venv.html

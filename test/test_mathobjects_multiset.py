@@ -1,7 +1,7 @@
 """Test the mathobjects.set module."""
 
-# $Id: test_mathobjects_multiset.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: test_mathobjects_multiset.py 22695 2015-07-28 16:20:45Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 11:20:45 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -134,7 +134,7 @@ class MultisetTest(unittest.TestCase):
 
         single_m = Multiset(Set([1, 2, 3, 4]), direct_load=True)
         self.assertEqual(single_m.cardinality, 1)
-        self.assertEqual(repr(single_m), """Multiset({Set(Atom(1), Atom(2), Atom(3), Atom(4)): 1})""")
+        self.assertEqual(repr(single_m), "Multiset({Set(Atom(1), Atom(2), Atom(3), Atom(4)): 1})")
         self.assertEqual(str(single_m), "[{1, 2, 3, 4}:1]")
 
         empty_m = Multiset()
@@ -156,6 +156,41 @@ class MultisetTest(unittest.TestCase):
         self.assertEqual(right_values1, Multiset({Atom('w'): 2, Atom('y'): 3}))
         right_values2 = multiset2[Atom('b')]
         self.assertEqual(right_values2, Multiset())
+
+    def test_flags_empty_set(self):
+        s = Multiset()
+
+        self.assertFalse(s.cached_is_relation)
+        self.assertTrue(s.cached_is_not_relation)
+        self.assertFalse(s.cached_is_clan)
+        self.assertTrue(s.cached_is_not_clan)
+        self.assertTrue(s.cached_is_multiclan)
+        self.assertFalse(s.cached_is_not_multiclan)
+        self.assertFalse(s.cached_is_functional)
+        self.assertFalse(s.cached_is_not_functional)
+        self.assertFalse(s.cached_is_right_functional)
+        self.assertFalse(s.cached_is_not_right_functional)
+        self.assertFalse(s.cached_is_regular)
+        self.assertFalse(s.cached_is_not_regular)
+        self.assertFalse(s.cached_is_reflexive)
+        self.assertFalse(s.cached_is_not_reflexive)
+        self.assertFalse(s.cached_is_symmetric)
+        self.assertFalse(s.cached_is_not_symmetric)
+        self.assertFalse(s.cached_is_transitive)
+        self.assertFalse(s.cached_is_not_transitive)
+
+        self.assertRaises(AssertionError, lambda: s.cache_is_relation(True))
+        self.assertRaises(AssertionError, lambda: s.cache_is_clan(True))
+        self.assertRaises(AssertionError, lambda: s.cache_is_multiclan(False))
+        s.cache_is_multiclan(True)
+
+        self.assertRaises(Exception, lambda: s.cache_is_transitive(False))
+        self.assertRaises(Exception, lambda: s.cache_is_functional(False))
+        self.assertRaises(Exception, lambda: s.cache_is_right_functional(False))
+        self.assertRaises(Exception, lambda: s.cache_is_regular(False))
+        self.assertRaises(Exception, lambda: s.cache_is_reflexive(False))
+        self.assertRaises(Exception, lambda: s.cache_is_symmetric(False))
+        self.assertRaises(Exception, lambda: s.cache_is_transitive(False))
 
 
 # --------------------------------------------------------------------------------------------------

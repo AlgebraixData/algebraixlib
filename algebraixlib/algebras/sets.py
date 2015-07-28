@@ -1,7 +1,7 @@
 """This module contains the :term:`algebra of sets` and related functionality."""
 
-# $Id: sets.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: sets.py 22702 2015-07-28 20:20:56Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -16,7 +16,7 @@
 # If not, see <http://www.gnu.org/licenses/>.
 # --------------------------------------------------------------------------------------------------
 import collections as _collections
-from functools import partial
+import functools as _functools
 
 import algebraixlib.mathobjects as _mo
 import algebraixlib.structure as _structure
@@ -37,7 +37,7 @@ class Algebra:
 
     @staticmethod
     def union(set1: 'P( M )', set2: 'P( M )', _checked=True) -> 'P( M )':
-        """Return the union of ``set1`` with ``set2``.
+        r"""Return the union of ``set1`` with ``set2``.
 
         :return: The :term:`binary union` of ``set1`` and ``set2`` or `Undef()` if ``set1`` or
             ``set2`` are not :term:`set`\s (that is, instances of :class:`~.Set`).
@@ -68,7 +68,7 @@ class Algebra:
 
     @staticmethod
     def intersect(set1: 'P( M )', set2: 'P( M )', _checked=True) -> 'P( M )':
-        """Return the intersection of ``set1`` with ``set2``.
+        r"""Return the intersection of ``set1`` with ``set2``.
 
         :return: The :term:`binary intersection` of ``set1`` and ``set2`` or `Undef()` if ``set1``
             or ``set2`` are not :term:`set`\s (that is, instances of :class:`~.Set`).
@@ -92,7 +92,7 @@ class Algebra:
 
     @staticmethod
     def minus(set1: 'P( M )', set2: 'P( M )', _checked=True) -> 'P( M )':
-        """Return the set difference of ``set1`` and ``set2``.
+        r"""Return the set difference of ``set1`` and ``set2``.
 
         :return: The :term:`difference` of ``set1`` and ``set2`` or `Undef()` if ``set1`` or
             ``set2`` are not :term:`set`\s (that is, instances of :class:`~.Set`).
@@ -111,13 +111,13 @@ class Algebra:
                 result.cache_is_clan(set1.cached_is_clan)
             if set1.cached_is_relation or set1.cached_is_not_relation:
                 result.cache_is_relation(set1.cached_is_relation)
-            if set1.cached_is_left_functional or set1.cached_is_not_left_functional:
-                result.cache_is_left_functional(set1.cached_is_left_functional)
+            if set1.cached_is_functional:
+                result.cache_is_functional(set1.cached_is_functional)
         return result
 
     @staticmethod
     def substrict(set1: 'P( M )', set2: 'P( M )', _checked=True) -> 'P( M )':
-        """Return ``set1`` if it is a subset of ``set2``, otherwise return `Undef()`.
+        r"""Return ``set1`` if it is a subset of ``set2``, otherwise return `Undef()`.
 
         :return: Return the :term:`substriction` of ``set1`` and ``set1``; that is, return ``set1``
             if it is a :term:`subset` of ``set2`` or `Undef()` if not. Also return `Undef()` if
@@ -137,7 +137,7 @@ class Algebra:
 
     @staticmethod
     def superstrict(set1: 'P( M )', set2: 'P( M )', _checked=True) -> 'P( M )':
-        """Return ``set1`` if it is a superset of ``set2``, otherwise return `Undef()`.
+        r"""Return ``set1`` if it is a superset of ``set2``, otherwise return `Undef()`.
 
         :return: Return the :term:`superstriction` of ``set1`` and ``set1``; that is, return
             ``set1`` if it is a :term:`subset` of ``set2`` or `Undef()` if not. Also return
@@ -156,12 +156,12 @@ class Algebra:
             return _make_or_raise_undef(2)
         return set1
 
-    # --------------------------------------------------------------------------------------------------
+    # ----------------------------------------------------------------------------------------------
     # Algebra relations.
 
     @staticmethod
     def is_subset_of(set1: 'P( M )', set2: 'P( M )', _checked=True) -> bool:
-        """Return whether ``set1`` is a subset of ``set2``.
+        r"""Return whether ``set1`` is a subset of ``set2``.
 
         :return: ``True`` if ``set1`` is a :term:`subset` of ``set2``, ``False`` if not. Return
             `Undef()` if ``set1`` or ``set2`` are not :term:`set`\s (that is, instances of
@@ -179,7 +179,7 @@ class Algebra:
 
     @staticmethod
     def is_superset_of(set1: 'P( M )', set2: 'P( M )', _checked=True) -> bool:
-        """Return whether ``set1`` is a superset of ``set2``.
+        r"""Return whether ``set1`` is a superset of ``set2``.
 
         :return: ``True`` if ``set1`` is a :term:`superset` of ``set2``, ``False`` if not. Return
             `Undef()` if ``set1`` or ``set2`` are not :term:`set`\s (that is, instances of
@@ -234,18 +234,18 @@ def get_absolute_ground_set() -> _structure.Structure:
 
 
 def is_member(obj: _mo.MathObject) -> bool:
-    """Return ``True`` if ``obj`` is a member of the :term:`ground set` of this :term:`algebra`.
+    """Return whether ``obj`` is a member of the :term:`ground set` of this :term:`algebra`.
 
-     :return: ``True`` if ``obj`` is an instance of :class:`~.Set`.
+     :return: ``True`` if ``obj`` is an instance of :class:`~.Set`, ``False`` if not.
      """
     _mo.raise_if_not_mathobject(obj)
     return isinstance(obj, _mo.Set)
 
 
 def is_absolute_member(obj: _mo.MathObject) -> bool:
-    """Return ``True`` if ``obj`` is a member of the :term:`absolute ground set` of this algebra.
+    """Return whether ``obj`` is a member of the :term:`absolute ground set` of this algebra.
 
-     :return: ``True`` if ``obj`` is an :term:`absolute set`.
+     :return: ``True`` if ``obj`` is an :term:`absolute set`, ``False`` if not.
 
     .. note:: This function calls :meth:`~.MathObject.get_ground_set` on ``obj``."""
     _mo.raise_if_not_mathobject(obj)
@@ -290,7 +290,7 @@ def big_union(set1: 'PP( M )', _checked=True) -> 'P( M )':
                 return _make_or_raise_undef()
     else:
         assert isinstance(set1, _mo.Set)
-    return _extend_binary_operation(set1, partial(union, _checked=False))
+    return chain_binary_operation(set1, _functools.partial(union, _checked=False), is_member)
 
 
 def big_intersect(set1: 'PP( M )', _checked=True) -> 'P( M )':
@@ -318,7 +318,7 @@ def big_intersect(set1: 'PP( M )', _checked=True) -> 'P( M )':
                 return _make_or_raise_undef()
     else:
         assert isinstance(set1, _mo.Set)
-    return _extend_binary_operation(set1, partial(intersect, _checked=False))
+    return chain_binary_operation(set1, _functools.partial(intersect, _checked=False), is_member)
 
 
 def single(set1: _mo.Set):
@@ -346,7 +346,8 @@ def some(set1: _mo.Set):
 
         This function is only intended to be used in (mostly implementation) scenarios where it
         does not matter which element of ``set1`` is retrieved, because the expressions that
-        consume that value will be invariant w.r.t. some of ``set1``.
+        consume that value will be invariant with respect to the exact element of ``set1`` that is
+        returned.
     """
     if not is_member(set1):
         return _make_or_raise_undef()
@@ -389,15 +390,32 @@ def restrict(set1: 'P( M )', selector: _collections.Callable) -> 'P( M )':
                    direct_load=True).cache_is_clan(True)
 
 
-def _extend_binary_operation(set1: 'PP( M )', binary_op):
-    """Extend a binary operation ``binary_op`` and apply it to all members of ``set1``."""
+def chain_binary_operation(set1, binary_op, is_algebra_member):
+    r"""Chain all elements of ``set1`` with the binary operation ``binary_op`` and return the
+    result.
+
+    :param set1: A :term:`set` of sets or :term:`multiset`\s.
+    :param binary_op: The operation through which the members of ``set1`` are chained. It must be
+        commutative and associative.
+    :param is_algebra_member: The ``is_member()`` function of the :term:`algebra` of which the
+        elements of ``set1`` must be members.
+    :return: A member of ``algebra`` that is the result of chaining all elements of ``set1`` with
+        the :term:`binary operation` ``binary_op``.
+    """
+    if not is_member(set1):
+        return _make_or_raise_undef()
+
     if set1.is_empty:
         return set1
-    elem_itr = iter(set1)
-    element = next(elem_itr)
-    assert is_member(element)
-    result = element
-    for element in elem_itr:
-        assert is_member(element)
+
+    set_itr = iter(set1)
+    element1 = next(set_itr)
+    if not is_algebra_member(element1):
+        return _make_or_raise_undef()
+
+    result = element1
+    for element in set_itr:
+        if not is_algebra_member(element):
+            return _make_or_raise_undef()
         result = binary_op(result, element)
     return result

@@ -1,7 +1,7 @@
 """Import data from XML."""
 
-# $Id: xml.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: xml.py 22690 2015-07-27 20:23:37Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-27 15:23:37 -0500 (Mon, 27 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -18,7 +18,7 @@
 # noinspection PyProtectedMember
 import algebraixlib.io._util as _util
 import algebraixlib.mathobjects as _mo
-import algebraixlib.util.miscellaneous as _miscellaneous
+import algebraixlib.util.miscellaneous as _misc
 
 
 def import_xml(xml_file_or_filepath, convert_numerics: bool=False) -> 'P( A x M )':
@@ -54,7 +54,8 @@ def import_xml(xml_file_or_filepath, convert_numerics: bool=False) -> 'P( A x M 
     text_left = _mo.Atom('$')
 
     def _contains_text_node(set1: set) -> bool:
-        # Return True if set1 (a set of Couplets) contains a couplet with the left component text_left.
+        # Return True if set1 (a set of Couplets) contains a couplet with the left component
+        # text_left.
         for couplet in set1:
             if couplet.left == text_left:
                 return True
@@ -73,7 +74,7 @@ def import_xml(xml_file_or_filepath, convert_numerics: bool=False) -> 'P( A x M 
                     # We have a single child that is a text node. Remove one layer of couplets.
                     yield _mo.Couplet(
                         left=_util.get_left_cached(node.tagName),
-                        right=_miscellaneous.get_single_iter_elem(children).right,
+                        right=_misc.get_single_iter_elem(children).right,
                         direct_load=True)
                 else:
                     yield _mo.Couplet(

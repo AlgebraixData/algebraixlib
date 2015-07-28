@@ -1,7 +1,7 @@
-"""Definitions for extending and other set operations that P(M) is not closed under."""
+"""Facilities for extending operations from one :term:`algebra` to another."""
 
-# $Id: extension.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: extension.py 22702 2015-07-28 20:20:56Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -23,6 +23,9 @@ import algebraixlib.undef as _ud
 
 def binary_extend(set1: 'P( M )', set2: 'P( M )', op, _checked=True) -> 'P( M )':
     r"""Return the :term:`binary extension` of ``op`` from one :term:`algebra` to another algebra.
+
+    For this extension, the elements of the extended algebra must be :term:`set`\s of the
+    elements of the original algebra.
 
     :param set1: A :term:`set` with elements on which ``op`` operates.
     :param set2: A set with elements on which ``op`` operates.
@@ -51,12 +54,16 @@ def binary_extend(set1: 'P( M )', set2: 'P( M )', op, _checked=True) -> 'P( M )'
 
 
 def binary_multi_extend(multiset1: 'P( M x N )', multiset2: 'P( M x N )', op,
-                      _checked=True) -> 'P( M x N )':
+                        _checked=True) -> 'P( M x N )':
     r"""Return the :term:`binary extension` of ``op`` from one :term:`algebra` to another algebra.
+
+    For this extension, the elements of the extended algebra must be :term:`multiset`\s of the
+    elements of the original algebra.
 
     :param multiset1: A :term:`multiset` with elements on which ``op`` operates.
     :param multiset2: A multiset with elements on which ``op`` operates.
-    :param op: A :term:`binary operation` that operates on the elements of ``multiset1`` and ``multiset2``.
+    :param op: A :term:`binary operation` that operates on the elements of ``multiset1`` and
+        ``multiset2``.
     :return: A multiset that consists of the defined results of ``op`` when executed on all
         combinations of the elements of ``multiset1`` and ``multiset2``, or `Undef()` if either
         set is not a :class:`~.Multiset`.
@@ -86,6 +93,9 @@ def binary_multi_extend(multiset1: 'P( M x N )', multiset2: 'P( M x N )', op,
 def unary_extend(set1: 'P( M )', op, _checked=True) -> 'P( M )':
     r"""Return the :term:`unary extension` of ``op`` from one :term:`algebra` to another algebra.
 
+    For this extension, the elements of the extended algebra must be :term:`set`\s of the elements
+    of the original algebra.
+
     :param set1: A :term:`set` with elements on which ``op`` operates.
     :param op: A :term:`unary operation` that operates on the elements of ``set1``.
     :return: A set that consists of the defined results of ``op`` when executed on the elements of
@@ -108,6 +118,9 @@ def unary_extend(set1: 'P( M )', op, _checked=True) -> 'P( M )':
 
 def unary_multi_extend(multiset1: 'P( M x N )', op, _checked=True) -> 'P( M x N )':
     r"""Return the :term:`unary extension` of ``op`` from one :term:`algebra` to another algebra.
+
+    For this extension, the elements of the extended algebra must be :term:`multiset`\s of the
+    elements of the original algebra.
 
     :param multiset1: A :term:`multiset` with elements on which ``op`` operates.
     :param op: A :term:`unary operation` that operates on the elements of ``multiset1``.

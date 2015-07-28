@@ -13,7 +13,6 @@ Submodules
 
    algebraixlib.mathobjects.atom
    algebraixlib.mathobjects.couplet
-   algebraixlib.mathobjects.flags
    algebraixlib.mathobjects.mathobject
    algebraixlib.mathobjects.multiset
    algebraixlib.mathobjects.set

@@ -1,7 +1,7 @@
 """Math object example data for tests."""
 
-# $Id: data_mathobjects.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: data_mathobjects.py 22698 2015-07-28 17:09:23Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 12:09:23 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -67,14 +67,14 @@ basic_sets = {key: _create_test_object(Set(val), key, val) for key, val in {
 _print_object_collection('basic_sets')
 
 #: Basic Multiset instances.
-#basic_multisets = {key: _create_test_object(Multiset(val), key, val) for key, val in {
-    #'empty': [],
-    #'dict': dict([('a', 3), ('b', 2), ('c', 5)]),
-    #'num in dict': {Atom(1), Atom(2), Atom(3)},
-    #'str in array': [Atom(el) for el in 'abc'],
-    #'single alpha': 'A'
-#}.items()}
-#_print_object_collection('basic_multisets')
+# basic_multisets = {key: _create_test_object(Multiset(val), key, val) for key, val in {
+#     'empty': [],
+#     'dict': dict([('a', 3), ('b', 2), ('c', 5)]),
+#     'num in dict': {Atom(1), Atom(2), Atom(3)},
+#     'str in array': [Atom(el) for el in 'abc'],
+#     'single alpha': 'A'
+# }.items()}
+# _print_object_collection('basic_multisets')
 
 #: Relation instances for testing the relation algebra.
 algebra_relations = {key: _create_test_object(val, key) for key, val in {
@@ -159,29 +159,29 @@ algebra_clans = {key: _create_test_object(val, key) for key, val in {
         Set([Couplet(s, c) for c, s in zip('abc', [1, 2, 3])]),
         Set([Couplet(s, c) for c, s in zip('abc', [4, 5, 6])]),
     }),
-    # union(clan1, clan2), functional_cross_union(clan1, clan2),
-    # right_functional_cross_union(clan1, clan2)
+    # union(clan1, clan2), cross_functional_union(clan1, clan2),
+    # cross_right_functional_union(clan1, clan2)
     'clan1union2': Set({
         Set([Couplet(s, c) for c, s in zip(
             [1, 2, 3, 'a', 'zzz', 'c'], ['a', 'b', 'c', 'x', 'zzz', 'y'])]),
         Set([Couplet(s, c) for c, s in zip(
             [4, 5, 6, 'a', 'zzz', 'c'], ['a', 'b', 'c', 'x', 'zzz', 'y'])]),
     }),
-    # functional_cross_union(clan1, clan3)
+    # cross_functional_union(clan1, clan3)
     'clan1sfcu3': Set({
         Set([Couplet(s, c) for c, s in zip([1, 2, 3], 'abc')]),
     }),
-    # functional_cross_union(clan1, clan4)
+    # cross_functional_union(clan1, clan4)
     'clan1sfcu4': Set({
         Set([Couplet(s, c) for c, s in zip(['a', 'b', 'c', 1, 2, 3], [1, 2, 3, 'a', 'b', 'c'])]),
         Set([Couplet(s, c) for c, s in zip(['a', 'b', 'c', 4, 5, 6], [1, 2, 3, 'a', 'b', 'c'])]),
     }),
-    # right_functional_cross_union(clan1, clan3)
+    # cross_right_functional_union(clan1, clan3)
     'clan1cfcu3': Set({
         Set([Couplet(s, c) for c, s in zip([1, 2, 3], 'abc')]),
         Set([Couplet(s, c) for c, s in zip([1, 2, 3, 4, 5, 6], 'abcabc')]),
     }),
-    # right_functional_cross_union(clan1, clan4)
+    # cross_right_functional_union(clan1, clan4)
     'clan1cfcu4': Set({
         Set([Couplet(s, c) for c, s in zip([1, 2, 3, 'a', 'b', 'c'], ['a', 'b', 'c', 1, 2, 3])]),
         Set([Couplet(s, c) for c, s in zip([1, 2, 3, 'a', 'b', 'c'], ['a', 'b', 'c', 4, 5, 5])]),
@@ -255,29 +255,29 @@ algebra_multiclans = {key: _create_test_object(val, key) for key, val in {
         Set([Couplet(s, c) for c, s in zip('abc', [1, 2, 3])]),
         Set([Couplet(s, c) for c, s in zip('abc', [4, 5, 6])]),
     }),
-    # union(clan1, clan2), functional_cross_union(clan1, clan2),
-    # right_functional_cross_union(clan1, clan2)
+    # union(clan1, clan2), cross_functional_union(clan1, clan2),
+    # cross_right_functional_union(clan1, clan2)
     'clan1union2': Multiset({
         Set([Couplet(s, c) for c, s in zip(
             [1, 2, 3, 'a', 'zzz', 'c'], ['a', 'b', 'c', 'x', 'zzz', 'y'])]),
         Set([Couplet(s, c) for c, s in zip(
             [4, 5, 6, 'a', 'zzz', 'c'], ['a', 'b', 'c', 'x', 'zzz', 'y'])]),
     }),
-    # functional_cross_union(clan1, clan3)
+    # cross_functional_union(clan1, clan3)
     'clan1sfcu3': Multiset({
         Set([Couplet(s, c) for c, s in zip([1, 2, 3], 'abc')]),
     }),
-    # functional_cross_union(clan1, clan4)
+    # cross_functional_union(clan1, clan4)
     'clan1sfcu4': Multiset({
         Set([Couplet(s, c) for c, s in zip(['a', 'b', 'c', 1, 2, 3], [1, 2, 3, 'a', 'b', 'c'])]),
         Set([Couplet(s, c) for c, s in zip(['a', 'b', 'c', 4, 5, 6], [1, 2, 3, 'a', 'b', 'c'])]),
     }),
-    # right_functional_cross_union(clan1, clan3)
+    # cross_right_functional_union(clan1, clan3)
     'clan1cfcu3': Multiset({
         Set([Couplet(s, c) for c, s in zip([1, 2, 3], 'abc')]),
         Set([Couplet(s, c) for c, s in zip([1, 2, 3, 4, 5, 6], 'abcabc')]),
     }),
-    # right_functional_cross_union(clan1, clan4)
+    # cross_right_functional_union(clan1, clan4)
     'clan1cfcu4': Multiset({
         Set([Couplet(s, c) for c, s in zip([1, 2, 3, 'a', 'b', 'c'], ['a', 'b', 'c', 1, 2, 3])]),
         Set([Couplet(s, c) for c, s in zip([1, 2, 3, 'a', 'b', 'c'], ['a', 'b', 'c', 4, 5, 5])]),

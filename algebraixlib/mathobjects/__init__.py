@@ -1,28 +1,43 @@
-"""This package contains the modules that define the classes that represent data.
+r"""This package contains the modules that define the classes that represent data.
 
-The modules are:
+The modules that contain classes that represent data are:
 
 -   :mod:`~.mathobject`: Contains the abstract base class :class:`~.MathObject`. It is the base
     class of all other data classes and can't be instantiated.
+
     It also provides the utility functions :func:`~.raise_if_not_mathobject` and
     :func:`~.raise_if_not_mathobjects` that raise a `TypeError` if the argument is not an instance
     of :class:`~.MathObject` (resp. is not a collection of such instances).
+
 -   :mod:`~.atom`: Contains the class :class:`~.Atom`. Instances of this class represent
-    :term:`atom`\s; that is, values (of non-math objects, like numbers, strings or any immutable
-    Python value). All instances of :class:`~.Atom` are members of :term:`set A` (:math:`A`), or
+    :term:`atom`\s; that is, values of non-math objects, like numbers, strings or any immutable
+    Python value. All instances of :class:`~.Atom` are members of :term:`set A` (:math:`A`), or
     conversely, :term:`set A` is the set of all instances of :class:`~.Atom`.
+
     It also provides the utility function :func:`~.auto_convert` that makes sure that its argument
     is always an instance of :class:`~.MathObject`; if it isn't, it converts it into an
     :class:`~.Atom`.
+
 -   :mod:`~.couplet`: Contains the class :class:`~.Couplet` that represents a :term:`couplet`.
+
 -   :mod:`~.set`: Contains the class :class:`~.Set` that represents a :term:`set`.
 
-If you ``import mathobjects`` (the package), all module-level symbols (functions, classes) are
-imported.
+-   :mod:`~.multiset`: Contains the class :class:`~.Multiset` that represents a :term:`multiset`.
+
+In addition to the modules with classes that represent data, there is a private module
+``_flags``. It contains the class ``_flags.Flags`` that provides a mechanism to cache
+certain properties of :class:`~.MathObject`\s. It is used by property accessors like
+:attr:`~.MathObject.cached_is_relation` and is not meant to be used by itself. (See also
+[PropCache]_.)
+
+All module-level symbols (functions and classes, except ``_flags.Flags``) are exposed at the
+package level, so if you ``import mathobjects`` (the package), these module-level symbols are
+imported. (Similarly, ``from mathobjects import ...`` can be used to import individual symbols
+from the package.)
 """
 
-# $Id: __init__.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: __init__.py 22702 2015-07-28 20:20:56Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -41,5 +56,5 @@ imported.
 from .atom import Atom, auto_convert
 from .couplet import Couplet
 from .mathobject import MathObject, raise_if_not_mathobject, raise_if_not_mathobjects
-from .set import Set
 from .multiset import Multiset
+from .set import Set

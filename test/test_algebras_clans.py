@@ -1,7 +1,7 @@
 """Test the algebras.clans module."""
 
-# $Id: test_algebras_clans.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: test_algebras_clans.py 22675 2015-07-24 21:01:36Z mhaque $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-24 16:01:36 -0500 (Fri, 24 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -71,70 +71,105 @@ class ClansTest(unittest.TestCase):
 
         c = ac['clan3']
         # Query the flag properties to verify propagation
-        self.assertTrue(c.is_left_functional())
+        self.assertTrue(c.is_functional())
         self.assertFalse(c.is_right_functional())
-        self.assertTrue(c.is_left_regular())
+        self.assertTrue(c.is_regular())
         r = transpose(c)
 
-        self.assertTrue(c.cached_is_left_functional)
-        self.assertFalse(c.cached_is_not_left_functional)
+        self.assertTrue(c.cached_is_functional)
+        self.assertFalse(c.cached_is_not_functional)
         self.assertFalse(c.cached_is_right_functional)
         self.assertTrue(c.cached_is_not_right_functional)
 
         # Without query, the result should have propagated flags
-        self.assertFalse(r.cached_is_left_functional)
-        self.assertTrue(r.cached_is_not_left_functional)
+        self.assertFalse(r.cached_is_functional)
+        self.assertTrue(r.cached_is_not_functional)
         self.assertTrue(r.cached_is_right_functional)
         self.assertFalse(r.cached_is_not_right_functional)
-        self.assertFalse(r.cached_is_left_regular)  # Can't propagate
-        self.assertFalse(r.cached_is_not_left_regular)
-        self.assertFalse(r.is_left_regular())
+        self.assertFalse(r.cached_is_regular)  # Can't propagate
+        self.assertFalse(r.cached_is_not_regular)
+        self.assertFalse(r.is_regular())
 
     def test_union(self):
         """Basic tests of clans.union()."""
         self._check_wrong_argument_types_binary(cross_union)
-        result = cross_union(ac['clan1'], ac['clan2'])
+        c1 = ac['clan1']
+        c2 = ac['clan2']
+        self.assertTrue(c1.is_functional())
+        self.assertTrue(c1.is_right_functional())
+        self.assertTrue(c1.is_regular())
+        self.assertTrue(c2.is_functional())
+        self.assertTrue(c2.is_right_functional())
+        self.assertTrue(c2.is_regular())
+        result = cross_union(c1, c2)
         self.assertEqual(result, ac['clan1union2'])
 
-    def test_functional_cross_union(self):
-        """Basic tests of clans.functional_cross_union()."""
-        self._check_wrong_argument_types_binary(functional_cross_union)
-        # Left-functional cross union.
-        result = functional_cross_union(ac['clan1'], ac['clan2'])
+        # None of the following flags were propagated
+        self.assertFalse(result.cached_is_functional)
+        self.assertFalse(result.cached_is_not_functional)
+        self.assertFalse(result.cached_is_right_functional)
+        self.assertFalse(result.cached_is_not_right_functional)
+        self.assertFalse(result.cached_is_regular)
+        self.assertFalse(result.cached_is_not_regular)
+
+    def test_cross_functional_union(self):
+        """Basic tests of clans.cross_functional_union()."""
+        self._check_wrong_argument_types_binary(cross_functional_union)
+        # cross-functional union.
+        result = cross_functional_union(ac['clan1'], ac['clan2'])
         self.assertEqual(result, ac['clan1union2'])
-        result = functional_cross_union(ac['clan1'], ac['clan3'])
+        result = cross_functional_union(ac['clan1'], ac['clan3'])
         self.assertEqual(result, ac['clan1sfcu3'])
-        result = functional_cross_union(ac['clan1'], ac['clan4'])
+        result = cross_functional_union(ac['clan1'], ac['clan4'])
         self.assertEqual(result, ac['clan1sfcu4'])
 
+        self.assertTrue(result.cached_is_functional)
+
     def test_right_functional_cross_union(self):
-        """Basic tests of clans.right_functional_cross_union()."""
-        self._check_wrong_argument_types_binary(right_functional_cross_union)
+        """Basic tests of clans.cross_right_functional_union()."""
+        self._check_wrong_argument_types_binary(cross_right_functional_union)
         # Right-functional cross union.
-        result = right_functional_cross_union(ac['clan1'], ac['clan2'])
+        result = cross_right_functional_union(ac['clan1'], ac['clan2'])
         self.assertEqual(result, ac['clan1union2'])
-        result = right_functional_cross_union(ac['clan1'], ac['clan3'])
+        result = cross_right_functional_union(ac['clan1'], ac['clan3'])
         self.assertEqual(result, ac['clan1cfcu3'])
-        result = right_functional_cross_union(ac['clan1'], ac['clan4'])
+        result = cross_right_functional_union(ac['clan1'], ac['clan4'])
         self.assertEqual(result, ac['clan1cfcu4'])
 
-    def test_left_functional_cross_union(self):
-        """Test for left_functional_cross_union."""
+        self.assertTrue(result.cached_is_right_functional)
+
+    def test_lhs_cross_functional_union(self):
+        """Test for functional_cross_union."""
         table_a = import_csv(self._get_table_a())
         table_b = import_csv(self._get_table_b())
 
+        self.assertTrue(table_a.is_functional())
+        self.assertTrue(table_b.is_functional())
+
         # Calculate left join.
-        result = lhs_functional_cross_union(table_a, table_b)
+        result = lhs_cross_functional_union(table_a, table_b)
 
         # Test result set properties
-        self.assertEqual(result.is_empty, False)
+        self.assertTrue(result.cached_is_functional)
+        self.assertFalse(result.is_empty)
         self.assertEqual(result.cardinality, 8)
-        expected = import_csv(self._get_result_left_functional_cross_union())
+        expected = import_csv(self._get_result_cross_functional_union())
         self.assertEqual(result, expected)
 
         if self.print_examples:
             print('Expected set: {0}'.format(expected))
             print('Result set: {0}'.format(result))
+
+        import algebraixlib.algebras.sets as sets
+        table_aa = sets.union(table_a, Set(Set(Couplet('PK', '-1'), Couplet('PK', '-2'))))
+        self.assertFalse(table_aa.is_functional())
+        result = lhs_cross_functional_union(table_aa, table_b)
+        self.assertFalse(result.cached_is_functional)
+
+        table_bb = sets.union(table_b, Set(Set(Couplet('PK', '-1'), Couplet('PK', '-2'))))
+        self.assertFalse(table_bb.is_functional())
+        result = lhs_cross_functional_union(table_a, table_bb)
+        self.assertTrue(result.cached_is_functional)
 
     def test_intersect(self):
         """Basic tests of clans.intersect()."""
@@ -145,20 +180,54 @@ class ClansTest(unittest.TestCase):
     def test_substrict(self):
         """Basic tests of clans.substrict()."""
         self._check_wrong_argument_types_binary(substrict)
-        # Substriction.
         result = substrict(ac['clan1'], ac['clan2'])
         self.assertEqual(result, Set())
         result = substrict(ac['clan1'], ac['clan3'])
         self.assertEqual(result, ac['clan1subsupstr3'])
 
+        c1 = diag('a', 'b')
+        c2 = diag('a', 'b', 'c')
+        result = substrict(c1, c2)
+        self.assertEqual(result, c1)
+        self.assertTrue(c1.is_functional())
+        self.assertTrue(c1.is_right_functional())
+        self.assertTrue(c1.is_regular())
+        self.assertTrue(c1.is_reflexive())
+        self.assertTrue(c1.is_symmetric())
+        self.assertTrue(c1.is_transitive())
+        # Test propagated flags
+        self.assertTrue(result.cached_is_functional)
+        self.assertTrue(result.cached_is_right_functional)
+        self.assertTrue(result.cached_is_regular)
+        self.assertTrue(result.cached_is_reflexive)
+        self.assertTrue(result.cached_is_symmetric)
+        self.assertTrue(result.cached_is_transitive)
+
     def test_superstrict(self):
         """Basic tests of clans.superstrict()."""
         self._check_wrong_argument_types_binary(superstrict)
-        # Superstriction.
         result = superstrict(ac['clan1'], ac['clan2'])
         self.assertEqual(result, Set())
         result = superstrict(ac['clan1'], ac['clan3'])
         self.assertEqual(result, ac['clan1subsupstr3'])
+
+        c1 = diag('a', 'b', 'c')
+        c2 = diag('a', 'b')
+        result = superstrict(c1, c2)
+        self.assertEqual(result, c1)
+        self.assertTrue(c1.is_functional())
+        self.assertTrue(c1.is_right_functional())
+        self.assertTrue(c1.is_regular())
+        self.assertTrue(c1.is_reflexive())
+        self.assertTrue(c1.is_symmetric())
+        self.assertTrue(c1.is_transitive())
+        # Test propagated flags
+        self.assertTrue(result.cached_is_functional)
+        self.assertTrue(result.cached_is_right_functional)
+        self.assertTrue(result.cached_is_regular)
+        self.assertTrue(result.cached_is_reflexive)
+        self.assertTrue(result.cached_is_symmetric)
+        self.assertTrue(result.cached_is_transitive)
 
     def test_get_lefts(self):
         """Basic tests of clans.get_lefts()."""
@@ -196,21 +265,43 @@ class ClansTest(unittest.TestCase):
         empty = get_rights(Set())
         self.assertEqual(empty, Set())
 
-    def test_left_functional_cache(self):
-        """Basic tests of is_left_functional()."""
+        c = Set(Set(Couplet('a', Set(Couplet('b', 'c')))))
+        self.assertTrue(is_member(c))
+        r = get_rights(c)
+
+        # This case the rights is a clan..but get_rights() doesn't inspect to know
+        self.assertFalse(r.cached_is_clan)
+        self.assertFalse(r.cached_is_not_clan)
+        self.assertFalse(r.cached_is_relation)
+        self.assertFalse(r.cached_is_not_relation)
+        self.assertTrue(is_member(r))
+        self.assertTrue(r.cached_is_clan)
+
+        c = Set(Set(Couplet('a', 'b')))
+        self.assertTrue(is_member(c))
+        r = get_rights(c)
+
+        # This case the rights is a not a clan..but get_rights() doesn't inspect to know
+        self.assertFalse(r.cached_is_clan)
+        self.assertFalse(r.cached_is_not_clan)
+        self.assertFalse(is_member(r))
+        self.assertTrue(r.cached_is_not_clan)
+
+    def test_functional_cache(self):
+        """Basic tests of is_functional()."""
         c = ac['clan3']
-        self.assertFalse(c.cached_is_left_functional)
-        self.assertFalse(c.cached_is_not_left_functional)
-        self.assertTrue(c.is_left_functional())
-        self.assertTrue(c.cached_is_left_functional)
-        self.assertFalse(c.cached_is_not_left_functional)
-        self.assertTrue(c.is_left_functional())
+        self.assertFalse(c.cached_is_functional)
+        self.assertFalse(c.cached_is_not_functional)
+        self.assertTrue(c.is_functional())
+        self.assertTrue(c.cached_is_functional)
+        self.assertFalse(c.cached_is_not_functional)
+        self.assertTrue(c.is_functional())
         c = ac['clan4']
-        self.assertFalse(c.cached_is_left_functional)
-        self.assertFalse(c.cached_is_not_left_functional)
-        self.assertFalse(c.is_left_functional())
-        self.assertFalse(c.cached_is_left_functional)
-        self.assertTrue(c.cached_is_not_left_functional)
+        self.assertFalse(c.cached_is_functional)
+        self.assertFalse(c.cached_is_not_functional)
+        self.assertFalse(c.is_functional())
+        self.assertFalse(c.cached_is_functional)
+        self.assertTrue(c.cached_is_not_functional)
 
     def test_right_functional_cache(self):
         """Basic tests of is_right_functional()."""
@@ -228,21 +319,21 @@ class ClansTest(unittest.TestCase):
         self.assertFalse(c.cached_is_right_functional)
         self.assertTrue(c.cached_is_not_right_functional)
 
-    def test_left_regular_cache(self):
-        """Basic tests of is_left_regular()."""
+    def test_regular_cache(self):
+        """Basic tests of is_regular()."""
         c = ac['clan3']
-        self.assertFalse(c.cached_is_left_regular)
-        self.assertFalse(c.cached_is_not_left_regular)
-        self.assertTrue(c.is_left_regular())
-        self.assertTrue(c.cached_is_left_regular)
-        self.assertFalse(c.cached_is_not_left_regular)
-        self.assertTrue(c.is_left_regular())
+        self.assertFalse(c.cached_is_regular)
+        self.assertFalse(c.cached_is_not_regular)
+        self.assertTrue(c.is_regular())
+        self.assertTrue(c.cached_is_regular)
+        self.assertFalse(c.cached_is_not_regular)
+        self.assertTrue(c.is_regular())
         c = ac['clan5']
-        self.assertFalse(c.cached_is_left_regular)
-        self.assertFalse(c.cached_is_not_left_regular)
-        self.assertFalse(c.is_left_regular())
-        self.assertFalse(c.cached_is_left_regular)
-        self.assertTrue(c.cached_is_not_left_regular)
+        self.assertFalse(c.cached_is_regular)
+        self.assertFalse(c.cached_is_not_regular)
+        self.assertFalse(c.is_regular())
+        self.assertFalse(c.cached_is_regular)
+        self.assertTrue(c.cached_is_not_regular)
 
     # ----------------------------------------------------------------------------------------------
 
@@ -293,7 +384,7 @@ class ClansTest(unittest.TestCase):
         return io.StringIO(csv_text)
 
     @staticmethod
-    def _get_result_left_functional_cross_union():
+    def _get_result_cross_functional_union():
         csv_text = textwrap.dedent("""\
             PK,AValue,BValue
             1,FOX,TROT

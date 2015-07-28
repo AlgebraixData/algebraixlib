@@ -1,7 +1,11 @@
-"""This module contains the :term:`algebra of clans`."""
+r"""This module contains the :term:`algebra of clans` and related functionality.
 
-# $Id: clans.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+A :term:`clan` is also a :term:`set` (of :term:`relation`\s), and inherits all operations
+of the :term:`algebra of sets`. These are provided in :mod:`~.algebras.sets`.
+"""
+
+# $Id: clans.py 22702 2015-07-28 20:20:56Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -15,7 +19,7 @@
 # You should have received a copy of the GNU Lesser General Public License along with algebraixlib.
 # If not, see <http://www.gnu.org/licenses/>.
 # --------------------------------------------------------------------------------------------------
-from functools import partial
+import functools as _functools
 
 import algebraixlib.algebras.relations as _relations
 import algebraixlib.algebras.sets as _sets
@@ -25,6 +29,8 @@ import algebraixlib.structure as _structure
 from algebraixlib.undef import make_or_raise_undef as _make_or_raise_undef
 
 
+# --------------------------------------------------------------------------------------------------
+
 class Algebra:
     """Provide the operations and relations that are members of the :term:`algebra of clans`.
 
@@ -32,12 +38,12 @@ class Algebra:
     and highlight the operations and relations that belong to the algebra of clans. All member
     functions are also available at the enclosing module scope.
     """
-    # --------------------------------------------------------------------------------------------------
+    # ----------------------------------------------------------------------------------------------
     # Unary algebra operations.
 
     @staticmethod
     def transpose(clan: 'PP(M x M)', _checked=True) -> 'PP(M x M)':
-        """Return the :term:`transposition` of the :term:`clan` ``clan``.
+        """Return a clan where all relations have their left and right components swapped.
 
         :return: The :term:`unary extension` of :term:`transposition` from the :term:`algebra of
             relations` to the :term:`algebra of clans`, applied to ``clan``, or `Undef()` if
@@ -48,21 +54,21 @@ class Algebra:
                 return _make_or_raise_undef()
         else:
             assert is_member(clan)
-        result = _extension.unary_extend(clan, partial(_relations.transpose, _checked=False),
-                                         _checked=False).cache_is_clan(True)
+        result = _extension.unary_extend(clan, _functools.partial(
+            _relations.transpose, _checked=False), _checked=False).cache_is_clan(True)
         if not result.is_empty:
-            if clan.cached_is_left_functional or clan.cached_is_not_left_functional:
-                result.cache_is_right_functional(clan.cached_is_left_functional)
+            if clan.cached_is_functional or clan.cached_is_not_functional:
+                result.cache_is_right_functional(clan.cached_is_functional)
             if clan.cached_is_right_functional or clan.cached_is_not_right_functional:
-                result.cache_is_left_functional(clan.cached_is_right_functional)
+                result.cache_is_functional(clan.cached_is_right_functional)
         return result
 
-    # --------------------------------------------------------------------------------------------------
+    # ----------------------------------------------------------------------------------------------
     # Binary algebra operations.
 
     @staticmethod
     def compose(clan1: 'PP(M x M)', clan2: 'PP(M x M)', _checked=True) -> 'PP(M x M)':
-        r"""Return the :term:`composition` of ``clan1`` with ``clan2``.
+        r"""Return the composition of ``clan1`` with ``clan2``.
 
         :return: The :term:`binary extension` of :term:`composition` from the
             :term:`algebra of relations` to the :term:`algebra of clans`, applied to ``clan1``
@@ -76,17 +82,20 @@ class Algebra:
         else:
             assert is_member(clan1)
             assert is_member(clan2)
-        return _extension.binary_extend(clan1, clan2, partial(_relations.compose, _checked=False),
-                                        _checked=False).cache_is_clan(True)
+        return _extension.binary_extend(clan1, clan2, _functools.partial(
+            _relations.compose, _checked=False), _checked=False).cache_is_clan(True)
 
     @staticmethod
     def cross_union(clan1: 'PP(M x M)', clan2: 'PP(M x M)', _checked=True) -> 'PP(M x M)':
-        r"""Return the :term:`cross-union` of ``clan1`` and ``clan2``.
+        r"""Return the cross-union of ``clan1`` and ``clan2``.
+
+        The :term:`cross-union` of two :term:`clan`\s is a clan that contains the result of
+        unioning every :term:`relation` from one clan with every relation from the other clan.
 
         :return: The :term:`binary extension` of :term:`union` from the :term:`algebra of relations`
             (which inherits it from the :term:`algebra of sets`) to the :term:`algebra of clans`
             applied to ``clan1`` and ``clan2``, or `Undef()` if ``clan1`` or ``clan2`` are not
-            :term:`clan`\s.
+            clans.
         """
         if _checked:
             if not is_member(clan1):
@@ -96,17 +105,21 @@ class Algebra:
         else:
             assert is_member(clan1)
             assert is_member(clan2)
-        return _extension.binary_extend(clan1, clan2, partial(_sets.union, _checked=False),
-                                        _checked=False).cache_is_clan(True)
+        return _extension.binary_extend(
+            clan1, clan2, _functools.partial(
+                _sets.union, _checked=False), _checked=False).cache_is_clan(True)
 
     @staticmethod
-    def functional_cross_union(clan1: 'PP(M x M)', clan2: 'PP(M x M)',
+    def cross_functional_union(clan1: 'PP(M x M)', clan2: 'PP(M x M)',
                                _checked=True) -> 'PP(M x M)':
-        r"""Return the :term:`left-functional cross-union` of ``clan1`` and ``clan2``.
+        r"""Return the cross-functional union of ``clan1`` and ``clan2``.
 
-        :return: The :term:`binary extension` of the :term:`left-functional union` from the
+        The :term:`cross-functional union` of two :term:`clan`\s is the :term:`cross-union` of
+        these clans, but removing all resulting :term:`relation`\s that are not :term:`function`\s.
+
+        :return: The :term:`binary extension` of the :term:`functional union` from the
             :term:`algebra of relations` to the :term:`algebra of clans`, applied to ``clan1`` and
-            ``clan2``, or `Undef()` if ``clan1`` or ``clan2`` are not :term:`clan`\s.
+            ``clan2``, or `Undef()` if ``clan1`` or ``clan2`` are not clans.
         """
         if _checked:
             if not is_member(clan1):
@@ -116,18 +129,21 @@ class Algebra:
         else:
             assert is_member(clan1)
             assert is_member(clan2)
-        return _extension.binary_extend(clan1, clan2,
-                                        partial(_relations.functional_union, _checked=False),
-                                        _checked=False).cache_is_clan(True)
+        return _extension.binary_extend(
+            clan1, clan2, _functools.partial(_relations.functional_union, _checked=False),
+            _checked=False).cache_is_clan(True).cache_is_functional(True)
 
     @staticmethod
-    def lhs_functional_cross_union(lhs: 'PP( MxM )', rhs: 'PP( MxM )', _checked=True):
-        """This data manipulations preforms a left functional cross union, then unions the left hand
-        side elements that were not cross unioned.
+    def lhs_cross_functional_union(lhs: 'PP( MxM )', rhs: 'PP( MxM )',
+                                   _checked=True) -> 'PP(M x M)':
+        """Return the :term:`lhs-cross-functional union` ('left join') of ``lhs`` and ``rhs``.
 
-        :param lhs: The priority left hand clan for this operation
-        :param rhs: The right hand clan to preform the cross union with
-        :return: PP(MxM) resulting math object
+        This operation results in a :term:`clan` that contains every :term:`relation` of a
+        :term:`cross-functional union`, but also contains all relations in ``lhs`` that
+        are not already part of one of the resulting relations.
+
+        :param lhs: All relations in this clan are guaranteed to be represented in the result.
+        :return: The resulting clan or `Undef()` if ``lhs`` or ``rhs`` are not clans.
         """
         if _checked:
             if not is_member(lhs):
@@ -138,24 +154,23 @@ class Algebra:
             assert is_member(lhs)
             assert is_member(rhs)
 
-        def _functional_cross_union(clan1: 'PP(M x M)', clan2: 'PP(M x M)') -> 'PP(M x M)':
-            """Return the :term:`left-functional cross-union` of ``clan1`` and ``clan2``."""
-            assert is_member(clan1)
-            assert is_member(clan2)
-
-            return _extension.binary_extend(
-                clan1, clan2, partial(_relations.functional_union, _checked=False),
-                _checked=False).cache_is_clan(True)
-
-        return _sets.union(
-            _functional_cross_union(lhs, rhs),
-            _mo.Set(lhs_elem for lhs_elem in lhs if _functional_cross_union(
+        result = _sets.union(
+            cross_functional_union(lhs, rhs, _checked=False),
+            _mo.Set(lhs_elem for lhs_elem in lhs if cross_functional_union(
                 _mo.Set(lhs_elem, direct_load=True), rhs).is_empty), _checked=False)
 
+        if lhs.cached_is_functional:
+            result.cache_is_functional(True)
+        return result
+
     @staticmethod
-    def right_functional_cross_union(clan1: 'PP(M x M)', clan2: 'PP(M x M)',
+    def cross_right_functional_union(clan1: 'PP(M x M)', clan2: 'PP(M x M)',
                                      _checked=True) -> 'PP(M x M)':
-        r"""Return the :term:`right-functional cross-union` of ``clan1`` and ``clan2``.
+        r"""Return the cross-right-functional union of ``clan1`` and ``clan2``.
+
+        The :term:`cross-right-functional union` of two :term:`clan`\s is the :term:`cross-union`
+        of these clans, but removing all resulting :term:`relation`\s that are not
+        :term:`right-functional`.
 
         :return: The :term:`binary extension` of the :term:`right-functional union` from the
             :term:`algebra of relations` to the :term:`algebra of clans`, applied to ``clan1`` and
@@ -169,13 +184,16 @@ class Algebra:
         else:
             assert is_member(clan1)
             assert is_member(clan2)
-        return _extension.binary_extend(clan1, clan2,
-                                        partial(_relations.right_functional_union,
-                                                _checked=False), _checked=False).cache_is_clan(True)
+        return _extension.binary_extend(
+            clan1, clan2, _functools.partial(_relations.right_functional_union, _checked=False),
+            _checked=False).cache_is_clan(True).cache_is_right_functional(True)
 
     @staticmethod
     def cross_intersect(clan1: 'PP(M x M)', clan2: 'PP(M x M)', _checked=True) -> 'PP(M x M)':
-        r"""Return the :term:`cross-intersection` of ``clan1`` and ``clan2``.
+        r"""Return the cross-intersection of ``clan1`` and ``clan2``.
+
+        The :term:`cross-intersection` of two :term:`clan`\s is a clan that contains the result of
+        intersecting every :term:`relation` from one clan with every relation from the other clan.
 
         :return: The :term:`binary extension` of :term:`intersection` from the :term:`algebra of
             relations` (which inherits it from the :term:`algebra of sets`) to the :term:`algebra of
@@ -190,17 +208,20 @@ class Algebra:
         else:
             assert is_member(clan1)
             assert is_member(clan2)
-        return _extension.binary_extend(clan1, clan2, partial(_sets.intersect, _checked=False),
-                                        _checked=False).cache_is_clan(True)
+        return _extension.binary_extend(
+            clan1, clan2, _functools.partial(
+                _sets.intersect, _checked=False), _checked=False).cache_is_clan(True)
 
     @staticmethod
     def substrict(clan1: 'PP(M x M)', clan2: 'PP(M x M)', _checked=True) -> 'PP(M x M)':
-        r"""Return the :term:`binary extension` of :term:`substriction` of ``clan1`` and ``clan2``.
+        r"""Return the substriction of ``clan1`` and ``clan2``.
+
+        The :term:`substriction` of two :term:`clan`\s is a clan that contains all
+        :term:`relation`\s from ``clan1`` that are a :term:`subset` of a relation from ``clan2``.
 
         :return: The :term:`binary extension` of :term:`substriction` from the :term:`algebra of
-            relations` (which inherits it from the :term:`algebra of sets`) to the :term:`algebra of
-            clans` applied to ``clan1`` and ``clan2``, or `Undef()` if ``clan1`` or ``clan2`` are
-            not :term:`clan`\s.
+            sets` to the :term:`algebra of clans` applied to ``clan1`` and ``clan2``, or `Undef()`
+            if ``clan1`` or ``clan2`` are not clans.
         """
         if _checked:
             if not is_member(clan1):
@@ -210,17 +231,24 @@ class Algebra:
         else:
             assert is_member(clan1)
             assert is_member(clan2)
-        return _extension.binary_extend(clan1, clan2, partial(_sets.substrict, _checked=False),
-                                        _checked=False).cache_is_clan(True)
+        result = _extension.binary_extend(
+            clan1, clan2, _functools.partial(
+                _sets.substrict, _checked=False), _checked=False).cache_is_clan(True)
+        # The subset of clan1 that is returned has all properties of clan1
+        if not result.is_empty:
+            result.copy_flags(clan1)
+        return result
 
     @staticmethod
     def superstrict(clan1: 'PP(M x M)', clan2: 'PP(M x M)', _checked=True) -> 'PP(M x M)':
-        r"""Return a Set of every element of clan1 that is a superset of any element of clan2.
+        r"""Return the superstriction of ``clan1`` and ``clan2``.
+
+        The :term:`superstriction` of two :term:`clan`\s is a clan that contains all
+        :term:`relation`\s from ``clan1`` that are a :term:`superset` of a relation from ``clan2``.
 
         :return: The :term:`binary extension` of :term:`superstriction` from the :term:`algebra of
-            relations` (which inherits it from the :term:`algebra of sets`) to the :term:`algebra of
-            clans` applied to ``clan1`` and ``clan2``, or `Undef()` if ``clan1`` or ``clan2`` are
-            not :term:`clan`\s.
+            sets` to the :term:`algebra of clans` applied to ``clan1`` and ``clan2``, or `Undef()`
+            if ``clan1`` or ``clan2`` are not clans.
         """
         if _checked:
             if not is_member(clan1):
@@ -230,23 +258,40 @@ class Algebra:
         else:
             assert is_member(clan1)
             assert is_member(clan2)
-        return _extension.binary_extend(clan1, clan2, partial(
+        result = _extension.binary_extend(clan1, clan2, _functools.partial(
             _sets.superstrict, _checked=False)).cache_is_clan(True)
 
+        # The subset of clan1 that is returned has all properties of clan1
+        if not result.is_empty:
+            result.copy_flags(clan1)
+        return result
+
+
+# For convenience, make the members of class Algebra (they are all static functions) available at
+# the module level.
+
+#: Convenience redirection to `Algebra.transpose`.
 transpose = Algebra.transpose
+#: Convenience redirection to `Algebra.compose`.
 compose = Algebra.compose
+#: Convenience redirection to `Algebra.cross_union`.
 cross_union = Algebra.cross_union
-functional_cross_union = Algebra.functional_cross_union
-lhs_functional_cross_union = Algebra.lhs_functional_cross_union
-right_functional_cross_union = Algebra.right_functional_cross_union
+#: Convenience redirection to `Algebra.cross_functional_union`.
+cross_functional_union = Algebra.cross_functional_union
+#: Convenience redirection to `Algebra.lhs_cross_functional_union`.
+lhs_cross_functional_union = Algebra.lhs_cross_functional_union
+#: Convenience redirection to `Algebra.cross_right_functional_union`.
+cross_right_functional_union = Algebra.cross_right_functional_union
+#: Convenience redirection to `Algebra.cross_intersect`.
 cross_intersect = Algebra.cross_intersect
+#: Convenience redirection to `Algebra.substrict`.
 substrict = Algebra.substrict
+#: Convenience redirection to `Algebra.superstrict`.
 superstrict = Algebra.superstrict
 
 
 # --------------------------------------------------------------------------------------------------
 # Metadata functions.
-
 
 def get_name() -> str:
     """Return the name and :term:`ground set` of this :term:`algebra` in string form."""
@@ -264,9 +309,10 @@ def get_absolute_ground_set() -> _structure.Structure:
 
 
 def is_member(obj: _mo.MathObject) -> bool:
-    """Return ``True`` if ``obj`` is a member of the :term:`ground set` of this :term:`algebra`.
+    """Return whether ``obj`` is a member of the :term:`ground set` of this :term:`algebra`.
 
-    .. note:: This function calls :meth:`~.MathObject.get_ground_set` on ``obj``.
+    .. note:: This function may call :meth:`~.MathObject.get_ground_set` on ``obj``. The result of
+        this operation is cached.
     """
     _mo.raise_if_not_mathobject(obj)
     if not obj.cached_is_clan and not obj.cached_is_not_clan:
@@ -275,9 +321,9 @@ def is_member(obj: _mo.MathObject) -> bool:
 
 
 def is_absolute_member(obj: _mo.MathObject) -> bool:
-    """Return ``True`` if ``obj`` is a member of the :term:`absolute ground set` of this algebra.
+    """Return whether ``obj`` is a member of the :term:`absolute ground set` of this algebra.
 
-     :return: ``True`` if ``obj`` is an :term:`absolute clan`.
+     :return: Whether ``obj`` is an :term:`absolute clan`.
 
     .. note:: This function calls :meth:`~.MathObject.get_ground_set` on ``obj``.
     """
@@ -286,14 +332,13 @@ def is_absolute_member(obj: _mo.MathObject) -> bool:
 
 
 # --------------------------------------------------------------------------------------------------
-# Utility operations that are not formally part of the algebra.
-
+# Related operations, not formally part of the algebra.
 
 def get_lefts(clan: 'PP(M x M)', _checked=True) -> 'P( M )':
-    r"""Return the :term:`left set` of this :term:`clan`.
+    r"""Return the set of the left components of all couplets in all relations in ``clan``.
 
-    :return: The :term:`union` of the :term:`left set`\s of all :term:`relation`\s in the
-        :term:`clan` or `Undef()` if ``clan`` is not a clan.
+    :return: The :term:`union` of the :term:`left set`\s of all :term:`relation`\s in ``clan`` or
+        `Undef()` if ``clan`` is not a :term:`clan`.
     """
     if _checked:
         if not is_member(clan):
@@ -308,16 +353,14 @@ def get_lefts(clan: 'PP(M x M)', _checked=True) -> 'P( M )':
     for rel in clan_itr:
         left_set = _sets.union(
             _relations.get_lefts(rel, _checked=False), left_set, _checked=False)
-    if not left_set.is_empty:
-        left_set.cache_is_relation(False).cache_is_clan(False)
     return left_set
 
 
 def get_rights(clan: 'PP(M x M)', _checked=True) -> "P( M )":
-    r"""Return the :term:`right set` of this :term:`clan`.
+    r"""Return the set of the right components of all couplets in all relations in ``clan``.
 
-    :return: The :term:`union` of the :term:`right set`\s of all :term:`relation`\s in the
-        :term:`clan` or `Undef()` if ``clan`` is not a clan.
+    :return: The :term:`union` of the :term:`right set`\s of all :term:`relation`\s in ``clan`` or
+        `Undef()` if ``clan`` is not a :term:`clan`.
     """
     if _checked:
         if not is_member(clan):
@@ -332,16 +375,14 @@ def get_rights(clan: 'PP(M x M)', _checked=True) -> "P( M )":
     for rel in clan_itr:
         right_set = _sets.union(
             _relations.get_rights(rel, _checked=False), right_set, _checked=False)
-    if not right_set.is_empty:
-        right_set.cache_is_relation(False).cache_is_clan(False)
     return right_set
 
 
-def is_left_regular(clan, _checked=True) -> bool:
-    """Return ``True`` if ``clan`` is :term:`left-regular`.
+def is_regular(clan, _checked=True) -> bool:
+    """Return whether ``clan`` is regular.
 
-    :return: ``True`` if ``clan`` is :term:`left-regular` or `Undef()` if ``clan`` is not a
-        :term:`clan`.
+    :return: ``True`` if ``clan`` is :term:`regular`, ``False`` if not or `Undef()` if ``clan``
+        is not a :term:`clan`.
     """
     if _checked:
         if not is_member(clan):
@@ -349,40 +390,41 @@ def is_left_regular(clan, _checked=True) -> bool:
     else:
         assert is_member(clan)
 
-    if not clan.cached_is_left_regular and not clan.cached_is_not_left_regular:
+    if not clan.cached_is_regular and not clan.cached_is_not_regular:
         # NOTE: The empty case is handled in Set().__init__ via flags initialization
-        if clan.cached_is_not_left_functional:
-            clan.cache_is_left_regular(False)
+        if clan.cached_is_not_functional:
+            clan.cache_is_regular(False)
             return False
         itr = iter(clan)
         rel = next(itr)
-        if not rel.is_left_functional():
-            clan.cache_is_left_regular(False)
+        if not rel.is_functional():
+            clan.cache_is_regular(False)
             return False
         left_set = rel.get_left_set()
-        regular = all(rel.is_left_functional() and left_set == rel.get_left_set() for rel in itr)
-        clan.cache_is_left_regular(regular)
-    return clan.cached_is_left_regular
+        regular = all(rel.is_functional() and left_set == rel.get_left_set() for rel in itr)
+        clan.cache_is_regular(regular)
+    return clan.cached_is_regular
 
 
 def project(clan: 'PP(M x M)', *lefts) -> 'PP(M x M)':
-    r"""Return a :term:`clan` with the :term:`left component`\s from ``clan`` with the values in
-    ``lefts``.  See :term:`project`.
+    r"""Return a clan that contains only the couplets with lefts from ``clan`` that match ``lefts``.
 
     :param clan: The source data. Must be a :term:`clan`.
-    :param lefts: The names of the lefts to return. (If you want to pass in an iterable, you need
-        to prefix it with a ``*``.)
-    :return: A clan with only the lefts as indicated by ``lefts``.
+    :param lefts: The names of the :term:`left component`\s to match. (If you want to pass in an
+        iterable, you need to prefix it with an asterisk ``*``.)
+    :return: The :term:`projection` of ``clan`` (a clan that contains only :term:`couplet`\s with
+        left components as indicated by ``lefts``), or `Undef()` if ``clan`` is not a clan.
     """
     clan = compose(clan, diag(*lefts))
     return clan
 
 
 def from_set(left: '( M )', *values: '( M )') -> 'PP(M x M)':
-    """Return a clan where all relations contain a single couplet with the same left component.
+    r"""Return a clan where all relations contain a single couplet with the same left component.
 
     :param left: The :term:`left component` of all :term:`couplet`\s in the returned :term:`clan`.
-    :param values: The :term:`right component`\s of the couplets in the returned clan.
+    :param values: The :term:`right component`\s of the couplets in the returned clan. (If you want
+        to pass in an iterable, you need to prefix it with an asterisk ``*``.)
     :return: A clan where every :term:`relation` consists of a single couplet with a left component
         of ``left`` and a right component from ``values``.
     """
@@ -394,7 +436,7 @@ def from_set(left: '( M )', *values: '( M )') -> 'PP(M x M)':
 
 
 def from_dict(dict1: dict) -> 'PP(M x M)':
-    """Return a :term:`clan` with a single :term:`relation` where the :term:`couplet`\s are the
+    r"""Return a :term:`clan` with a single :term:`relation` where the :term:`couplet`\s are the
     elements of ``dict1``."""
     clan = _mo.Set(_mo.Set((_mo.Couplet(left, right) for left, right in dict1.items()),
                            direct_load=True).cache_is_relation(True),
@@ -402,16 +444,18 @@ def from_dict(dict1: dict) -> 'PP(M x M)':
     return clan
 
 
-def diag(*args) -> 'PP(M x M)':
-    """Return a 'clan :term:`diagonal`' of the arguments."""
-    clan = _mo.Set(_mo.Set((_mo.Couplet(elem, elem) for elem in args),
-                           direct_load=True).cache_is_relation(True).cache_is_left_functional(True),
-                   direct_load=True).cache_is_clan(True)
+def diag(*args, _checked=True) -> 'PP(M x M)':
+    """Return a clan diagonal of the arguments.
+
+    :param args: Pass in the elements from which the :term:`clan diagonal` is formed. (If you want
+        to pass in an iterable, you need to prefix it with an asterisk ``*``.)
+    """
+    clan = _mo.Set(_relations.diag(*args, _checked=_checked), direct_load=True).cache_is_clan(True)
     return clan
 
 
-def defined_at(clan, left):
-    """Return the portion of clan where relations in clan are defined for left"""
-    clan = _extension.unary_extend(clan, partial(
-        _relations.defined_at, left=left)).cache_is_clan(True)
+def defined_at(clan, left, _checked=True):
+    r"""Return the :term:`relation`\s of ``clan`` that are defined for ``left``."""
+    clan = _extension.unary_extend(clan, _functools.partial(
+        _relations.defined_at, left=left, _checked=_checked), _checked=_checked).cache_is_clan(True)
     return clan

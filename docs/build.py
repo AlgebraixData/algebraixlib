@@ -9,8 +9,8 @@ requires that the directory of this script is the current directory. (This is au
 by default by PyCharm when it runs a script.)
 """
 
-# $Id: build.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: build.py 22698 2015-07-28 17:09:23Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 12:09:23 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -27,7 +27,9 @@ by default by PyCharm when it runs a script.)
 import filecmp
 import os
 import shutil
+# noinspection PyPackageRequirements
 import sphinx
+# noinspection PyPackageRequirements
 import sphinx.apidoc
 import webbrowser
 

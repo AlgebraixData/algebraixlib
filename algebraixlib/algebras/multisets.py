@@ -1,7 +1,7 @@
-"""This module contains the :term:`algebra of multisets`."""
+"""This module contains the :term:`algebra of multisets` and related functionality."""
 
-# $Id: multisets.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: multisets.py 22702 2015-07-28 20:20:56Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -15,12 +15,15 @@
 # You should have received a copy of the GNU Lesser General Public License along with algebraixlib.
 # If not, see <http://www.gnu.org/licenses/>.
 # --------------------------------------------------------------------------------------------------
-from functools import partial
+import functools as _functools
 
+import algebraixlib.algebras.sets as _sets
 import algebraixlib.mathobjects as _mo
 import algebraixlib.structure as _structure
 from algebraixlib.undef import make_or_raise_undef as _make_or_raise_undef
 
+
+# --------------------------------------------------------------------------------------------------
 
 class Algebra:
     """Provide the operations and relations that are members of the :term:`algebra of multisets`.
@@ -29,15 +32,15 @@ class Algebra:
     and highlight the operations and relations that belong to the algebra of multisets. All member
     functions are also available at the enclosing module scope.
     """
-    # --------------------------------------------------------------------------------------------------
+    # ----------------------------------------------------------------------------------------------
     # Binary algebra operations.
 
     @staticmethod
     def union(multiset1: 'P( M x N )', multiset2: 'P( M x N )', _checked=True) -> 'P( M x N )':
-        """Return the :term:`binary union` of ``multiset1`` with ``multiset2``.
+        """Return the multiset union of ``multiset1`` with ``multiset2``.
 
-        :return: The union of ``multiset1`` and ``multiset2`` or `Undef()` if ``multiset1`` or
-            ``multiset2`` are not instances of :class:`~.Multiset`.
+        :return: The :term:`multiset union` of ``multiset1`` and ``multiset2`` or `Undef()` if
+            ``multiset1`` or ``multiset2`` are not instances of :class:`~.Multiset`.
         """
         if _checked:
             if not is_member(multiset1):
@@ -52,10 +55,10 @@ class Algebra:
 
     @staticmethod
     def intersect(multiset1: 'P( M x N )', multiset2: 'P( M x N )', _checked=True) -> 'P( M x N )':
-        """Return the :term:`binary intersection` of ``multiset1`` with ``multiset2``.
+        """Return the multiset intersection of ``multiset1`` with ``multiset2``.
 
-        :return: The intersection of ``multiset1`` and ``multiset2`` or `Undef()` if ``multiset1``
-            or ``multiset2`` are not instances of :class:`~.Multiset`.
+        :return: The :term:`multiset intersection` of ``multiset1`` and ``multiset2`` or `Undef()`
+            if ``multiset1`` or ``multiset2`` are not instances of :class:`~.Multiset`.
         """
         if _checked:
             if not is_member(multiset1):
@@ -70,10 +73,10 @@ class Algebra:
 
     @staticmethod
     def minus(multiset1: 'P( M x N )', multiset2: 'P( M x N )', _checked=True) -> 'P( M x N )':
-        """Return the :term:`difference` of ``multiset1`` and ``multiset2``.
+        """Return the multiset difference of ``multiset1`` and ``multiset2``.
 
-        :return: The difference of ``multiset1`` and ``multiset2`` or `Undef()` if ``multiset1`` or
-            ``multiset2`` are not instances of :class:`~.Multiset`.
+        :return: The :term:`multiset difference` of ``multiset1`` and ``multiset2`` or `Undef()`
+            if ``multiset1`` or ``multiset2`` are not instances of :class:`~.Multiset`.
         """
         if _checked:
             if not is_member(multiset1):
@@ -88,10 +91,10 @@ class Algebra:
 
     @staticmethod
     def addition(multiset1: 'P( M x N )', multiset2: 'P( M x N )', _checked=True) -> 'P( M x N )':
-        """Return the :term:`addition` of ``multiset1`` and ``multiset2``.
+        """Return the multiset addition of ``multiset1`` and ``multiset2``.
 
-        :return: The addition of ``multiset1`` and ``multiset2`` or `Undef()` if ``multiset1`` or
-            ``multiset2`` are not instances of :class:`~.Multiset`.
+        :return: The :term:`multiset addition` of ``multiset1`` and ``multiset2`` or `Undef()` if
+            ``multiset1`` or ``multiset2`` are not instances of :class:`~.Multiset`.
         """
         if _checked:
             if not is_member(multiset1):
@@ -106,11 +109,11 @@ class Algebra:
 
     @staticmethod
     def substrict(multiset1: 'P( M x N )', multiset2: 'P( M x N )', _checked=True) -> 'P( M x N )':
-        """Return the :term:`substriction` of ``multiset1`` and ``multiset2``.
+        """Return ``multiset1`` if ``multiset1`` is a subset of ``multiset2`` or `Undef()` if not.
 
-        :return: ``multiset1`` if ``multiset1`` is a :term:`subset` of ``multiset2`` or `Undef()` if
-            not. Also return `Undef()` if ``multiset1`` or ``multiset2`` are not instances of
-            :class:`~.Set`.
+        :return: The :term:`substriction` of ``multiset1`` and ``multiset2`` (may return `Undef()`).
+            Also return `Undef()` if ``multiset1`` or ``multiset2`` are not instances of
+            :class:`~.Multiset`.
         """
         if _checked:
             if not is_member(multiset1):
@@ -127,11 +130,11 @@ class Algebra:
     @staticmethod
     def superstrict(multiset1: 'P( M x N )', multiset2: 'P( M X N )',
                     _checked=True) -> 'P( M X N )':
-        """Return the :term:`superstriction` of ``multiset1`` and ``multiset2``.
+        """Return ``multiset1`` if ``multiset1`` is a superset of ``multiset2`` or `Undef()` if not.
 
-        :return: ``multiset1`` if ``multiset1`` is a :term:`superset` of ``multiset2`` or `Undef()`
-            if not. Also return `Undef()` if ``multiset1`` or ``multiset2`` are not instances of
-            :class:`~.Multiset`.
+        :return: The :term:`superstriction` of ``multiset1`` and ``multiset2`` (may return
+            `Undef()`). Also return `Undef()` if ``multiset1`` or ``multiset2`` are not instances
+            of :class:`~.Multiset`.
         """
         if _checked:
             if not is_member(multiset1):
@@ -145,14 +148,16 @@ class Algebra:
             return _make_or_raise_undef(2)
         return multiset1
 
-    # --------------------------------------------------------------------------------------------------
+    # ----------------------------------------------------------------------------------------------
     # Algebra relations.
+
     @staticmethod
     def is_subset_of(multiset1: 'P( M x N )', multiset2: 'P( M x N )', _checked=True) -> bool:
-        """Return whether ``multiset1`` is a :term:`subset` of ``multiset2``.
+        """Return whether ``multiset1`` is a submultiset of ``multiset2``.
 
-        :return: ``True`` if ``multiset1`` is a subset of ``multiset2``, ``False`` if not. Return
-            `Undef()` if ``multiset1`` or ``multiset2`` are not instances of :class:`~.Multiset`.
+        :return: ``True`` if ``multiset1`` is a :term:`submultiset` of ``multiset2``, ``False`` if
+            not. Return `Undef()` if ``multiset1`` or ``multiset2`` are not instances of
+            :class:`~.Multiset`.
         """
         if _checked:
             if not is_member(multiset1):
@@ -169,12 +174,11 @@ class Algebra:
 
     @staticmethod
     def is_superset_of(multiset1: 'P( M x N )', multiset2: 'P( M x N )', _checked=True) -> bool:
-        """Return whether ``multiset1`` is a :term:`superset` of ``multiset2``.
+        """Return whether ``multiset1`` is a supermultiset of ``multiset2``.
 
-        :return: ``True`` if ``multiset1`` is a superset of ``multiset2``, ``False`` if not. Return
-            `Undef()` if ``multiset1`` or ``multiset2`` are not instances of :class:`~.Multiset`.
-
-        .. note:: Reasonably up to date up to here. I haven't yet worked on the rest.
+        :return: ``True`` if ``multiset1`` is a :term:`supermultiset` of ``multiset2``, ``False``
+            if not. Return `Undef()` if ``multiset1`` or ``multiset2`` are not instances of
+            :class:`~.Multiset`.
         """
         if _checked:
             if not is_member(multiset1):
@@ -190,13 +194,24 @@ class Algebra:
         return True
 
 
+# For convenience, make the members of class Algebra (they are all static functions) available at
+# the module level.
+
+#: Convenience redirection to `Algebra.union`.
 union = Algebra.union
+#: Convenience redirection to `Algebra.intersect`.
 intersect = Algebra.intersect
+#: Convenience redirection to `Algebra.minus`.
 minus = Algebra.minus
+#: Convenience redirection to `Algebra.addition`.
 addition = Algebra.addition
+#: Convenience redirection to `Algebra.substrict`.
 substrict = Algebra.substrict
+#: Convenience redirection to `Algebra.superstrict`.
 superstrict = Algebra.superstrict
+#: Convenience redirection to `Algebra.is_subset_of`.
 is_subset_of = Algebra.is_subset_of
+#: Convenience redirection to `Algebra.is_superset_of`.
 is_superset_of = Algebra.is_superset_of
 
 
@@ -220,18 +235,18 @@ def get_absolute_ground_set() -> _structure.Structure:
 
 
 def is_member(obj: _mo.MathObject) -> bool:
-    """Return ``True`` if ``obj`` is a member of the :term:`ground set` of this :term:`algebra`.
+    """Return whether ``obj`` is a member of the :term:`ground set` of this :term:`algebra`.
 
-     :return: ``True`` if ``obj`` is an instance of :class:`~.Multiset`.
+     :return: ``True`` if ``obj`` is an instance of :class:`~.Multiset`, ``False`` if not.
      """
     _mo.raise_if_not_mathobject(obj)
     return isinstance(obj, _mo.Multiset)
 
 
 def is_absolute_member(obj: _mo.MathObject) -> bool:
-    """Return ``True`` if ``obj`` is a member of the :term:`absolute ground set` of this algebra.
+    """Return whether ``obj`` is a member of the :term:`absolute ground set` of this algebra.
 
-     :return: ``True`` if ``obj`` is an :term:`absolute set`.
+     :return: ``True`` if ``obj`` is an :term:`absolute set`, ``False`` if not.
 
     .. note:: This function calls :meth:`~.MathObject.get_ground_set` on ``obj``."""
     _mo.raise_if_not_mathobject(obj)
@@ -240,7 +255,9 @@ def is_absolute_member(obj: _mo.MathObject) -> bool:
 
 # --------------------------------------------------------------------------------------------------
 # Related operations, not formally part of the algebra.
+
 def demultify(multiset: 'P( M x N )', _checked=True) -> 'P( M )':
+    """Return a :term:`set` based on ``multiset`` that contains all elements without multiples."""
     if _checked:
         if not is_member(multiset):
             return _make_or_raise_undef()
@@ -249,50 +266,39 @@ def demultify(multiset: 'P( M x N )', _checked=True) -> 'P( M )':
     return _mo.Set(multiset.data.keys(), direct_load=True)
 
 
-def big_union(multiset: 'PP( M x N )', _checked=True) -> 'P( M x N )':
-    """Return the :term:`union` of all members of ``multiset``.
+def big_union(set_of_multisets: 'PP( M x N )', _checked=True) -> 'P( M x N )':
+    """Return the set_of_multisets union of all members of ``set_of_multisets``.
 
-    :return: The :term:`union` of all members of ``multiset`` or `Undef()` if ``multiset`` or any of
-        its members are not instances of :class:`~.Multiset`.
+    :return: The :term:`multiset union` of all members of ``set_of_multisets`` or `Undef()` if
+        ``set_of_multisets`` is not a :class:`~.Set` or any of its members are not instances of
+        :class:`~.Multiset`.
     """
     if _checked:
-        if not isinstance(multiset, _mo.Set):
+        if not isinstance(set_of_multisets, _mo.Set):
             return _make_or_raise_undef()
-        for element in multiset:
+        for element in set_of_multisets:
             if not is_member(element):
                 return _make_or_raise_undef()
     else:
-        assert isinstance(multiset, _mo.Set)
-    return _extend_binary_operation(multiset, partial(union, _checked=False))
+        assert isinstance(set_of_multisets, _mo.Set)
+    return _sets.chain_binary_operation(
+        set_of_multisets, _functools.partial(union, _checked=False), is_member)
 
 
-def big_intersect(multisets: 'PP( M x N )', _checked=True) -> 'P( M x N )':
-    """Return the :term:`intersection` of all members of ``multiset``.
+def big_intersect(set_of_multisets: 'PP( M x N )', _checked=True) -> 'P( M x N )':
+    """Return the multiset intersection of all members of ``multiset``.
 
-    :return: The :term:`intersection` of all members of ``multiset`` or `Undef()` if ``multiset`` or
-        any of its members are not instances of :class:`~.Multiset`.
+    :return: The :term:`multiset intersection` of all members of ``set_of_multisets`` or `Undef()`
+        if ``set_of_multisets`` is not a :class:`~.Set` or any of its members are not instances of
+        :class:`~.Multiset`.
     """
     if _checked:
-        if not isinstance(multisets, _mo.Set):
+        if not isinstance(set_of_multisets, _mo.Set):
             return _make_or_raise_undef()
-        for element in multisets:
+        for element in set_of_multisets:
             if not is_member(element):
                 return _make_or_raise_undef()
     else:
-        assert isinstance(multisets, _mo.Set)
-    return _extend_binary_operation(multisets, partial(intersect, _checked=False))
-
-
-def _extend_binary_operation(multiset: 'PP( M x N )', binary_op):
-    """Extend a binary operation ``binary_op`` and apply it to all members of ``multiset`` inside
-    this ``set``."""
-    if multiset.is_empty:
-        return multiset
-    elem_itr = iter(multiset)
-    element = next(elem_itr)
-    assert is_member(element)
-    result = element
-    for element in elem_itr:
-        assert is_member(element)
-        result = binary_op(result, element)
-    return result
+        assert isinstance(set_of_multisets, _mo.Set)
+    return _sets.chain_binary_operation(
+        set_of_multisets, _functools.partial(intersect, _checked=False), is_member)

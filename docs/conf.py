@@ -11,8 +11,8 @@ shown in comments.
 See also `The build configuration file <http://sphinx-doc.org/config.html>`_.
 """
 
-# $Id: conf.py 22619 2015-07-15 19:31:06Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 14:31:06 -0500 (Wed, 15 Jul 2015) $
+# $Id: conf.py 22698 2015-07-28 17:09:23Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 12:09:23 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -34,6 +34,7 @@ import sys
 
 # Information about the project.
 project = 'Algebraix Technology Core Library'
+# noinspection PyShadowingBuiltins
 copyright = '2015, Algebraix Data Corporation'
 author = "Algebraix Data Corporation"
 
@@ -112,7 +113,7 @@ def skip_member(app, what, name, obj, skip, options):
         '__new__',
         '__str__', '__repr__',
         '__hash__', '__eq__', '__ne__', '__le__',
-        '__contains__'
+        '__contains__', '__call__', '__getitem__'
     ]
     if name in include_methods:
         return False

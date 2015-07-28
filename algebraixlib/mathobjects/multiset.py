@@ -1,7 +1,7 @@
-"""A math object that represents a Multiset."""
+"""Provide the class :class:`~.Multiset`; it represents a :term:`multiset`."""
 
-# $Id: multiset.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: multiset.py 22702 2015-07-28 20:20:56Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -20,13 +20,14 @@ import types as _types
 
 import algebraixlib.structure as _structure
 import algebraixlib.undef as _ud
-from algebraixlib.util.miscellaneous import get_hash as _get_hash
-from algebraixlib.util.miscellaneous import get_single_iter_elem as _get_single_iter_elem
+import algebraixlib.util.miscellaneous as _misc
 
 from algebraixlib.mathobjects.atom import auto_convert
 from algebraixlib.mathobjects.couplet import Couplet
 from algebraixlib.mathobjects.mathobject import MathObject, raise_if_not_mathobject
 
+
+# On-demand import 'statements' that avoid problems with circular imports.
 
 def _multisets():
     _multisets.algebra = getattr(_multisets, 'algebra', None)
@@ -36,22 +37,24 @@ def _multisets():
     return _multisets.algebra
 
 
+# --------------------------------------------------------------------------------------------------
+
 class Multiset(MathObject):
     """A :term:`multiset` consisting of zero or more different `MathObject` instances."""
 
     def __init__(self, *args, direct_load=False):
-        """Construct a :class:`Multiset` from a single `MathObject` or value or an iterable collection of
-         such.
-
-        :param args: Zero or more unnamed arguments that are placed into the created Multiset.
-        :param direct_load: Flag they allows bypassing the normal auto-converting of elements.
-            The elements must all be instances of `MathObject`.
-
-        The prefered argument type will be a dictionary whose keys are mapped to positive
-        integers.  The keys will be auto-converted based on the direct_load parameter.
-
-        .. note:: A string is an iterable, so an explicit conversion to an :class:`~.Atom` (or
-            wrapping it into brackets or braces) is required for multi-character strings.
+        """
+        :param args: Zero or more unnamed arguments that are placed into the created ``Multiset``.
+            If you want to pass in an iterable, you need to prefix it with an asterisk ``*``. If
+            no argument is given or the given iterable is empty, an empty :term:`multiset` is
+            created. (A Python string of type ``str`` is an iterable, but it is considered a
+            single, non-iterable argument.) Arguments of type :class:`~collections.Counter` are
+            loaded directly, and arguments of type `dict` must map values or instances of
+            `MathObject` to integers; the integers are interpreted as multiplicity values for the
+            given keys. (In order to create a ``Multiset`` that contains a ``Counter`` or `dict`,
+            put the ``Counter`` or `dict` in an :class:`~.Atom` or an array first.)
+        :param direct_load: (Optional) Set to ``True`` if you know that all arguments (or all
+            elements of the iterable) are instances of `MathObject`.
         """
         super().__init__()
         elements = args[0] if len(args) == 1 else args
@@ -70,10 +73,11 @@ class Multiset(MathObject):
                     assert isinstance(elements[key], int) and elements[key] > 0
                     self._data[auto_convert(key)] = elements[key]
         elif isinstance(elements, str):
-            # Strings are iterable, but that is undesired behaviour in this instance
+            # Strings are iterable, but we treat them as a single value in this case.
             self._data = _collections.Counter({auto_convert(elements): 1})
         elif isinstance(elements, _collections.Iterable) and not isinstance(elements, MathObject):
-            # An Iterable (that is not a Multiset) as argument: create a Multiset with all elements.
+            # An Iterable (that is not a Multiset, Counter or dict) as argument: create a Multiset
+            # with all elements.
             if direct_load:
                 self._data = _collections.Counter(elements)
             else:
@@ -85,6 +89,13 @@ class Multiset(MathObject):
             else:
                 self._data = _collections.Counter({auto_convert(elements): 1})
         self._hash = 0
+        self._flags._not_relation = True
+        self._flags._not_clan = True
+        if self.is_empty:
+            self._flags._multiclan = True
+
+    # ----------------------------------------------------------------------------------------------
+    # Characteristics of the instance.
 
     @property
     def data(self) -> _collections.Counter:
@@ -93,25 +104,18 @@ class Multiset(MathObject):
         """
         return self._data
 
-    def is_left_regular(self) -> bool:
-        """Return ``True`` if this :class:`Multiset` is left-regular. Return `Undef` if not
-        applicable."""
-        tmp_clan = _multisets().demultify(self)
-
-        return tmp_clan.is_left_regular()
-
     @property
     def cardinality(self) -> int:
-        """Read-only; return the number of elements in the ``Multiset``."""
+        """Read-only; return the number of elements in the :term:`multiset`."""
         return sum(self._data.values())
 
     @property
     def is_empty(self) -> bool:
-        """Return ``True`` if this ``Multiset`` is empty."""
+        """Return ``True`` if this :term:`multiset` is empty."""
         return not self._data
 
     def has_element(self, elem: MathObject) -> bool:
-        """Return ``True`` if ``elem`` is an element of this ``Multiset``. ``elem`` must be a `MathObject`.
+        """Return whether ``elem`` is an element of this multiset. ``elem`` must be a `MathObject`.
 
         For a more relaxed version (that auto-converts non-`MathObject` arguments into instances of
         :class:`~.Atom`) see `__contains__` and the construct ``elem in Multiset``.
@@ -127,29 +131,25 @@ class Multiset(MathObject):
         return self.data[elem]
 
     def get_ground_set(self) -> _structure.Structure:
-        """Return the ground Multiset of the lowest-level algebra of this :class:`Multiset`."""
+        """Return the :term:`ground set` of the lowest-level algebra of this :class:`Multiset`."""
         if len(self.data) == 0:
             return _structure.Structure()
 
         elements_ground_set = _structure.Union(elem.get_ground_set() for elem in self.data)
         if len(elements_ground_set.data) == 1:
             return _structure.PowerSet(_structure.CartesianProduct(
-                _get_single_iter_elem(elements_ground_set.data), _structure.GenesisSetN()))
+                _misc.get_single_iter_elem(elements_ground_set.data), _structure.GenesisSetN()))
         else:
             return _structure.PowerSet(_structure.CartesianProduct(
                 elements_ground_set, _structure.GenesisSetN()))
 
-    def get_repr(self) -> str:
-        """Return the instance's code representation."""
-        return 'Multiset({{{0}}})'.format(', '.join(
-            repr(key) + ': ' + repr(value) for key, value in sorted(self.data.items())))
-
-    def get_str(self) -> str:
-        """Return the instance's string representation."""
-        return '[{elems}]'.format(elems=', '.join(
-            str(key) + ':' + str(value) for key, value in sorted(self._data.items())))
+    def is_regular(self) -> bool:
+        """Return whether ``self`` is :term:`regular`. Return `Undef()` if not applicable."""
+        tmp_clan = _multisets().demultify(self)
+        return tmp_clan.is_regular()
 
     # ----------------------------------------------------------------------------------------------
+    # (Python-)Special functions.
 
     def __eq__(self, other):
         """Implement value-based equality. Return ``True`` if type and data match."""
@@ -164,27 +164,49 @@ class Multiset(MathObject):
         return not isinstance(other, Multiset) or (repr(self) < repr(other))
 
     def __contains__(self, item):
-        """Return ``True`` if ``item`` is a member of this Multiset. If ``item`` is not a `MathObject`,
-        it is converted into an :class:`~.Atom`.
+        """Return ``True`` if ``item`` is a member of this multiset. If ``item`` is not a
+        `MathObject`, it is converted into an :class:`~.Atom`.
 
         This allows Boolean expressions of the form ``element in Multiset``.
         """
         return auto_convert(item) in self.data
 
     def __iter__(self):
-        """Iterate over the elements of this instance in no particular order."""
+        """Iterate over the elements of this instance in no particular order. Elements are iterated
+        over according to their multiplicities."""
         for value in sorted(self._data.elements()):
             yield value
 
     def __len__(self):
-        """Return the cardinality of this Multiset.
-
-        Note that the length includes the multiplicities of the elements.  This is to keep the
-        length consistent with how iteration works.
-        """
+        """Return the cardinality of this multiset, considering multiplicities."""
         return sum(self._data.values())
 
+    def __hash__(self):
+        """Return a hash based on the value that is calculated on demand and cached."""
+        if not self._hash:
+            counter_parts = self.data.items()
+            multiset_parts = ['algebraixlib.mathobjects.multiset.Multiset']
+            # noinspection PyTypeChecker
+            multiset_parts.extend(counter_parts)
+            self._hash = _misc.get_hash(*multiset_parts)
+        return self._hash
+
+    def __repr__(self):
+        """Return the instance's code representation."""
+        return 'Multiset({{{0}}})'.format(', '.join(
+            repr(key) + ': ' + repr(value) for key, value in sorted(self.data.items())))
+
+    def __str__(self):
+        """Return the instance's string representation."""
+        return '[{elems}]'.format(elems=', '.join(
+            str(key) + ':' + str(value) for key, value in sorted(self._data.items())))
+
+    # __getitem__ mechanism for indexing syntax `mo[left]`. ----------------------------------------
+
     def _getitem(self, left):
+        """The initial function assigned to ``_getitem_redirect``. Determine whether ``self`` is a
+        multirelation, set ``_getitem_redirect`` accordingly and return the appropriate
+        result."""
         def is_multirelation():
             for elem in self.data.keys():
                 if not isinstance(elem, Couplet):
@@ -195,60 +217,47 @@ class Multiset(MathObject):
         if is_multirelation():
             self._getitem_redirect = _types.MethodType(Multiset._getitem_multirelation, self)
         else:
-            self._getitem_redirect = _types.MethodType(Multiset._getitem_not_multirelation, self)
+            self._getitem_redirect = _types.MethodType(Multiset._getitem_undef, self)
         return self._getitem_redirect(left)
 
     def _getitem_multirelation(self, left):
+        """Return a multiset with the rights of all the couplets that have a left of ``left``."""
         left_mo = auto_convert(left)
 
-        def _sum_same_left_relations(left_mo):
+        def _sum_same_left_relations(left_mo_):
             return_count = _collections.Counter()
             for elem, multi in self.data.items():
-                if elem.left == left_mo:
+                if elem.left == left_mo_:
                     return_count[elem.right] = multi
-
             return return_count
 
         return Multiset(_sum_same_left_relations(left_mo), direct_load=True)
 
     # noinspection PyMethodMayBeStatic,PyUnusedLocal
-    def _getitem_not_multirelation(self, left):
+    def _getitem_undef(self, left):
+        """Return ``Undef()``. Used for ``self``s that are neither relations nor clans."""
         return _ud.Undef()
 
+    #: The private member that stores the currently active function. This is used to cache the
+    #: information whether ``self`` is a multirelation or not.
     _getitem_redirect = _getitem
 
     def __getitem__(self, left):
-        """With the syntax ``mo[left]``, return a set of rights associated with ``left``.
+        r"""With the syntax ``mo[left]``, return a set of rights associated with ``left``.
 
-        :param left: The :term:`left` of the :term:`couplet`\(s) of which the
-            :term:`right`\(s) are returned.
-        :return: If ``self`` is a :term:`relation`, return a :term:`set` that contains the
-            right(s) of the couplet(s) that have a left that matches ``left``. (This set may
-            be empty if no couplet with the given left exists.) Return `Undef()` if ``self`` is not
-            a relation.
+        :param left: The :term:`left component` of the :term:`couplet`\(s) of which the
+            :term:`right component`\(s) are returned.
+        :return: If ``self`` is a multi-relation, return a :term:`multiset` that contains the
+            right(s) of the :term:`couplet`\(s) that have a left component that matches ``left``.
+            (The returned multiset may be empty if no couplet with the given left exists.)
+            Return `Undef()` if ``self`` is not a multi-relation.
         """
         return self._getitem_redirect(left)
 
-    def __hash__(self):
-        """Return a hash based on the value that is calculated on demand and cached."""
-        if not self._hash:
-            counter_parts = self.data.items()
-            multiset_parts = ['algebraixlib.mathobjects.multiset.Multiset']
-            # noinspection PyTypeChecker
-            multiset_parts.extend(counter_parts)
-            self._hash = _get_hash(*multiset_parts)
-        return self._hash
-
-    def __repr__(self):
-        """Return the instance's code representation."""
-        return self.get_repr()
-
-    __str = None
-
-    def __str__(self):
-        """Return the instance's string representation."""
-        return self.get_str()
+    # ----------------------------------------------------------------------------------------------
+    # Overrides for property cache setters that are defined in base class MathObject.
 
     def cache_is_multiclan(self, value: bool):
+        """Cache whether ``self`` is or is not a :term:`multiclan`. See [PropCache]_."""
         self._flags.multiclan = value
         return self

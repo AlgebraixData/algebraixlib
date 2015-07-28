@@ -1,7 +1,7 @@
 """Import a `MathObject` from and export it to a custom JSON format that allows a round-trip."""
 
-# $Id: mojson.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: mojson.py 22700 2015-07-28 19:01:00Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 14:01:00 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -15,13 +15,17 @@
 # You should have received a copy of the GNU Lesser General Public License along with algebraixlib.
 # If not, see <http://www.gnu.org/licenses/>.
 # --------------------------------------------------------------------------------------------------
-import json
+import json as _json
+import json.decoder as _jsondecoder
 
 import algebraixlib.mathobjects as _mo
 
 
-class ExportJson(json.JSONEncoder):
-    """Custom json encoder. Manages encoding math objects and supported built in data types."""
+class ExportJson(_json.JSONEncoder):
+    """Export a `MathObject` as a custom JSON format that allows a round-trip.
+
+    .. note:: :class:`~.Multiset` is currently not supported.
+    """
 
     @staticmethod
     def _get_type_name(o):
@@ -31,10 +35,11 @@ class ExportJson(json.JSONEncoder):
 
     @staticmethod
     def _encode_object(o):
-        """Return a json string of a math object or supported built in data type."""
+        """Return a JSON string of a `MathObject` or a supported built-in data type."""
 
-        assert(isinstance(o, (bool, int, float, str, complex, bytes, range, frozenset, tuple,
-            _mo.Atom, _mo.Couplet, _mo.Set)) or o is None)
+        assert isinstance(
+            o, (bool, int, float, str, complex, bytes, range, frozenset, tuple, _mo.Atom,
+                _mo.Couplet, _mo.Set)) or o is None
 
         if isinstance(o, (bool, int, float, str)) or o is None:
             return o
@@ -54,26 +59,29 @@ class ExportJson(json.JSONEncoder):
                                 'left': ExportJson._encode_object(o.left)}}
 
     def default(self, o):
+        """Convert ``o`` into JSON and return the JSON string."""
         if isinstance(o, (_mo.Atom, _mo.Couplet, _mo.Set)):
             return ExportJson._encode_object(o)
+        raise TypeError('Invalid MathObject {} provided to encoder. Expected Atom, Couplet or Set.'
+                        .format(str(type(o))))
 
-        raise TypeError("Invalid math object, " + str(type(o)) +
-                        ", provided to encoder. Expected Atom, Couplet or Set")
 
-
-class ImportJson(json.JSONDecoder):
-    """Custom json decoder. Manages decoding json into math objects and hashable data types."""
+class ImportJson(_json.JSONDecoder):
+    """Import the JSON format created by `ExportJson` and create a `MathObject` from it."""
 
     @staticmethod
     def _is_math_object_text(s):
+        """Return ``True`` if ``s`` is a string that is the type of a supported `MathObject`."""
         return 'Atom' or 'Couplet' or 'Set' in s
 
     @staticmethod
     def _decode_object(o):
-        """Return a math object or hashable data type decoded from a json string or raise TypeError
-        for unknown type."""
+        """Return a `MathObject` or a hashable type decoded from the JSON string in ``o``.
 
-        # Only json object, array and value types should make it here which are all handled so
+        :raise: `TypeError` for unknown type.
+        """
+
+        # Only JSON object, array and value types should make it here which are all handled so
         # there's no need for additional type checking.
         if isinstance(o, (bool, int, float, str)) or o is None:
             return o
@@ -110,11 +118,9 @@ class ImportJson(json.JSONDecoder):
                 else:
                     raise TypeError("Invalid key, " + key + ", provided to decoder.")
 
-    from json.decoder import WHITESPACE
-
-    def decode(self, s, _w=WHITESPACE.match):
-        # Use JSONDecoder to decode the json document into Python objects that we can then decode
-        # into math objects.
+    def decode(self, s, _w=_jsondecoder.WHITESPACE.match):
+        # Use JSONDecoder to decode the JSON document into Python objects that we can then decode
+        # into MathObject instances.
         decoded = super().decode(s, _w)
 
         if isinstance(decoded, dict):
@@ -127,5 +133,5 @@ class ImportJson(json.JSONDecoder):
             if ImportJson._is_math_object_text(decoded):
                 return ImportJson._decode_object(decoded)
 
-        raise TypeError("Invalid object, " + str(type(decoded)) +
-                        ", provided to decoder. Expected Atom, Couplet or Set")
+        raise TypeError('Invalid object {} provided to decoder. Expected Atom, Couplet or Set.'
+                        .format(str(type(decoded))))

@@ -1,7 +1,7 @@
 """Examples for Data Algebra library."""
 
-# $Id: simple_pattern_match.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: simple_pattern_match.py 22698 2015-07-28 17:09:23Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 12:09:23 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -32,7 +32,7 @@ show_results_as_webpage = True
 
 
 # Import and print the input graph.
-graph_algebra = import_graph(input_file=io.StringIO(sample_graph), rdf_format='turtle')
+graph_algebra = import_graph(io.StringIO(sample_graph), rdf_format='turtle')
 if print_examples:
     print('Input graph:', sample_graph)
     print('Input graph (as MathObject):', graph_algebra)
@@ -49,7 +49,7 @@ engineers = match_and_project(
     {'p': rdflib.URIRef('rdf:type'), 'o': rdflib.URIRef('cat:engineer')},
     {'s': '?eng'}
 )
-engs_and_names = clans.functional_cross_union(names, engineers)
+engs_and_names = clans.cross_functional_union(names, engineers)
 
 if print_examples:
     print('Engineers and their names:', engs_and_names)

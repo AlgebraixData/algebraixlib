@@ -1,7 +1,22 @@
-"""This package contains modules with facilities for importing and exporting data."""
+r"""This package contains modules with facilities for importing and exporting data.
 
-# $Id: __init__.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+Supported formats are:
+
+-   :mod:`~.csv`: Export :term:`regular` :term:`clan`\s as CSV data and import CSV data into clans.
+-   :mod:`~.json`: Import hierarchical JSON data into nested :term:`relation`\s.
+-   :mod:`~.mojson`: Export any `MathObject` to JSON and import that data. This format is
+    guaranteed to round-trip.
+-   :mod:`~.rdf`: Import RDF graphs in the formats N-Triples and Turtle. Export tabular results as
+    RDF-CSV and RDF-JSON.
+-   :mod:`~.xml`: Import hierarchical XML data into nested :term:`relation`\s.
+
+All these import/export facilities are not meant to be full, standard-compliant implementations.
+They are rather examples for how these formats can be represented in and converted to data algebra,
+missing details and features notwithstanding.
+"""
+
+# $Id: __init__.py 22701 2015-07-28 19:02:38Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 14:02:38 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

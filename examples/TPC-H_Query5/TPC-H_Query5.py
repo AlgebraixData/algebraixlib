@@ -8,8 +8,8 @@ For the code that we used to create the modified data, see the file format_conve
 same directory.
 """
 
-# $Id: TPC-H_Query5.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: TPC-H_Query5.py 22653 2015-07-23 16:33:00Z mhaque $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-23 11:33:00 -0500 (Thu, 23 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -70,7 +70,7 @@ def get_customers_nations_projected(nations):
     customers = csv.import_csv('customer.csv', customer_types)
     timer.lap('customers', short=short_prints)
 
-    customers_nations = clans.functional_cross_union(customers, nations)
+    customers_nations = clans.cross_functional_union(customers, nations)
     timer.lap('customers_nations', short=short_prints)
 
     customers_nations_projected = clans.project(customers_nations,
@@ -153,7 +153,7 @@ def get_supplier_solutions():
 
     # Join the previous results on 'supplier' and project the columns we need.
     supplier_solutions = clans.project(
-        clans.functional_cross_union(bgp_suppkey, bgp_nationkey), 'nationkey', 'suppkey')
+        clans.cross_functional_union(bgp_suppkey, bgp_nationkey), 'nationkey', 'suppkey')
     timer.end('supplier_solutions', short=short_prints)
 
     return supplier_solutions
@@ -219,12 +219,12 @@ def query5():
     short_prints = True
 
     # Join supplier_solutions and customers_nations_projected on 'nationkey'.
-    result1 = clans.functional_cross_union(
+    result1 = clans.cross_functional_union(
         get_supplier_solutions(), get_customers_nations_projected(get_nations(region_name)))
     timer.lap('result1', short=short_prints)
 
     # Join result1 with orders_restricted_projected on 'custkey'.
-    result2 = clans.functional_cross_union(
+    result2 = clans.cross_functional_union(
         result1, get_orders_restricted_projected(start_date, end_date))
     timer.lap('result2', short=short_prints)
 
@@ -233,7 +233,7 @@ def query5():
         'orderkey': int, 'suppkey': int, 'extendedprice': float, 'discount': float,
         'partkey': int, 'linenumber': int, 'quantity': int, 'tax': float,
     }
-    result3 = clans.functional_cross_union(result2, csv.import_csv('lineitem.csv', lineitem_types))
+    result3 = clans.cross_functional_union(result2, csv.import_csv('lineitem.csv', lineitem_types))
     timer.lap('result3', short=short_prints)
 
     # Add the 'revenue' column.

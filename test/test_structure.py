@@ -1,7 +1,7 @@
 """Test the structure module."""
 
-# $Id: test_structure.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: test_structure.py 22698 2015-07-28 17:09:23Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 12:09:23 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -20,7 +20,8 @@ import os
 import unittest
 
 from data_structures import empties, setas, setms, setns, basic_cps, basic_unions, basic_pss
-from algebraixlib.structure import CartesianProduct, GenesisSetA, GenesisSetM, GenesisSetN, PowerSet, Structure, Union
+from algebraixlib.structure import CartesianProduct, GenesisSetA, GenesisSetM, GenesisSetN, \
+    PowerSet, Structure, Union
 
 
 class StructureTest(unittest.TestCase):
@@ -120,7 +121,8 @@ class StructureTest(unittest.TestCase):
         self.assertEqual('M', Union([GenesisSetM()]).__str__())
         self.assertEqual('(M U N)', Union([GenesisSetM(), GenesisSetN()]).__str__())
         self.assertEqual('Union([GenesisSetM()])', Union([GenesisSetM()]).__repr__())
-        self.assertEqual('Union([GenesisSetM(), GenesisSetN()])', Union([GenesisSetM(), GenesisSetN()]).__repr__())
+        self.assertEqual('Union([GenesisSetM(), GenesisSetN()])',
+            Union([GenesisSetM(), GenesisSetN()]).__repr__())
 
     def test_PowerSet(self):
         """Basic properties and subset relationships of the power set."""

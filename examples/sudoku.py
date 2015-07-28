@@ -1,8 +1,8 @@
 """An example data algebra script.  Naively solve a Sudoku game using techniques a person would
 likely use.  This is a teaching exercise, not an attempt at writing the fastest solver possible."""
 
-# $Id: sudoku.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: sudoku.py 22698 2015-07-28 17:09:23Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 12:09:23 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -20,7 +20,7 @@ import time
 from functools import partial
 import itertools
 
-from algebraixlib.mathobjects import Couplet, Set
+from algebraixlib.mathobjects import Atom, Couplet, Set
 import algebraixlib.algebras.relations as relations
 import algebraixlib.algebras.clans as clans
 import algebraixlib.algebras.sets as sets
@@ -35,15 +35,15 @@ verbose = False
 BLOCK_SIZE = 3
 GRID_SIZE = BLOCK_SIZE*BLOCK_SIZE
 BLOCK_VALUES_CLAN = Set(Set(Couplet('value', i)
-                            ).cache_is_relation(True).cache_is_left_functional(True)
-                        for i in range(1, GRID_SIZE+1)
-                        ).cache_is_clan(True).cache_is_left_functional(True)
+                            ).cache_is_relation(True).cache_is_functional(True)
+                        for i in range(
+    1, GRID_SIZE+1)).cache_is_clan(True).cache_is_functional(True).cache_is_regular(True)
 BANDS_STACKS = Set((relations.from_dict({'row': r, 'col': c,
                                          'band': int((r-1) / BLOCK_SIZE)+1,
                                          'stack': int((c-1) / BLOCK_SIZE)+1})
                     for r, c in itertools.product(list(range(1, GRID_SIZE+1)),
                                                   list(range(1, GRID_SIZE+1))))
-                   ).cache_is_clan(True).cache_is_left_functional(True)
+                   ).cache_is_clan(True).cache_is_functional(True).cache_is_regular(True)
 
 
 def _sorted(iterable, key=None):
@@ -72,7 +72,7 @@ def make_board(_puzzle):
         if value != 0:
             cell['value'] = value
         board.add(relations.from_dict(cell))
-    return Set(board, direct_load=True).cache_is_clan(True).cache_is_left_functional(True)
+    return Set(board, direct_load=True).cache_is_clan(True).cache_is_functional(True)
 
 
 def print_string(board):
@@ -111,7 +111,7 @@ def get_string(board):
 
 
 def get_filled_cells(board):
-    return clans.defined_at(board, 'value')
+    return clans.defined_at(board, Atom('value'), _checked=False)
 
 
 def project(clan: 'PP(M x M)', *lefts) -> 'PP(M x M)':
@@ -149,8 +149,11 @@ def get_new_board(board, new_cells):
     old_cells = clans.superstrict(board, cell_filter)
     new_board = sets.minus(board, old_cells)
 
-    bands_stacks = clans.superstrict(BANDS_STACKS, cell_filter)
-    new_cells = clans.functional_cross_union(new_cells, bands_stacks)
+    t = new_cells['band']
+    if not t:
+        # print("missing band")
+        bands_stacks = clans.superstrict(BANDS_STACKS, cell_filter)
+        new_cells = clans.cross_functional_union(new_cells, bands_stacks)
 
     new_board = sets.union(new_board, new_cells)
     # if verbose:
@@ -186,7 +189,7 @@ def check_values(_board):
     return _board
 
 
-def check_rows(_board):
+def check_rows(_board, try_harder=0):
     """Look for rows where there is only one missing value.  If any are found fill in the missing
     value.  Look for rows where there are two missing values.  If either missing value is blocked
     by the same value in the candidate row, col, or block then the other value can be placed in
@@ -208,6 +211,7 @@ def check_rows(_board):
             row_col = sets.minus(board_row, row_clan)
             new_cells = clans.cross_union(row_col, values_clan)
             _board = get_new_board(_board, new_cells)
+            try_harder = 0
             continue
 
         # Get the set of candidate col/value pairs
@@ -228,6 +232,7 @@ def check_rows(_board):
                     # Of the 4 possibilities (2 values * 2 cols), 2 were removed, place remaining
                     new_cells = clans.cross_union(row, new_possible)
                     _board = get_new_board(_board, new_cells)
+                    try_harder = 0
                     continue
 
                 # 3 of the possibilities remain...
@@ -244,6 +249,7 @@ def check_rows(_board):
                 new_cells = clans.cross_union(row, col_value1)
                 new_cells = sets.union(new_cells, clans.cross_union(row, col_value2))
                 _board = get_new_board(_board, new_cells)
+                try_harder = 0
                 continue
 
         # The occupied_clan is the row/col/value set that could be a conflict for values
@@ -274,7 +280,7 @@ def check_rows(_board):
 
         # Add band/stack
         new_targets = clans.superstrict(BANDS_STACKS, project(new_possible, 'row', 'col'))
-        new_possible3 = clans.functional_cross_union(new_targets, new_possible)
+        new_possible3 = clans.cross_functional_union(new_targets, new_possible)
         occupied_clan2 = occupied_clan
 
         # Remove block (band+stack) conflicts
@@ -282,32 +288,57 @@ def check_rows(_board):
                                     project(occupied_clan2, 'value', 'band', 'stack'))
         new_possible4 = clans.superstrict(new_possible3, new_possible4a)
 
-        # Partition by row/col
-        placed = 0
-        candidates = partition.partition(new_possible4, partial(by_keys, 'row', 'col'))
-        for candidate in _sort(candidates, key=partial(by_clan_key, 'col')):
-            # If any row/col has only 1 candidate, place it
-            if candidate.cardinality == 1:
-                # Remove band/stack
-                cell = project(candidate, 'row', 'col', 'value')
-                _board = get_new_board(_board, cell)
-                placed += 1
+        while True:
+            candidates_updated = False
+            # Partition by row/col
+            placed = 0
+            candidates = partition.partition(new_possible4, partial(by_keys, 'row', 'col'))
+            for candidate in _sort(candidates, key=partial(by_clan_key, 'col')):
+                # If any row/col has only 1 candidate, place it
+                if candidate.cardinality == 1:
+                    # Remove band/stack
+                    _board = get_new_board(_board, candidate)
+                    try_harder = 0
+                    placed += 1
+            if placed:
+                break
 
-        if placed:
-            continue
+            # Partition by value
+            candidates = partition.partition(new_possible4, partial(by_key, 'value'))
+            for candidate in _sort(candidates, key=partial(by_clan_key, 'value')):
+                # If any value fits in only 1 cell, place it
+                if candidate.cardinality == 1:
+                    # Remove band/stack
+                    _board = get_new_board(_board, candidate)
+                    try_harder = 0
+                else:  # If any value must be placed elsewhere, remove as candidate for this cell
+                    if try_harder:
+                        value = project(candidate, 'value')
+                        # If this row of a sibling block must contain this value...
+                        blocks = partition.partition(candidate, partial(by_keys, 'band', 'stack'))
+                        if blocks.cardinality > 1:
+                            for block_clan in _sort(blocks,
+                                                    key=partial(by_clan_keys, 'band', 'stack')):
+                                block = project(block_clan, 'band', 'stack')
+                                board_block = clans.superstrict(board, block)
+                                if board_block.is_empty:
+                                    continue
 
-        # Partition by value
-        candidates = partition.partition(new_possible4, partial(by_key, 'value'))
-        for candidate in _sort(candidates, key=partial(by_clan_key, 'value')):
-            # If any value fits in only 1 cell, place it
-            if candidate.cardinality == 1:
-                # Remove band/stack
-                cell = project(candidate, 'row', 'col', 'value')
-                _board = get_new_board(_board, cell)
+                                new_possible, conflict = get_block_candidates(board_block, board)
+                                new_possible_value = clans.superstrict(new_possible, value)
+
+                                if new_possible_value['row'].cardinality == 1:
+                                    # Value must be placed in this block
+                                    # ...other block candidates can be removed
+                                    remove = sets.minus(candidate, block_clan)
+                                    new_possible4 = sets.minus(new_possible4, remove)
+                                    candidates_updated = True
+            if not candidates_updated or not try_harder:
+                break
     return _board
 
 
-def check_cols(_board):
+def check_cols(_board, try_harder=0):
     """Check the columns the same way rows are checked"""
     if verbose:
         print("* check_cols")
@@ -315,18 +346,51 @@ def check_cols(_board):
     # Rotate the board by swapping row and col then call check_rows
     swaps = clans.from_dict({'row': 'col', 'band': 'stack'})
     rotated = extension.binary_extend(_board, swaps, partial(relations.swap, _checked=False)
-                                     ).cache_is_clan(True).cache_is_left_functional(True)
-    for rel in rotated:
-        rel.cache_is_left_functional(True)
+                                      ).cache_is_clan(True).cache_is_functional(True)
 
-    new_board = check_rows(rotated)
-    if rotated != new_board:
+    new_board = check_rows(rotated, try_harder)
+    if rotated is not new_board:
         _board = extension.binary_extend(new_board, swaps, partial(relations.swap, _checked=False)
-                                         ).cache_is_clan(True).cache_is_left_functional(True)
-        for rel in _board:
-            rel.cache_is_left_functional(True)
-
+                                         ).cache_is_clan(True).cache_is_functional(True)
     return _board
+
+
+def get_block_candidates(block_clan, board):
+    # Get the set of missing values...see if any can be placed due to row/col information
+    values_clan = get_missing_values(block_clan)
+
+    # Get the set of missing values...see if any can be placed due to row/col information
+    target_rowcols = get_missing_rowcols(block_clan)
+
+    if block_clan.cardinality == GRID_SIZE-1:
+        new_cells = clans.cross_union(target_rowcols, values_clan)
+        return new_cells, Set()
+
+    # Need cross union values with rows
+    rows_clan = project(target_rowcols, 'row')
+    cols_clan = project(target_rowcols, 'col')
+    possible_rows_values = clans.cross_union(values_clan, rows_clan)
+    possible_cols_values = clans.cross_union(values_clan, cols_clan)
+
+    possible_rows_cols_values = sets.union(possible_rows_values, possible_cols_values)
+
+    # The occupied_clan is the row/col/value set that is a conflict for values
+    occupied_clan = clans.superstrict(board, possible_rows_cols_values)
+
+    # If there are no conflicts then no cells can be placed
+    if occupied_clan.is_empty:
+        return Set(), Set()
+
+    all_possible = clans.cross_union(values_clan, target_rowcols).cache_is_functional(True)
+
+    # Get the set of conflicts...conflicting row/value + col/value
+    conflict = sets.union(
+        clans.superstrict(all_possible, project(occupied_clan, 'value', 'col')),
+        clans.superstrict(all_possible, project(occupied_clan, 'value', 'row')))
+
+    # Remove the conflicts from all_possible
+    new_possible = sets.minus(all_possible, conflict)
+    return new_possible, conflict
 
 
 def check_blocks(_board):
@@ -337,44 +401,13 @@ def check_blocks(_board):
     board = get_filled_cells(_board)
     blocks = partition.partition(board, partial(by_keys, 'band', 'stack'))
     for block_clan in _sort(blocks, key=partial(by_clan_keys, 'band', 'stack')):
-        # Get the set of missing values...see if any can be placed due to row/col information
-        values_clan = get_missing_values(block_clan)
+        new_possible, conflict = get_block_candidates(block_clan, board)
 
-        # Get the set of missing values...see if any can be placed due to row/col information
-        target_rowcols = get_missing_rowcols(block_clan)
-
-        if block_clan.cardinality == GRID_SIZE-1:
-            new_cells = clans.cross_union(target_rowcols, values_clan)
-            _board = get_new_board(_board, new_cells)
+        if new_possible.is_empty:
             continue
-
-        # Need cross union values with rows
-        rows_clan = project(target_rowcols, 'row')
-        cols_clan = project(target_rowcols, 'col')
-        possible_rows_values = clans.cross_union(values_clan, rows_clan)
-        possible_cols_values = clans.cross_union(values_clan, cols_clan)
-
-        possible_rows_cols_values = sets.union(possible_rows_values, possible_cols_values)
-
-        # The occupied_clan is the row/col/value set that is a conflict for values
-        occupied_clan = project(clans.superstrict(board, possible_rows_cols_values),
-                                'value', 'row', 'col')
-
-        # If there are no conflicts then no cells can be placed
-        if occupied_clan.is_empty:
+        if new_possible.cardinality == 1:
+            _board = get_new_board(_board, new_possible)
             continue
-
-        all_possible = clans.cross_union(values_clan, target_rowcols).cache_is_left_functional(True)
-        for rel in all_possible:
-            rel.cache_is_left_functional(True)
-
-        # Get the set of conflicts...conflicting row/value + col/value
-        conflict = sets.union(
-            clans.superstrict(all_possible, project(occupied_clan, 'value', 'col')),
-            clans.superstrict(all_possible, project(occupied_clan, 'value', 'row')))
-
-        # Remove the conflicts from all_possible
-        new_possible = sets.minus(all_possible, conflict)
 
         if block_clan.cardinality == GRID_SIZE-2:
             # Knowing that the value in conflict can't be placed in the conflict cell
@@ -407,6 +440,7 @@ def check_blocks(_board):
                 # Remove band/stack
                 new_cell = project(candidate, 'row', 'col', 'value')
                 _board = get_new_board(_board, new_cell)
+
     return _board
 
 
@@ -422,16 +456,30 @@ def check_done(_board):
 
 
 def solve_board(board):
+    try_harder = 0
     while not check_done(board):
         board_start = board
         board = check_values(board)
-        board = check_rows(board)
-        board = check_cols(board)
+        board = check_rows(board, try_harder)
+        if board_start is not board:
+            try_harder = 0
+        board = check_cols(board, try_harder)
+        if board_start is not board:
+            try_harder = 0
         board = check_blocks(board)
-        if board_start == board:
-            if verbose:
-                print("*** can't solve")
-            break
+        if board_start is board:
+            if try_harder == 0:
+                if verbose:
+                    print("*** no cells placed..trying harder")
+                try_harder = 1
+            elif try_harder == 1:
+                if verbose:
+                    print("*** can't solve")
+                break
+        else:
+            if try_harder:
+                try_harder = 0
+
     return board
 
 
@@ -548,6 +596,12 @@ class SudokuTest(unittest.TestCase):
             '..4156789123.........23..........................................................',
             check_rows)
 
+        self._test_func(
+            # Place 3 in row 1 col 6 by eliminating block conflicts..
+            '1..92....524.17..9......271.5...81.2...1.2...4127...9..6...9.1...1.36945.4..71.26',
+            '1..923...524.17..9......271.5...81.2...1.2...4127...9..6...9.1...1.36945.4..71.26',
+            partial(check_rows, try_harder=1))
+        
     def test_column(self):
         self._test_func(
             # 1 value missing in column 1, place the 9
@@ -648,6 +702,7 @@ class SudokuTest(unittest.TestCase):
             solve_board)
 
 
+# noinspection PyPackageRequirements
 import nose
 if __name__ == '__main__':
     arguments = [

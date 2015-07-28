@@ -1,7 +1,8 @@
-"""This module contains """
+"""This package-private module contains the class ``Flags`` that is used to cache certain properties
+of ``MathObject``s. This code is internal and transient."""
 
-# $Id: flags.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: _flags.py 22687 2015-07-27 17:43:05Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-27 12:43:05 -0500 (Mon, 27 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -15,21 +16,27 @@
 # You should have received a copy of the GNU Lesser General Public License along with algebraixlib.
 # If not, see <http://www.gnu.org/licenses/>.
 # --------------------------------------------------------------------------------------------------
-from ctypes import c_uint32, Structure
+import ctypes as _ctypes
 
 
-class Flags(Structure):
-    """The bits only convey information if they are True...False only indicates not initialized.
-    For instance to determine if a Set() is a Clan use "Set().is_clan()".  To verify that a Set() is
-    not a clan do not use "not Set().is_clan()", but instead use Set().is_not_clan()
+# noinspection PyAttributeOutsideInit
+class Flags(_ctypes.Structure):
+    """Each bit in ``_fields_`` is set when a ``MathObject`` "is known to be" what the bit's name
+    indicates. If a bit is not set, this means that whether or not the ``MathObject`` has the given
+    property is not known -- not that the given property is ``False``.
+
+    For example, if the bit ``_clan`` (accessor ``clan``) is ``False``, this does not mean that the
+    ``MathObject`` is not a clan, it means that it is not known whether it is a clan. If this bit
+    is ``True``, it is known that the ``MathObject`` is a clan (and the corresponding bit
+    ``_not_clan`` must not be also ``True``).
     """
-    _fields_ = [(name, c_uint32, 1) for name in [
+    _fields_ = [(name, _ctypes.c_uint32, 1) for name in [
         "_relation", "_not_relation",
         "_clan", "_not_clan",
         "_multiclan", "_not_multiclan",
-        "_left_functional", "_not_left_functional",
+        "_functional", "_not_functional",
         "_right_functional", "_not_right_functional",
-        "_left_regular", "_not_left_regular",
+        "_regular", "_not_regular",
         "_reflexive", "_not_reflexive",
         "_symmetric", "_not_symmetric",
         "_transitive", "_not_transitive"
@@ -87,21 +94,21 @@ class Flags(Structure):
             self._not_multiclan = True
 
     @property
-    def not_left_functional(self) -> bool:
-        return self._not_left_functional
+    def not_functional(self) -> bool:
+        return self._not_functional
 
     @property
-    def left_functional(self) -> bool:
-        return self._left_functional
+    def functional(self) -> bool:
+        return self._functional
 
-    @left_functional.setter
-    def left_functional(self, value: bool):
+    @functional.setter
+    def functional(self, value: bool):
         if value:
-            assert not self._not_left_functional
-            self._left_functional = True
+            assert not self._not_functional
+            self._functional = True
         else:
-            assert not self._left_functional
-            self._not_left_functional = True
+            assert not self._functional
+            self._not_functional = True
 
     @property
     def not_right_functional(self) -> bool:
@@ -121,21 +128,21 @@ class Flags(Structure):
             self._not_right_functional = True
 
     @property
-    def not_left_regular(self) -> bool:
-        return self._not_left_regular
+    def not_regular(self) -> bool:
+        return self._not_regular
 
     @property
-    def left_regular(self) -> bool:
-        return self._left_regular
+    def regular(self) -> bool:
+        return self._regular
 
-    @left_regular.setter
-    def left_regular(self, value: bool):
+    @regular.setter
+    def regular(self, value: bool):
         if value:
-            assert not self._not_left_regular
-            self._left_regular = True
+            assert not self._not_regular
+            self._regular = True
         else:
-            assert not self._left_regular
-            self._not_left_regular = True
+            assert not self._regular
+            self._not_regular = True
 
     @property
     def not_reflexive(self) -> bool:

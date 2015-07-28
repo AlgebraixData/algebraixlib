@@ -1,7 +1,7 @@
 """Examples for using the Data Algebra library to solve RDF/SPARQL-style problems."""
 
-# $Id: rdf_pattern_match.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: rdf_pattern_match.py 22690 2015-07-27 20:23:37Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-27 15:23:37 -0500 (Mon, 27 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -25,6 +25,7 @@ from algebraixlib.util.html import DataAlgebraHtmlDescriptor as HtmlDesc, math_o
 from algebraixlib.util.miscellaneous import open_webpage_from_html_str
 from algebraixlib.util.rdf import triple_match, join
 
+# noinspection PyUnresolvedReferences
 from examples.sampleRdfGraph import sample_graph
 
 
@@ -40,7 +41,7 @@ if print_examples:
 # Data Algebra -------------------------------------------------------------------------------------
 
 # Import the example graph as data algebra MathObject.
-graph_algebra = import_graph(input_data=sample_graph, rdf_format='turtle')
+graph_algebra = import_graph(io.StringIO(sample_graph), rdf_format='turtle')
 
 if print_examples:
     print('Input graph (as MathObject):', graph_algebra)

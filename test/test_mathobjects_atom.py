@@ -1,7 +1,7 @@
 """Testing the mathobjects.atom module."""
 
-# $Id: test_mathobjects_atom.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: test_mathobjects_atom.py 22673 2015-07-24 20:10:43Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-24 15:10:43 -0500 (Fri, 24 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -21,8 +21,10 @@ import unittest
 
 from algebraixlib.mathobjects import Atom, Couplet, MathObject, Set
 from algebraixlib.structure import GenesisSetA
-from data_mathobjects import basic_atoms as ba
 from algebraixlib.undef import Undef
+
+# noinspection PyUnresolvedReferences
+from data_mathobjects import basic_atoms as ba
 
 
 class AtomTest(unittest.TestCase):
@@ -64,7 +66,7 @@ class AtomTest(unittest.TestCase):
         self.assertEqual(atom.get_ground_set(), GenesisSetA())
         # Test left set and functionality.
         self.assertIs(atom.get_left_set(), Undef())
-        self.assertIs(atom.is_left_functional(), Undef())
+        self.assertIs(atom.is_functional(), Undef())
         self.assertIs(atom('callable'), Undef())
         # Print the representation and the string conversion.
         if self.print_examples:
@@ -97,14 +99,47 @@ class AtomTest(unittest.TestCase):
     def test_properties(self):
         a = ba['2']
         self.assertIs(a.get_left_set(), Undef())
-        self.assertIs(a.is_left_functional(), Undef())
+        self.assertIs(a.is_functional(), Undef())
         self.assertIs(a.get_right_set(), Undef())
         self.assertIs(a.is_right_functional(), Undef())
-        self.assertIs(a.is_bijection(), Undef())
+        self.assertIs(a.is_bijective(), Undef())
         self.assertIs(a.is_reflexive(), Undef())
         self.assertIs(a.is_symmetric(), Undef())
         self.assertIs(a.is_transitive(), Undef())
         self.assertIs(a.is_equivalence_relation(), Undef())
+
+    def test_flags_cache(self):
+        a = Atom(1)
+        self.assertFalse(a.cached_is_relation)
+        self.assertTrue(a.cached_is_not_relation)
+        self.assertFalse(a.cached_is_clan)
+        self.assertTrue(a.cached_is_not_clan)
+        self.assertFalse(a.cached_is_multiclan)
+        self.assertTrue(a.cached_is_not_multiclan)
+        self.assertFalse(a.cached_is_functional)
+        self.assertFalse(a.cached_is_not_functional)
+        self.assertFalse(a.cached_is_right_functional)
+        self.assertFalse(a.cached_is_not_right_functional)
+        self.assertFalse(a.cached_is_regular)
+        self.assertFalse(a.cached_is_not_regular)
+        self.assertFalse(a.cached_is_reflexive)
+        self.assertFalse(a.cached_is_not_reflexive)
+        self.assertFalse(a.cached_is_symmetric)
+        self.assertFalse(a.cached_is_not_symmetric)
+        self.assertFalse(a.cached_is_transitive)
+        self.assertFalse(a.cached_is_not_transitive)
+
+        self.assertRaises(AssertionError, lambda: a.cache_is_relation(True))
+        self.assertRaises(AssertionError, lambda: a.cache_is_clan(True))
+        self.assertRaises(AssertionError, lambda: a.cache_is_multiclan(True))
+
+        self.assertRaises(Exception, lambda: a.cache_is_transitive(False))
+        self.assertRaises(Exception, lambda: a.cache_is_functional(False))
+        self.assertRaises(Exception, lambda: a.cache_is_right_functional(False))
+        self.assertRaises(Exception, lambda: a.cache_is_regular(False))
+        self.assertRaises(Exception, lambda: a.cache_is_reflexive(False))
+        self.assertRaises(Exception, lambda: a.cache_is_symmetric(False))
+        self.assertRaises(Exception, lambda: a.cache_is_transitive(False))
 
     def _equality_assert(self, at1, at2):
         """Check that at1 and at2 are properly equal."""

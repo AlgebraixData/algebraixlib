@@ -1,7 +1,7 @@
 """Test the mathobjects.set module."""
 
-# $Id: test_mathobjects_set.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: test_mathobjects_set.py 22673 2015-07-24 20:10:43Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-24 15:10:43 -0500 (Fri, 24 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -181,45 +181,45 @@ class SetTest(unittest.TestCase):
         s2 = Set({Atom(1)}).get_ground_set()
         self.assertIs(s1._is_powerset_property(s2, 'get_left_set'), Undef())
 
-    def test_left_regular(self):
+    def test_regular(self):
         lefts = basic_sets['left func/lefts']
-        self.assertTrue(Set().is_left_regular())
-        self.assertIs(lefts.is_left_regular(), Undef())
-        self.assertIs(basic_sets['left func'].is_left_regular(), Undef())
-        self.assertTrue(basic_clans['left func'].is_left_regular())
-        self.assertFalse(basic_clans['left func2'].is_left_regular())
-        self.assertFalse(basic_clans['not left func'].is_left_regular())
+        self.assertTrue(Set().is_regular())
+        self.assertIs(lefts.is_regular(), Undef())
+        self.assertIs(basic_sets['left func'].is_regular(), Undef())
+        self.assertTrue(basic_clans['left func'].is_regular())
+        self.assertFalse(basic_clans['left func2'].is_regular())
+        self.assertFalse(basic_clans['not left func'].is_regular())
         embedded_has_irregular_left = Set(basic_sets['left func'], basic_sets['not left func'])
-        self.assertFalse(embedded_has_irregular_left.is_left_regular())
-        self.assertTrue(basic_hordes['left func'].is_left_regular())
-        self.assertFalse(basic_hordes['left func2'].is_left_regular())
+        self.assertFalse(embedded_has_irregular_left.is_regular())
+        self.assertTrue(basic_hordes['left func'].is_regular())
+        self.assertFalse(basic_hordes['left func2'].is_regular())
 
         s = basic_sets['left func']
-        self.assertFalse(s.cached_is_left_regular)
-        self.assertFalse(s.cached_is_not_left_regular)
+        self.assertFalse(s.cached_is_regular)
+        self.assertFalse(s.cached_is_not_regular)
 
-    def test_left_functional(self):
-        self.assertTrue(Set().is_left_functional())
-        self.assertIs(Undef(), Set('a', 'b', 'c').is_left_functional())
-        f = basic_sets['left func'].is_left_functional()
+    def test_functional(self):
+        self.assertTrue(Set().is_functional())
+        self.assertIs(Undef(), Set('a', 'b', 'c').is_functional())
+        f = basic_sets['left func'].is_functional()
         self.assertTrue(f)
-        f = basic_sets['not left func'].is_left_functional()
+        f = basic_sets['not left func'].is_functional()
         self.assertFalse(f)
-        f = basic_clans['left func'].is_left_functional()
+        f = basic_clans['left func'].is_functional()
         self.assertTrue(f)
-        f = basic_clans['not left func'].is_left_functional()
+        f = basic_clans['not left func'].is_functional()
         self.assertFalse(f)
-        f = basic_hordes['left func'].is_left_functional()
+        f = basic_hordes['left func'].is_functional()
         self.assertTrue(f)
-        f = basic_hordes['not left func'].is_left_functional()
+        f = basic_hordes['not left func'].is_functional()
         self.assertFalse(f)
 
         s = basic_sets['left func']
-        self.assertTrue(s.cached_is_left_functional)
-        self.assertFalse(s.cached_is_not_left_functional)
+        self.assertTrue(s.cached_is_functional)
+        self.assertFalse(s.cached_is_not_functional)
         s = basic_sets['not left func']
-        self.assertFalse(s.cached_is_left_functional)
-        self.assertTrue(s.cached_is_not_left_functional)
+        self.assertFalse(s.cached_is_functional)
+        self.assertTrue(s.cached_is_not_functional)
 
     def test_callable(self):
         # Undefined:
@@ -291,31 +291,31 @@ class SetTest(unittest.TestCase):
         self.assertTrue(s.cached_is_not_right_functional)
 
     def test_bijection(self):
-        self.assertTrue(Set().is_bijection())
-        self.assertIs(Undef(), Set('a', 'b', 'c').is_bijection())
-        f = basic_sets['left func'].is_bijection()
+        self.assertTrue(Set().is_bijective())
+        self.assertIs(Undef(), Set('a', 'b', 'c').is_bijective())
+        f = basic_sets['left func'].is_bijective()
         self.assertTrue(f)
-        f = basic_sets['not left func'].is_bijection()
+        f = basic_sets['not left func'].is_bijective()
         self.assertFalse(f)
-        f = basic_sets['not right func'].is_bijection()
+        f = basic_sets['not right func'].is_bijective()
         self.assertFalse(f)
-        f = basic_clans['left func'].is_bijection()
+        f = basic_clans['left func'].is_bijective()
         self.assertTrue(f)
-        f = basic_clans['not right func'].is_bijection()
+        f = basic_clans['not right func'].is_bijective()
         self.assertFalse(f)
-        f = basic_hordes['left func'].is_bijection()
+        f = basic_hordes['left func'].is_bijective()
         self.assertTrue(f)
-        f = basic_hordes['not right func'].is_bijection()
+        f = basic_hordes['not right func'].is_bijective()
         self.assertFalse(f)
 
         s = basic_sets['left func']
-        self.assertTrue(s.cached_is_left_functional)
+        self.assertTrue(s.cached_is_functional)
         self.assertTrue(s.cached_is_right_functional)
-        self.assertFalse(s.cached_is_not_left_functional)
+        self.assertFalse(s.cached_is_not_functional)
         self.assertFalse(s.cached_is_not_right_functional)
         s = basic_sets['not left func']
-        self.assertFalse(s.cached_is_left_functional)
-        self.assertTrue(s.cached_is_not_left_functional)
+        self.assertFalse(s.cached_is_functional)
+        self.assertTrue(s.cached_is_not_functional)
         # The right flags aren't checked if left fails
         self.assertFalse(s.cached_is_right_functional)
         self.assertFalse(s.cached_is_not_right_functional)
@@ -448,6 +448,40 @@ class SetTest(unittest.TestCase):
         export_csv(clan, csv)
         csv_str = csv.getvalue()
         self.assertEqual(csv_str, """a,b,c,d\r\n1,2,3,"foo, bar"\r\n""")
+
+    def test_flags_empty_set(self):
+        s = Set()
+        self.assertTrue(s.cached_is_relation)
+        self.assertFalse(s.cached_is_not_relation)
+        self.assertTrue(s.cached_is_clan)
+        self.assertFalse(s.cached_is_not_clan)
+        self.assertFalse(s.cached_is_multiclan)
+        self.assertTrue(s.cached_is_not_multiclan)
+        self.assertTrue(s.cached_is_functional)
+        self.assertFalse(s.cached_is_not_functional)
+        self.assertTrue(s.cached_is_right_functional)
+        self.assertFalse(s.cached_is_not_right_functional)
+        self.assertTrue(s.cached_is_regular)
+        self.assertFalse(s.cached_is_not_regular)
+        self.assertTrue(s.cached_is_reflexive)
+        self.assertFalse(s.cached_is_not_reflexive)
+        self.assertTrue(s.cached_is_symmetric)
+        self.assertFalse(s.cached_is_not_symmetric)
+        self.assertTrue(s.is_transitive())
+        self.assertTrue(s.cached_is_transitive)
+        self.assertFalse(s.cached_is_not_transitive)
+
+        self.assertRaises(AssertionError, lambda: s.cache_is_relation(False))
+        self.assertRaises(AssertionError, lambda: s.cache_is_clan(False))
+        self.assertRaises(AssertionError, lambda: s.cache_is_multiclan(True))
+
+        self.assertRaises(AssertionError, lambda: s.cache_is_transitive(False))
+        self.assertRaises(AssertionError, lambda: s.cache_is_functional(False))
+        self.assertRaises(AssertionError, lambda: s.cache_is_right_functional(False))
+        self.assertRaises(AssertionError, lambda: s.cache_is_regular(False))
+        self.assertRaises(AssertionError, lambda: s.cache_is_reflexive(False))
+        self.assertRaises(AssertionError, lambda: s.cache_is_symmetric(False))
+        self.assertRaises(AssertionError, lambda: s.cache_is_transitive(False))
 
     def test_flags_set(self):
         s = Set(1, 2, 3)

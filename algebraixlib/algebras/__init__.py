@@ -1,30 +1,37 @@
 r"""This package contains modules that represent :term:`algebra`\s and their operations.
 
-To the mathematical operations of a given algebra, we also add:
+The algebra modules contain a class ``Algebra`` that contains the operations that are formally part
+of the given algebra (that is, they are closed within that algebra). For convenience, these
+functions are also exposed at the module level. (We collect them in the ``Algebra`` class mainly
+for documentation purposes.)
 
--   Functions that return metadata. (For example, all our algebras contain an ``is_member``
+Besides the mathematical operations of a given algebra (in ``Algebra``), we also provide the
+following types of functions that are related to the algebra, but are not members of it:
+
+-   Functions that return metadata. For example, all our algebras contain an ``is_member``
     function that returns ``True`` if the argument is a member of the given algebra's :term:`ground
-    set`. This function is not mathematically an operation of the algebra.)
+    set`. This function is not mathematically an operation of the algebra.
 -   Other functions that are mathematically related, but have arguments or return results that are
-    not members of the ground set. (For example, the :func:`~.relations.get_lefts` function of the
+    not members of the ground set. For example, the :func:`~.relations.get_lefts` function of the
     :term:`algebra of relations` returns a result that is not an element of the algebra's ground
-    set.)
+    set.
 
-The algebras based on :term:`set`\s that are provided are:
+The algebras that are provided are:
 
 -   :mod:`~.sets`: The :term:`algebra of sets`.
 -   :mod:`~.couplets`: The :term:`algebra of couplets`.
--   :mod:`~.relations`: The :term:`algebra of relations`.
--   :mod:`~.clans`: The :term:`algebra of clans`.
-
-The algebras based on :term:`multiset`\s that are provided are:
-
+-   :mod:`~.relations`: The :term:`algebra of relations`. (A :term:`relation` is a :term:`set` of
+    :term:`couplet`\s).
+-   :mod:`~.clans`: The :term:`algebra of clans`. (A :term:`clan` is a :term:`set` of
+    :term:`relation`\s; that is, a :term:`set` of :term:`set`\s of :term:`couplet`\s).
 -   :mod:`~.multisets`: The :term:`algebra of multisets`.
--   :mod:`~.multiclans`: The :term:`algebra of multiclans`.
+-   :mod:`~.multiclans`: The :term:`algebra of multiclans`. (A :term:`multiclan` is a
+    :term:`multiset` of :term:`relation`\s; that is, a :term:`multiset` of :term:`set`\s of
+    :term:`couplet`\s).
 """
 
-# $Id: __init__.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: __init__.py 22656 2015-07-23 17:44:24Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-23 12:44:24 -0500 (Thu, 23 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

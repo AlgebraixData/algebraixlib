@@ -1,7 +1,11 @@
-"""This module contains the :term:`algebra of multiclans`."""
+r"""This module contains the :term:`algebra of multiclans` and related functionality.
 
-# $Id: multiclans.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+A :term:`multiclan` is also a :term:`multiset` (of :term:`relation`\s), and inherits all operations
+of the :term:`algebra of multisets`. These are provided in :mod:`~.algebras.multisets`.
+"""
+
+# $Id: multiclans.py 22702 2015-07-28 20:20:56Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -15,7 +19,7 @@
 # You should have received a copy of the GNU Lesser General Public License along with algebraixlib.
 # If not, see <http://www.gnu.org/licenses/>.
 # --------------------------------------------------------------------------------------------------
-from functools import partial
+import functools as _functools
 
 import algebraixlib.algebras.relations as _relations
 import algebraixlib.algebras.sets as _sets
@@ -25,6 +29,8 @@ import algebraixlib.structure as _structure
 from algebraixlib.undef import make_or_raise_undef as _make_or_raise_undef
 
 
+# --------------------------------------------------------------------------------------------------
+
 class Algebra:
     """Provide the operations and relations that are members of the :term:`algebra of multiclans`.
 
@@ -32,32 +38,32 @@ class Algebra:
     and highlight the operations and relations that belong to the algebra of multiclans. All member
     functions are also available at the enclosing module scope.
     """
-    # --------------------------------------------------------------------------------------------------
+    # ----------------------------------------------------------------------------------------------
     # Unary algebra operations.
 
     @staticmethod
     def transpose(multiclan: 'P(P(M x M) x N)', _checked=True) -> 'P(P(M x M) x N)':
-        """Return the :term:`transposition` of the :term:`multiclan` ``multiclan``.
+        """Return a multiclan where all relations have their left and right components swapped.
 
-        :return: The :term:`unary extension` of :term:`transposition` from the :term:`algebra of
-            relations` to the :term:`algebra of multiclans`, applied to ``multiclan``, or `Undef()`
-            if ``multiclan`` is not a :term:`multiclan`.
+        :return: The :term:`unary multi-extension` of :term:`transposition` from the
+            :term:`algebra of relations` to the :term:`algebra of multiclans`, applied to
+            ``multiclan``, or `Undef()` if ``multiclan`` is not a :term:`multiclan`.
         """
         if _checked:
             if not is_member(multiclan):
                 return _make_or_raise_undef()
         else:
             assert is_member(multiclan)
-        return _extension.unary_multi_extend(multiclan, partial(
+        return _extension.unary_multi_extend(multiclan, _functools.partial(
             _relations.transpose, _checked=False), _checked=False)
 
-    # --------------------------------------------------------------------------------------------------
+    # ----------------------------------------------------------------------------------------------
     # Binary algebra operations.
 
     @staticmethod
     def compose(multiclan1: 'P(P(M x M) x N)', multiclan2: 'P(P(M x M) x N)',
                 _checked=True) -> 'P(P(M x M) x N)':
-        r"""Return the :term:`composition` of ``multiclan1`` with ``multiclan2``.
+        r"""Return the composition of ``multiclan1`` with ``multiclan2``.
 
         :return: The :term:`binary multi-extension` of :term:`composition` from the
             :term:`algebra of relations` to the :term:`algebra of multiclans`, applied to
@@ -72,7 +78,7 @@ class Algebra:
         else:
             assert is_member(multiclan1)
             assert is_member(multiclan2)
-        return _extension.binary_multi_extend(multiclan1, multiclan2, partial(
+        return _extension.binary_multi_extend(multiclan1, multiclan2, _functools.partial(
             _relations.compose, _checked=False), _checked=False)
 
     @staticmethod
@@ -81,7 +87,7 @@ class Algebra:
         r"""Return the :term:`cross-union` of ``multiclan1`` and ``multiclan2``.
 
         :return: The :term:`binary multi-extension` of :term:`union` from the
-            :term:`algebra of relations` (which inherits it from the :term:`algebra of multisets`)
+            :term:`algebra of relations` (which inherits it from the :term:`algebra of sets`)
             to the :term:`algebra of multiclans` applied to ``multiclan1`` and ``multiclan2``,
             or `Undef()` if ``multiclan1`` or ``multiclan2`` are not :term:`multiclan`\s.
         """
@@ -93,15 +99,15 @@ class Algebra:
         else:
             assert is_member(multiclan1)
             assert is_member(multiclan2)
-        return _extension.binary_multi_extend(multiclan1, multiclan2, partial(
+        return _extension.binary_multi_extend(multiclan1, multiclan2, _functools.partial(
             _sets.union, _checked=False), _checked=False)
 
     @staticmethod
-    def functional_cross_union(multiclan1: 'P(P(M x M) x N)', multiclan2: 'P(P(M x M) x N)',
+    def cross_functional_union(multiclan1: 'P(P(M x M) x N)', multiclan2: 'P(P(M x M) x N)',
                                _checked=True) -> 'P(P(M x M) x N)':
-        r"""Return the :term:`left-functional cross-union` of ``multiclan1`` and ``multiclan2``.
+        r"""Return the :term:`cross-functional union` of ``multiclan1`` and ``multiclan2``.
 
-        :return: The :term:`binary multi-extension` of the :term:`left-functional union` from the
+        :return: The :term:`binary multi-extension` of the :term:`functional union` from the
             :term:`algebra of relations` to the :term:`algebra of multiclans`, applied to
             ``multiclan1`` and ``multiclan2``, or `Undef()` if ``multiclan1`` or ``multiclan2`` are
             not :term:`multiclan`\s.
@@ -114,14 +120,14 @@ class Algebra:
         else:
             assert is_member(multiclan1)
             assert is_member(multiclan2)
-        return _extension.binary_multi_extend(multiclan1, multiclan2, partial(
+        return _extension.binary_multi_extend(multiclan1, multiclan2, _functools.partial(
             _relations.functional_union, _checked=False), _checked=False)
 
     @staticmethod
-    def right_functional_cross_union(
+    def cross_right_functional_union(
             multiclan1: 'P(P(M x M) x N)', multiclan2: 'P(P(M x M) x N)',
             _checked=True) -> 'P(P(M x M) x N)':
-        r"""Return the :term:`right-functional cross-union` of ``multiclan1`` and ``multiclan2``.
+        r"""Return the :term:`cross-right-functional union` of ``multiclan1`` and ``multiclan2``.
 
         :return: The :term:`binary multi-extension` of the :term:`right-functional union` from the
             :term:`algebra of relations` to the :term:`algebra of multiclans`, applied to
@@ -136,7 +142,7 @@ class Algebra:
         else:
             assert is_member(multiclan1)
             assert is_member(multiclan2)
-        return _extension.binary_multi_extend(multiclan1, multiclan2, partial(
+        return _extension.binary_multi_extend(multiclan1, multiclan2, _functools.partial(
             _relations.right_functional_union, _checked=False), _checked=False)
 
     @staticmethod
@@ -157,13 +163,16 @@ class Algebra:
         else:
             assert is_member(multiclan1)
             assert is_member(multiclan2)
-        return _extension.binary_multi_extend(multiclan1, multiclan2, partial(
+        return _extension.binary_multi_extend(multiclan1, multiclan2, _functools.partial(
             _sets.intersect, _checked=False), _checked=False)
 
     @staticmethod
     def substrict(multiclan1: 'P(P(M x M) x N)', multiclan2: 'P(P(M x M) x N)',
                   _checked=True) -> 'P(P(M x M) x N)':
-        r"""Return the :term:`binary extension` of :term:`substriction` of ``multiclan1`` and
+        r"""Return the substriction of ``multiclan1`` and ``multiclan2``.
+
+        The :term:`substriction` of two :term:`multiclan`\s is a multiclan that contains all
+        :term:`relation`\s from ``multiclan1`` that are a :term:`submultiset` of a relation from
         ``multiclan2``.
 
         :return: The :term:`binary multi-extension` of :term:`substriction` from the :term:`algebra
@@ -179,14 +188,17 @@ class Algebra:
         else:
             assert is_member(multiclan1)
             assert is_member(multiclan2)
-        return _extension.binary_multi_extend(multiclan1, multiclan2, partial(
+        return _extension.binary_multi_extend(multiclan1, multiclan2, _functools.partial(
             _sets.substrict, _checked=False), _checked=False)
 
     @staticmethod
     def superstrict(multiclan1: 'P(P(M x M) x N)', multiclan2: 'P(P(M x M) x N)',
                     _checked=True) -> 'P(P(M x M) x N)':
-        r"""Return the :term:`binary multi-extension` of :term:`superstriction` of ``multiclan1``
-            and ``multiclan2``.
+        r"""Return the superstriction of ``multiclan1`` and ``multiclan2``.
+
+        The :term:`superstriction` of two :term:`multiclan`\s is a multiclan that contains all
+        :term:`relation`\s from ``multiclan1`` that are a :term:`supermultiset` of a relation from
+        ``multiclan2``.
 
         :return: The :term:`binary multi-extension` of :term:`superstriction` from the
             :term:`algebra of relations` (which inherits it from the :term:`algebra of sets`) to the
@@ -201,21 +213,33 @@ class Algebra:
         else:
             assert is_member(multiclan1)
             assert is_member(multiclan2)
-        return _extension.binary_multi_extend(multiclan1, multiclan2, partial(
+        return _extension.binary_multi_extend(multiclan1, multiclan2, _functools.partial(
             _sets.superstrict, _checked=False), _checked=False)
 
+
+# For convenience, make the members of class Algebra (they are all static functions) available at
+# the module level.
+
+#: Convenience redirection to `Algebra.transpose`.
 transpose = Algebra.transpose
+#: Convenience redirection to `Algebra.compose`.
 compose = Algebra.compose
+#: Convenience redirection to `Algebra.cross_union`.
 cross_union = Algebra.cross_union
-functional_cross_union = Algebra.functional_cross_union
-right_functional_cross_union = Algebra.right_functional_cross_union
+#: Convenience redirection to `Algebra.cross_functional_union`.
+cross_functional_union = Algebra.cross_functional_union
+#: Convenience redirection to `Algebra.cross_right_functional_union`.
+cross_right_functional_union = Algebra.cross_right_functional_union
+#: Convenience redirection to `Algebra.cross_intersect`.
 cross_intersect = Algebra.cross_intersect
+#: Convenience redirection to `Algebra.substrict`.
 substrict = Algebra.substrict
+#: Convenience redirection to `Algebra.superstrict`.
 superstrict = Algebra.superstrict
+
 
 # --------------------------------------------------------------------------------------------------
 # Metadata functions.
-
 
 def get_name() -> str:
     """Return the name and :term:`ground set` of this :term:`algebra` in string form."""
@@ -235,7 +259,7 @@ def get_absolute_ground_set() -> _structure.Structure:
 
 
 def is_member(obj: _mo.MathObject) -> bool:
-    """Return ``True`` if ``obj`` is a member of the :term:`ground set` of this :term:`algebra`.
+    """Return whether ``obj`` is a member of the :term:`ground set` of this :term:`algebra`.
 
     .. note:: This function calls :meth:`~.MathObject.get_ground_set` on ``obj``.
     """
@@ -246,9 +270,9 @@ def is_member(obj: _mo.MathObject) -> bool:
 
 
 def is_absolute_member(obj: _mo.MathObject) -> bool:
-    """Return ``True`` if ``obj`` is a member of the :term:`absolute ground set` of this algebra.
+    """Return whether ``obj`` is a member of the :term:`absolute ground set` of this algebra.
 
-     :return: ``True`` if ``obj`` is an :term:`absolute clan`.
+     :return: ``True`` if ``obj`` is an :term:`absolute clan`, ``False`` if not.
 
     .. note:: This function calls :meth:`~.MathObject.get_ground_set` on ``obj``.
     """

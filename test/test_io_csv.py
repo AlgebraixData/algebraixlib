@@ -1,7 +1,7 @@
 """Testing the io.csv module."""
 
-# $Id: test_io_csv.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: test_io_csv.py 22667 2015-07-23 22:52:32Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-23 17:52:32 -0500 (Thu, 23 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -25,8 +25,6 @@ from algebraixlib.mathobjects import Couplet, Set
 
 class IoCsvTests(unittest.TestCase):
 
-    _print_examples = False
-
     @staticmethod
     def path(file):
         return os.path.join(os.path.dirname(__file__), file)
@@ -37,23 +35,33 @@ class IoCsvTests(unittest.TestCase):
         st1 = import_csv(IoCsvTests.path('set1.csv'))
         self.assertEqual(clan, st1)
         self.assertTrue(st1.cached_is_clan)
-        self.assertTrue(st1.cached_is_left_functional)
+        self.assertTrue(st1.cached_is_functional)
+        self.assertTrue(st1.cached_is_regular)
 
         clan = Set({Set({Couplet('a', '1'), Couplet('b', '2')})})
         st1a = import_csv(IoCsvTests.path('set1a.csv'))
         # NOTE: duplicate row is removed
         self.assertEqual(clan, st1a)
+        self.assertTrue(st1a.cached_is_clan)
+        self.assertTrue(st1a.cached_is_functional)
+        self.assertTrue(st1a.cached_is_regular)
 
         clan = Set(Set({Couplet('a', '1'), Couplet('b', '2'), Couplet('row', 0)}),
                    Set({Couplet('a', '1'), Couplet('b', '2'), Couplet('row', 1)}))
         st1a = import_csv(IoCsvTests.path('set1a.csv'), index_column='row')
         # NOTE: duplicate row is NOT removed
         self.assertEqual(clan, st1a)
+        self.assertTrue(st1a.cached_is_clan)
+        self.assertTrue(st1a.cached_is_functional)
+        self.assertTrue(st1a.cached_is_regular)
 
-        clan = Set({Set({Couplet('a', '1'), Couplet('b', '2')}), Set({Couplet('a', '3'),
-                                                                      Couplet('b', '4')})})
+        clan = Set({Set({Couplet('a', '1'), Couplet('b', '2')}),
+                    Set({Couplet('a', '3'), Couplet('b', '4')})})
         st2 = import_csv(IoCsvTests.path('set2.csv'))
         self.assertEqual(clan, st2)
+        self.assertTrue(st2.cached_is_clan)
+        self.assertTrue(st2.cached_is_functional)
+        self.assertTrue(st2.cached_is_regular)
 
         clan = Set(Set([Couplet(s, c) for s, c in zip('abcd', [1, 2, 3, 4])]),
                    Set([Couplet(s, c) for s, c in zip('abc', [5, 6, 7])]),
@@ -63,6 +71,9 @@ class IoCsvTests(unittest.TestCase):
         # print("expected", clan)
         # print("actual", st3)
         self.assertEqual(clan, st3)
+        self.assertTrue(st3.cached_is_clan)
+        self.assertTrue(st3.cached_is_functional)
+        self.assertTrue(st3.cached_is_not_regular)
 
 
 # --------------------------------------------------------------------------------------------------

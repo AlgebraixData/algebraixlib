@@ -1,7 +1,12 @@
-"""An executable script that runs all unit tests."""
+#!/usr/bin/env python
 
-# $Id: runtests.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+"""Run all unit tests. 
+
+This script requires the packages nose and coverage (available from PyPI, install using pip).
+"""
+
+# $Id: runtests.py 22698 2015-07-28 17:09:23Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 12:09:23 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -16,6 +21,7 @@
 # If not, see <http://www.gnu.org/licenses/>.
 # --------------------------------------------------------------------------------------------------
 import inspect
+# noinspection PyPackageRequirements
 import nose
 import os
 
@@ -35,10 +41,10 @@ if __name__ == '__main__':
     arguments = [
         '-s', '--nocapture', '-v',  # Don't capture stdout (show it in the console).
         '--all-modules',  # Run tests in all modules (so that __main__ tests run).
-        '--with-doctest',  # Include doctests
-        '--with-coverage',  # Include unit test coverage
-        '--cover-package=algebraixlib',  # Exclude 3rd party packages from unit test coverage report
-        '--where=' + dirpath,  # Enable invocation from an external path
+        '--with-doctest',  # Include doctests.
+        '--with-coverage',  # Include unit test coverage.
+        '--cover-package=algebraixlib',  # Exclude 3rd party code from unit test coverage report.
+        '--where=' + dirpath,  # Enable invocation from an external path.
 
         # --all-modules makes the following functions being run so we exclude them:
         '--exclude=create_test_object|get_test_file_(name|path)'

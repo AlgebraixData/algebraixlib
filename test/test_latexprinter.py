@@ -1,8 +1,8 @@
 """Test the util.latexPrinter module."""
 
-# $Id: test_latexprinter.py 22614 2015-07-15 18:14:53Z gfiedler $
+# $Id: test_latexprinter.py 22698 2015-07-28 17:09:23Z gfiedler $
 
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 12:09:23 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -22,7 +22,7 @@
 import inspect
 import os
 import unittest
-import algebraixlib.util.latexprinter as latexPrinter  # latexPrinter.colorize_output
+import algebraixlib.util.latexprinter as latexprinter  # latexprinter.colorize_output
 from algebraixlib.util.latexprinter import math_object_to_latex
 from algebraixlib.mathobjects import Atom, Couplet, Set
 
@@ -61,7 +61,7 @@ class LatexPrinterTest(unittest.TestCase):
     _s3 = Set([_s1, _s2])
 
     def _enable_colorization(self, on_off):
-        latexPrinter.Config.colorize_output = on_off
+        latexprinter.Config.colorize_output = on_off
 
     def test_atom_printer(self):
         self._enable_colorization(False)
@@ -97,17 +97,6 @@ class LatexPrinterTest(unittest.TestCase):
         # Actual LaTeX Output Data
         latex_set1 = math_object_to_latex(self._s1)
         latex_set2 = math_object_to_latex(self._s2)
-
-        # Expected LaTeX Output Data
-        latex_set_ex1 = ("\left\{\ \mbox{'van'}^{\mbox{'mystery'}},\ "
-                         "\mbox{'doo'}^{\mbox{'scooby'}},\ "
-                         "\mbox{'rogers'}^{\mbox{'shaggy'}}\ \\right\}")
-
-        latex_set_ex2 = ("\left\{\ \mbox{'blake'}^{\mbox{'daphne'}},\ "
-                         "\mbox{'jones'}^{\mbox{'fred'}},\ "
-                         "\mbox{'team'}^{\mbox{'mystery'}},\ "
-                         "\mbox{'dinkley'}^{\mbox{'velma'}}\ \\right\}")
-        latex_mixed_set_with_couplet = math_object_to_latex(Set('a', Couplet('x', 'y')))
         if self._print_examples:
             print("test_set_printer Begin:")
             print('\tSet={s!s}'.format(s=self._s1))

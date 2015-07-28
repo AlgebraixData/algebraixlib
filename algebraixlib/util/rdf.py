@@ -1,5 +1,6 @@
-r"""This module contains RDF-specific data manipulation facilities. The code is RDF/SPARQL-inspired
-but does not officially implement any RDF standards.
+r"""RDF-specific data manipulation facilities.
+
+The code is RDF/SPARQL-inspired but does not officially implement any RDF standards.
 
 Glossary
 ========
@@ -7,7 +8,7 @@ Glossary
 .. glossary::
 
     triple
-        A :term:`relation` with three members, with the :term:`left component`\s ``'s'``, ``'p'``,
+        A :term:`function` with three members, with the :term:`left component`\s ``'s'``, ``'p'``,
         ``'o'``. A generic triple is an element of :math:`P(A \times M)`; an RDF triple is an
         element of :math:`P(A \times A)`. (See also :term:`set A` and :term:`set M`.)
 
@@ -21,8 +22,8 @@ API
 
 """
 
-# $Id: rdf.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: rdf.py 22702 2015-07-28 20:20:56Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -39,29 +40,38 @@ API
 import os as _os
 import urllib.parse as _urlparse
 import urllib.request as _urlreq
+
 import algebraixlib.algebras.clans as _clans
 import algebraixlib.algebras.relations as _relations
 import algebraixlib.mathobjects as _mo
 
 
+# --------------------------------------------------------------------------------------------------
+
 def is_file_url(path_or_url: str) -> bool:
-    """Return ``True`` if ``path_or_url`` is a file URL (that is, starts with ``'file://'``)."""
+    """Return ``True`` if ``path_or_url`` is a file URL, ``False`` if not.
+
+    As valid file URL we consider any URL that starts with ``'file://'``).
+    """
     return path_or_url.startswith('file://')
 
 
 def get_file_url(path: str) -> str:
-    """Return the file URL that corresponds to the file path ``path``. If ``path`` is relative, it
-    is converted into an absolute path before being converted into a file URL."""
+    """Return the file URL that corresponds to the file path ``path``.
+
+    If ``path`` is relative, it is converted into an absolute path before being converted into a
+    file URL.
+    """
     return _urlparse.urljoin('file:', _urlreq.pathname2url(_os.path.abspath(path)))
 
 
 def is_triple(obj: _mo.MathObject) -> bool:
-    """Return ``True`` if ``obj`` is a `triple`."""
+    """Return ``True`` if ``obj`` is a valid `triple`, ``False`` if not."""
     return _relations.is_member(obj) and _check_triple(obj)
 
 
 def is_absolute_triple(obj: _mo.MathObject) -> bool:
-    """Return ``True`` if ``obj`` is an :term:`absolute` :term:`triple`."""
+    """Return ``True`` if ``obj`` is an :term:`absolute` :term:`triple`, ``False`` if not."""
     return _relations.is_absolute_member(obj) and _check_triple(obj)
 
 
@@ -79,12 +89,12 @@ def make_triple(subject: '( M )', predicate: '( M )', object_: '( M )') -> 'P(A 
 
 
 def is_graph(obj: _mo.MathObject) -> bool:
-    """Return ``True`` if ``obj`` is a `graph`."""
+    """Return ``True`` if ``obj`` is a `graph`, ``False`` if not."""
     return _clans.is_member(obj) and _check_graph(obj)
 
 
 def is_absolute_graph(obj: _mo.MathObject) -> bool:
-    """Return ``True`` if ``obj`` is an :term:`absolute` `graph`."""
+    """Return ``True`` if ``obj`` is an :term:`absolute` `graph`, ``False`` if not."""
     return _clans.is_absolute_member(obj) and _check_graph(obj)
 
 
@@ -104,7 +114,7 @@ def triple_match(rdf_graph: 'PP(A x M)', subject=None, predicate=None, object_=N
         that's not a variable name (match) or ``None`` (ignore).
     :return: A :term:`clan` with the matches.
     """
-    assert(is_graph(rdf_graph))
+    assert is_graph(rdf_graph)
     pattern = {}
     projection = {}
 
@@ -123,41 +133,46 @@ def triple_match(rdf_graph: 'PP(A x M)', subject=None, predicate=None, object_=N
 
 
 def join(rdf_solution1, rdf_solution2, *rdf_solutions):
-    """Return the functional cross union (:func:`.multiclans.functional_cross_union`) of all
-    arguments.
+    """Return the :term:`cross-functional union` of all arguments.
+
+    This is a thin wrapper around :func:`.clans.cross_functional_union`.
     """
-    result = _clans.functional_cross_union(rdf_solution1, rdf_solution2)
+    result = _clans.cross_functional_union(rdf_solution1, rdf_solution2)
     for sln in rdf_solutions:
-        result = _clans.functional_cross_union(result, sln)
+        result = _clans.cross_functional_union(result, sln)
     return result
 
 
-def _check_triple(obj: _mo.MathObject) -> bool:
-    """Return ``True`` if ``obj`` is (almost) a :term:`triple`. Perform all checks except for the
-    membership in the :term:`algebra of relations`."""
+def _check_triple(obj: 'P(A x M)') -> bool:
+    """Return ``True`` if ``obj`` is a :term:`triple`, ``False`` if not.
+
+    ``obj`` is expected to be a :term:`relation`.
+    """
     # noinspection PyUnresolvedReferences
     return isinstance(obj, _mo.Set) and obj.cardinality == 3 \
         and obj.get_left_set() == _mo.Set('s', 'p', 'o')
 
 
 def _check_graph(obj: _mo.MathObject) -> bool:
-    """Return ``True`` if ``obj`` is (almost) a :term:`graph`. Perform all checks except for the
-    membership in the :term:`algebra of clans`."""
-    return isinstance(obj, _mo.Set) and obj.get_left_set() == _mo.Set('s', 'p', 'o') \
-        and obj.is_left_regular()
+    """Return ``True`` if ``obj`` is a :term:`graph`, ``False`` if not.
 
-
-def match_and_project(graph: 'PP( AxA )', pattern: dict=None, projection: dict=None):
-    """Return all relations in ``graph`` that contain all members of ``pattern``. Rename their lefts
-    according to the members of ``projection``.
-
-    :param graph: An absolute clan.
-    :param pattern: A dictionary where the keys are the lefts and the values the rights that
-        will be matched.
-    :param projection: A dictionary where the values are the new names and the keys the existing
-        names of the lefts to be renamed.
+    ``obj`` is expected to be a :term:`clan`.
     """
-    assert(_clans.is_member(graph))
+    return isinstance(obj, _mo.Set) and obj.get_left_set() == _mo.Set('s', 'p', 'o') \
+        and obj.is_regular()
+
+
+def match_and_project(graph: 'PP(A x A)', pattern: dict=None, projection: dict=None):
+    r"""Return all relations in ``graph`` that contain all members of ``pattern``. Rename their
+    lefts according to the members of ``projection``.
+
+    :param graph: An absolute :term:`clan`.
+    :param pattern: A dictionary where the keys are the :term:`left`\s and the values the
+        :term:`right`\s that will be matched.
+    :param projection: A dictionary where the values are the new names and the keys the existing
+        names of the :term:`left`\s to be renamed.
+    """
+    assert _clans.is_member(graph)
     if pattern is None:
         pattern = {}
     if projection is None:
@@ -169,12 +184,12 @@ def match_and_project(graph: 'PP( AxA )', pattern: dict=None, projection: dict=N
 
 
 def pattern_match(graph: 'PP( AxA )', pattern: dict):
-    """Return all relations in ``graph`` that contain all members of ``pattern``.
+    r"""Return all relations in ``graph`` that contain all members of ``pattern``.
 
-    :param graph: An absolute clan.
-    :param pattern: A dictionary where the keys are the lefts and the values the rights that
-        will be matched.
+    :param graph: An absolute :term:`clan`.
+    :param pattern: A dictionary where the keys are the :term:`left`\s and the values the
+        :term:`right`\s that will be matched.
     """
-    assert(_clans.is_member(graph))
+    assert _clans.is_member(graph)
     match_predicate = _clans.from_dict(pattern)
     return _clans.superstrict(graph, match_predicate, _checked=False)

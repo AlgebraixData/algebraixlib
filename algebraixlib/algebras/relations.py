@@ -1,7 +1,11 @@
-"""This module contains the :term:`algebra of relations` and related functionality."""
+r"""This module contains the :term:`algebra of relations` and related functionality.
 
-# $Id: relations.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+A :term:`relation` is also a :term:`set` (of :term:`couplet`\s), and inherits all operations
+of the :term:`algebra of sets`. These are provided in :mod:`~.algebras.sets`.
+"""
+
+# $Id: relations.py 22702 2015-07-28 20:20:56Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -39,8 +43,7 @@ class Algebra:
 
     @staticmethod
     def transpose(rel: 'P(M x M)', _checked=True) -> 'P(M x M)':
-        """Return a relation where the left components and right components of all couplets are
-        swapped.
+        """Return a relation where all couplets have their left and right components swapped.
 
         :return: The :term:`unary extension` of :term:`transposition` from the
             :term:`algebra of couplets` to the :term:`algebra of relations`, applied to the
@@ -59,7 +62,7 @@ class Algebra:
 
     @staticmethod
     def compose(rel1: 'P(M x M)', rel2: 'P(M x M)', _checked=True) -> 'P(M x M)':
-        """Return the composition of ``rel1`` with ``rel2``.
+        r"""Return the composition of ``rel1`` with ``rel2``.
 
         :return: The :term:`binary extension` of :term:`composition` from the :term:`algebra of
             couplets` to the :term:`algebra of relations`, applied to the :term:`relation`\s
@@ -78,10 +81,10 @@ class Algebra:
 
     @staticmethod
     def functional_union(rel1: 'P(M x M)', rel2: 'P(M x M)', _checked=True) -> 'P(M x M)':
-        """Return the union of ``rel1`` and ``rel2`` if it is a function, otherwise `Undef()`.
+        r"""Return the union of ``rel1`` and ``rel2`` if it is a function, otherwise `Undef()`.
 
-        :return: The :term:`left-functional union` of the :term:`relation`\s ``rel1`` and ``rel2``;
-            that is, the :term:`union` if the result is :term:`left-functional`, otherwise
+        :return: The :term:`functional union` of the :term:`relation`\s ``rel1`` and ``rel2``;
+            that is, the :term:`union` if the result is a :term:`function`, otherwise
             `Undef()`. Also return `Undef()` if ``rel1`` or ``rel2`` are not relations.
         """
         if _checked:
@@ -93,13 +96,13 @@ class Algebra:
             assert is_member(rel1)
             assert is_member(rel2)
         rel_union = _sets.union(rel1, rel2, _checked=False).cache_is_relation(True)
-        if not is_left_functional(rel_union, _checked=False):
+        if not is_functional(rel_union, _checked=False):
             return _make_or_raise_undef(2)
         return rel_union
 
     @staticmethod
     def right_functional_union(rel1: 'P(M x M)', rel2: 'P(M x M)', _checked=True) -> 'P(M x M)':
-        """Return the union of ``rel1`` and ``rel2`` if it is right-functional, otherwise
+        r"""Return the union of ``rel1`` and ``rel2`` if it is right-functional, otherwise
         `Undef()`.
 
         :return: The :term:`right-functional union` of the :term:`relation`\s ``rel1`` and
@@ -152,7 +155,7 @@ def get_absolute_ground_set() -> _structure.Structure:
 
 
 def is_member(obj: _mo.MathObject) -> bool:
-    """Return ``True`` if ``obj`` is a member of the :term:`ground set` of this :term:`algebra`.
+    """Return whether ``obj`` is a member of the :term:`ground set` of this :term:`algebra`.
 
     .. note:: This function may call :meth:`~.MathObject.get_ground_set` on ``obj``. The result
         of this operation is cached.
@@ -164,9 +167,9 @@ def is_member(obj: _mo.MathObject) -> bool:
 
 
 def is_absolute_member(obj: _mo.MathObject) -> bool:
-    """Return ``True`` if ``obj`` is a member of the :term:`absolute ground set` of this algebra.
+    """Return whether ``obj`` is a member of the :term:`absolute ground set` of this algebra.
 
-     :return: ``True`` if ``obj`` is an :term:`absolute relation`.
+     :return: ``True`` if ``obj`` is an :term:`absolute relation`, ``False`` if not.
 
     .. note:: This function calls :meth:`~.MathObject.get_ground_set` on ``obj``."""
     _mo.raise_if_not_mathobject(obj)
@@ -180,7 +183,7 @@ def get_lefts(rel: 'P(M x M)', _checked=True) -> 'P( M )':
     """Return the set of the left components of all couplets in the relation ``rel``.
 
     :return: The :term:`left set` of the :term:`relation` ``rel`` or `Undef()` if ``rel`` is not a
-        :term:`relation`.
+        relation.
     """
     if _checked:
         if not is_member(rel):
@@ -194,7 +197,7 @@ def get_rights(rel: 'P(M x M)', _checked=True) -> 'P( M )':
     """Return the set of the right components of all couplets in the relation ``rel``.
 
     :return: The :term:`right set` of the :term:`relation` ``rel`` or `Undef()` if ``rel`` is not a
-        :term:`relation`.
+        relation.
     """
     if _checked:
         if not is_member(rel):
@@ -204,14 +207,31 @@ def get_rights(rel: 'P(M x M)', _checked=True) -> 'P( M )':
     return _mo.Set((e.right for e in rel), direct_load=True)
 
 
+def get_rights_for_left(rel: 'P(M x M)', left: '( M )', _checked=True) -> '( M )':
+    """Return the set of the right components of all couplets in the relation ``rel`` associated
+    with the :term:`left component` ``left``.
+
+    :return: The :term:`right set` of the :term:`relation` ``rel`` associated with the :term:`left
+        component` or `Undef()` if ``rel`` is not a :term:`relation`.
+    """
+    if _checked:
+        if not is_member(rel):
+            return _make_or_raise_undef()
+        left = _mo.auto_convert(left)
+    else:
+        assert is_member(rel)
+        assert isinstance(left, _mo.MathObject)
+    return _mo.Set((elem.right for elem in rel if elem.left == left), direct_load=True)
+
+
 def get_right(rel: 'P(M x M)', left: '( M )', _checked=True) -> '( M )':
-    """Return the single :term:`right component` associated with the :term:`left component` ``left``.
+    r"""Return the right component of the couplet that has a left component of ``left``.
 
-    In general, use with :term:`left-functional` :term:`relation`\s; that is, relations where
-    all left components appear at most once.
+    In general, use with :term:`function`\s; that is, :term:`relation`\s where all
+    :term:`left component`\s appear at most once.
 
-    :return: The single :term:`right component` associated with the :term:`left component`
-        ``left``, or `Undef()` if there is not exactly one element with the left component
+    :return: The :term:`right component` of the :term:`couplet` that has a :term:`left component`
+        of ``left``, or `Undef()` if there is not exactly one couplet with the left component
         ``left`` in ``rel`` or ``rel`` is not a :term:`relation`.
     """
     if _checked:
@@ -233,13 +253,13 @@ def get_right(rel: 'P(M x M)', left: '( M )', _checked=True) -> '( M )':
 
 
 def get_left(rel: 'P(M x M)', right: '( M )', _checked=True) -> '( M )':
-    """Return the single :term:`left component` associated with the :term:`right component` ``right``.
+    r"""Return the left component of the couplet that has a right component of ``right``.
 
     In general, use with :term:`right-functional` :term:`relation`\s; that is, relations
-    where all right components appear at most once.
+    where all :term:`right component`\s appear at most once.
 
-    :return: The single :term:`left component` associated with the :term:`right component`
-        ``right``, or `Undef()` if there is not exactly one element with the right component
+    :return: The :term:`left component` of the :term:`couplet` that has a :term:`right component`
+        of ``right``, or `Undef()` if there is not exactly one couplet with the right component
         ``right`` in ``rel`` or ``rel`` is not a :term:`relation`.
     """
     if _checked:
@@ -260,28 +280,28 @@ def get_left(rel: 'P(M x M)', right: '( M )', _checked=True) -> '( M )':
     return result
 
 
-def is_left_functional(rel, _checked=True) -> bool:
-    """Return ``True`` if ``rel`` is :term:`left-functional`.
+def is_functional(rel, _checked=True) -> bool:
+    """Return whether ``rel`` is left-functional (is a function).
 
-    :return: ``True`` if ``rel`` is :term:`left-functional` or `Undef()` if ``rel`` is not a
-        :term:`relation`.
+    :return: ``True`` if ``rel`` is a :term:`function`, ``False`` if not, or `Undef()` if ``rel`` is
+        not a :term:`relation`.
     """
     if _checked:
         if not is_member(rel):
             return _make_or_raise_undef()
     else:
         assert is_member(rel)
-    if not rel.cached_is_left_functional and not rel.cached_is_not_left_functional:
+    if not rel.cached_is_functional and not rel.cached_is_not_functional:
         left_set = get_lefts(rel, _checked=False)
-        rel.cache_is_left_functional(left_set.cardinality == rel.cardinality)
-    return rel.cached_is_left_functional
+        rel.cache_is_functional(left_set.cardinality == rel.cardinality)
+    return rel.cached_is_functional
 
 
 def is_right_functional(rel, _checked=True) -> bool:
-    """Return ``True`` if ``rel`` is :term:`right-functional`.
+    """Return whether ``rel`` is right-functional.
 
-    :return: ``True`` if ``rel`` is :term:`right-functional` or `Undef()` if ``rel`` is not a
-        :term:`relation`.
+    :return: ``True`` if ``rel`` is :term:`right-functional`, ``False`` if not, or `Undef()` if
+        ``rel`` is not a :term:`relation`.
     """
     if _checked:
         if not is_member(rel):
@@ -295,10 +315,10 @@ def is_right_functional(rel, _checked=True) -> bool:
 
 
 def is_reflexive(rel, _checked=True) -> bool:
-    """Return ``True`` if ``rel`` is :term:`reflexive`.
+    """Return whether ``rel`` is reflexive.
 
-    :return: ``True`` if ``rel`` is :term:`reflexive` or `Undef()` if ``rel`` is not a
-        :term:`relation`.
+    :return: ``True`` if ``rel`` is :term:`reflexive`, ``False`` if it is not, or `Undef()` if
+        ``rel`` is not a :term:`relation`.
     """
     if _checked:
         if not is_member(rel):
@@ -312,10 +332,10 @@ def is_reflexive(rel, _checked=True) -> bool:
 
 
 def is_symmetric(rel, _checked=True) -> bool:
-    """Return ``True`` if ``rel`` is :term:`symmetric`.
+    """Return whether ``rel`` is symmetric.
 
-    :return: ``True`` if ``rel`` is :term:`symmetric` or `Undef()` if ``rel`` is not a
-        :term:`relation`.
+    :return: ``True`` if ``rel`` is :term:`symmetric`, ``False`` if it is not, or `Undef()` if
+        ``rel`` is not a :term:`relation`.
     """
     if _checked:
         if not is_member(rel):
@@ -330,10 +350,10 @@ def is_symmetric(rel, _checked=True) -> bool:
 
 
 def is_transitive(rel, _checked=True) -> bool:
-    """Return ``True`` if ``rel`` is :term:`transitive`.
+    """Return whether ``rel`` is transitive.
 
-    :return: ``True`` if ``rel`` is :term:`transitive` or `Undef()` if ``rel`` is not a
-        :term:`relation`.
+    :return: ``True`` if ``rel`` is :term:`transitive`, ``False`` if it is not, or `Undef()` if
+        ``rel`` is not a :term:`relation`.
     """
     if _checked:
         if not is_member(rel):
@@ -353,14 +373,17 @@ def is_transitive(rel, _checked=True) -> bool:
 
 
 def fill_lefts(rel: 'P(M x M)', renames: 'P(M x M)', _checked=True) -> 'P(M x M)':
-    """Return the left components in ``rel`` that are missing in ``renames`` as a diagonal
+    r"""Return the left components in ``rel`` that are missing in ``renames`` as a diagonal
     unioned with ``renames``.
+
+    The purpose is to create a :term:`relation` that can be used with the :term:`composition`
+    operation to change (rename) one or more :term:`left component`\s and leave the rest alone.
 
     :param rel: The :term:`relation` that provides the full :term:`left set`.
     :param renames: A relation where the :term:`right component`\s are meant to be
         :term:`composition` 'origins' and the :term:`left component`\s composition 'targets'.
-    :return: A relation that contains all members of ``lefts`` unioned with a :term:`diagonal`
-        that consists of all left components in ``rel`` that are missing in ``lefts``.
+    :return: A relation that contains all members of ``renames`` unioned with a :term:`diagonal`
+        that consists of all left components in ``rel`` that are missing in ``renames``.
     """
     if _checked:
         if not is_member(rel):
@@ -372,17 +395,18 @@ def fill_lefts(rel: 'P(M x M)', renames: 'P(M x M)', _checked=True) -> 'P(M x M)
         assert is_member(renames)
     missing_lefts = _sets.minus(get_lefts(rel, _checked=False),
                                 get_rights(renames, _checked=False), _checked=False)
-    diag_missing_lefts = diag(*missing_lefts)
+    diag_missing_lefts = diag(*missing_lefts, _checked=False)
     return _sets.union(renames, diag_missing_lefts, _checked=False).cache_is_relation(True)
 
 
 def rename(rel: 'P(M x M)', renames: 'P(M x M)', _checked=True) -> 'P(M x M)':
-    """Return a :term:`relation` where left components in ``rel`` are renamed according to ``renames``.
+    r"""Return a relation where left components in ``rel`` are renamed according to ``renames``.
 
-    :param rel: The relation with the left components to rename.
-    :param renames: A relation where the right components are the current left components in
-        ``rel`` and the  left components are the new left components to use in ``rel``.
-    :return: A version of ``rel`` where the left components of the member couplets are renamed.
+    :param rel: The :term:`relation` with the :term:`left component`\s to rename.
+    :param renames: A relation where the :term:`right component`\s are the current left components
+        in ``rel`` and the  left components are the new left components to use in ``rel``.
+    :return: A version of ``rel`` where some left components of the member :term:`couplet`\s are
+        changed (renamed), according to ``renames``.
     """
     if _checked:
         if not is_member(rel):
@@ -398,12 +422,13 @@ def rename(rel: 'P(M x M)', renames: 'P(M x M)', _checked=True) -> 'P(M x M)':
 
 
 def swap(rel: 'P(M x M)', swaps: 'P(M x M)', _checked=True) -> 'P(M x M)':
-    """Return a :term:`relation` where  components in ``rel`` are swapped according to ``swaps``.
+    r"""Return a relation where  components in ``rel`` are swapped according to ``swaps``.
 
-    :param rel: The relation with the left components to swap.
-    :param swaps: A relation where both right components and left components are current left
-        components in ``rel``.  These left components are swapped.
-    :return: A version of ``rel`` where the left components of the member couplets are swapped.
+    :param rel: The :term:`relation` with the :term:`left component`\s to swap.
+    :param swaps: A relation where both :term:`right component`\s and left components are current
+        left components in ``rel``.  These left components are swapped.
+    :return: A version of ``rel`` where some left components of the member :term:`couplet`\s are
+        swapped, according to ``swaps``.
     """
     if _checked:
         if not is_member(rel):
@@ -418,7 +443,7 @@ def swap(rel: 'P(M x M)', swaps: 'P(M x M)', _checked=True) -> 'P(M x M)':
 
 
 def functional_add(rel: 'P(M x M)', element: 'M x M') -> 'P(M x M)':
-    """Add ``element`` to ``rel`` and return the new :term:`relation`.
+    """Add ``element`` to ``rel`` and return the new relation.
 
     :param rel: The source data. Must be a :term:`relation`. It must not contain a :term:`couplet`
         with the same :term:`left component` as ``element``.
@@ -437,20 +462,20 @@ def functional_add(rel: 'P(M x M)', element: 'M x M') -> 'P(M x M)':
 
 
 def from_dict(dict1: dict) -> 'P(M x M)':
-    """Return a :term:`relation` where the :term:`couplet`\s are the elements of ``dict1``."""
+    r"""Return a :term:`relation` where the :term:`couplet`\s are the elements of ``dict1``."""
     return _mo.Set((_mo.Couplet(left, right) for left, right in dict1.items()),
-                   direct_load=True).cache_is_relation(True).cache_is_left_functional(True)
+                   direct_load=True).cache_is_relation(True).cache_is_functional(True)
 
 
-def diag(*args) -> 'P(M x M)':
+def diag(*args, _checked=True) -> 'P(M x M)':
     """Return the :term:`diagonal` of the set comprising the elements in ``*args``."""
-    return _mo.Set((_mo.Couplet(elem, elem) for elem in args),
-                   direct_load=True).cache_is_left_functional(True)
+    return _mo.Set((_mo.Couplet(
+        elem, direct_load=True if not _checked else False) for elem in args),
+                   direct_load=True).cache_is_relation(True).cache_is_functional(True)
 
 
-def defined_at(rel, left):
-    """Return the ``rel`` if it is defined at left else `Undef()`."""
-    # if rel(left) is Undef():
-    if not rel[left]:
+def defined_at(rel, left, _checked=True):
+    """Return ``rel`` if it has a :term:`couplet` with left component ``left`` else `Undef()`."""
+    if not get_rights_for_left(rel, left, _checked):
         return _make_or_raise_undef(2)
     return rel

@@ -1,7 +1,7 @@
 """Import data from JSON."""
 
-# $Id: json.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: json.py 22690 2015-07-27 20:23:37Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-27 15:23:37 -0500 (Mon, 27 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -22,7 +22,7 @@ def import_json(json_file_or_filepath) -> 'P( A x M )':
     """Import the file ``json_file_or_filepath`` as JSON file and return nested relations.
 
     :param json_file_or_filepath: A file path or a file object of the file to be imported.
-    :return: A nested relation that represents the JSON document.
+    :return: A nested :term:`relation` that represents the JSON document.
     """
     def _process_nodes(nodes):
         for key, value in nodes.items():

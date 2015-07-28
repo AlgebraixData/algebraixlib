@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-"""An executable script that builds the Data Algebra Library's installation package."""
+"""Install algebraixlib or builds its installation package."""
 
-# $Id: setup.py 22624 2015-07-15 21:35:12Z wholler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 16:35:12 -0500 (Wed, 15 Jul 2015) $
+# $Id: setup.py 22690 2015-07-27 20:23:37Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-27 15:23:37 -0500 (Mon, 27 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -21,8 +21,16 @@ from sys import version_info, exit
 from setuptools import setup
 
 # Check python version
-if version_info < (3, 4, 3):
-    exit("This library requires Python 3.4.3 or newer!")
+python_version = str(version_info[0]) + '.' + str(version_info[1]) + '.' + str(version_info[2])
+if version_info < (3, 0):
+    exit('The current Python Version is ' + python_version + '. '
+         + 'This library requires Python Version 3. Exiting.')
+elif version_info < (3, 4):
+    print('Warning: The current Python Version is ' + python_version + '. '
+          + 'This library has been tested with Python Version 3.4.3. Use at your own risk.')
+elif version_info < (3, 4, 3):
+    print('Note: The current Python Version is ' + python_version + '. '
+          + 'This library has been tested with Python Version 3.4.3.')
 
 # Import readme as long description that is used by PyPI as the home page for the library's package.
 with open('README.rst') as file:
@@ -30,7 +38,7 @@ with open('README.rst') as file:
 
 setup(
     name="algebraixlib",
-    version="1.0",
+    version="1.1",
     description="A data algebra library",
     long_description=long_description,
     author="Algebraix Data Corporation",

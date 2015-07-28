@@ -1,7 +1,7 @@
 """Miscellaneous utility functions and classes."""
 
-# $Id: miscellaneous.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: miscellaneous.py 22702 2015-07-28 20:20:56Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -128,8 +128,8 @@ def print_var(variable_name, frames_up: int=0, skip: bool=False, short: bool=Fal
 
 def write_to_file_or_path(file_or_path, data_functor):
     """If ``file_or_path`` is a string, open a file and call ``data_functor`` on it. If it is not a
-    string, assume it is a file-like object (with a .write() function) and call ``data_functor`` on
-    it.
+    string, assume it is a file-like object (with a ``.write()`` function) and call ``data_functor``
+    on it.
 
     :param file_or_path: A string or a file-like object (with a .write() function).
     :param data_functor: A function-like object with one argument that is the writer.
@@ -241,8 +241,7 @@ class FunctionTimer:
             the variable is located.
         """
         print(self.get_indent() + '...{func_name} {label} (elapsed {elapsed_time:.3f} s)'.format(
-            func_name=self.func_name, label=label, elapsed_time=self.get_elapsed_time()),
-            end='')
+            func_name=self.func_name, label=label, elapsed_time=self.get_elapsed_time()), end='')
         if variable_name is not None:
             assert desc is None
             print(': ', end='')

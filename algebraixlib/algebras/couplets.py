@@ -1,7 +1,7 @@
-"""This module contains the :term:`algebra of couplets`."""
+"""This module contains the :term:`algebra of couplets` and related functionality."""
 
-# $Id: couplets.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: couplets.py 22702 2015-07-28 20:20:56Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -20,6 +20,8 @@ import algebraixlib.structure as _structure
 from algebraixlib.undef import make_or_raise_undef as _make_or_raise_undef
 
 
+# --------------------------------------------------------------------------------------------------
+
 class Algebra:
     """Provide the operations and relations that are members of the :term:`algebra of couplets`.
 
@@ -27,12 +29,12 @@ class Algebra:
     and highlight the operations and relations that belong to the algebra of couplets. All member
     functions are also available at the enclosing module scope.
     """
-    # --------------------------------------------------------------------------------------------------
+    # ----------------------------------------------------------------------------------------------
     # Unary algebra operations.
 
     @staticmethod
     def transpose(couplet: '(M x M)', _checked=True) -> '(M x M)':
-        """Return the :term:`transposition` of ``couplet``.
+        """Return the transposition of ``couplet`` (right and left components swapped).
 
         :return: The :term:`transposition` of ``couplet`` or `Undef()` if ``couplet`` is not an
             instance of :class:`~.Couplet`.
@@ -44,12 +46,12 @@ class Algebra:
             assert is_member(couplet)
         return _mo.Couplet(left=couplet.right, right=couplet.left, direct_load=True)
 
-    # --------------------------------------------------------------------------------------------------
+    # ----------------------------------------------------------------------------------------------
     # Binary algebra operations.
 
     @staticmethod
     def compose(couplet1: '(M x M)', couplet2: '(M x M)', _checked=True) -> '(M x M)':
-        """Return the :term:`composition` of ``couplet1`` with ``couplet2``.
+        """Return the composition of ``couplet1`` with ``couplet2``.
 
         :return: The :term:`composition` of ``couplet1`` with ``couplet2`` (which may be undefined,
             in which case the result is `Undef()`) or `Undef()` if ``couplet1`` or ``couplet2`` are
@@ -67,7 +69,13 @@ class Algebra:
             return _make_or_raise_undef(2)
         return _mo.Couplet(left=couplet2.left, right=couplet1.right, direct_load=True)
 
+
+# For convenience, make the members of class Algebra (they are all static functions) available at
+# the module level.
+
+#: Convenience redirection to `Algebra.transpose`.
 transpose = Algebra.transpose
+#: Convenience redirection to `Algebra.compose`.
 compose = Algebra.compose
 
 
@@ -91,18 +99,18 @@ def get_absolute_ground_set() -> _structure.Structure:
 
 
 def is_member(obj: _mo.MathObject) -> bool:
-    """Return ``True`` if ``obj`` is a member of the :term:`ground set` of this :term:`algebra`.
+    """Return whether ``obj`` is a member of the :term:`ground set` of this :term:`algebra`.
 
-     :return: ``True`` if ``obj`` is an instance of :class:`~.Couplet`.
+     :return: ``True`` if ``obj`` is an instance of :class:`~.Couplet`, ``False`` if not.
     """
     _mo.raise_if_not_mathobject(obj)
     return isinstance(obj, _mo.Couplet)
 
 
 def is_absolute_member(obj: _mo.MathObject) -> bool:
-    """Return ``True`` if ``obj`` is a member of the :term:`absolute ground set` of this algebra.
+    """Return whether ``obj`` is a member of the :term:`absolute ground set` of this algebra.
 
-     :return: ``True`` if ``obj`` is an :term:`absolute couplet`.
+     :return: ``True`` if ``obj`` is an :term:`absolute couplet`, ``False`` if not.
 
     .. note:: This function calls :meth:`~.MathObject.get_ground_set` on ``obj``.
     """

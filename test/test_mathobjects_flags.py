@@ -1,7 +1,7 @@
 """Testing the mathobjects.flags module."""
 
-# $Id: test_mathobjects_flags.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: test_mathobjects_flags.py 22698 2015-07-28 17:09:23Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 12:09:23 -0500 (Tue, 28 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -20,7 +20,8 @@ import os
 import unittest
 from ctypes import c_uint32
 
-from algebraixlib.mathobjects.flags import Flags
+# noinspection PyProtectedMember
+from algebraixlib.mathobjects._flags import Flags
 
 
 class MathObjectFlagsTest(unittest.TestCase):

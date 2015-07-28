@@ -1,7 +1,7 @@
-"""Addition to unittest to be able to create non-failing 'expect'-like tests."""
+"""Test utilities."""
 
-# $Id: test.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# $Id: test.py 22692 2015-07-27 23:21:10Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-27 18:21:10 -0500 (Mon, 27 Jul 2015) $
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -15,15 +15,15 @@
 # You should have received a copy of the GNU Lesser General Public License along with algebraixlib.
 # If not, see <http://www.gnu.org/licenses/>.
 # --------------------------------------------------------------------------------------------------
-import inspect
-import os
-import unittest
+import os.path as _path
 
 import algebraixlib.mathobjects as _mo
 
 
+# --------------------------------------------------------------------------------------------------
+
 def create_test_object(obj: object, msg: str, val: object=None) -> object:
-    """Add the content of msg and optionally val as properties to obj.
+    """Add the content of ``msg`` and optionally ``val`` as properties to ``obj``.
 
     :param obj: The object to be 'decorated'.
     :param msg: Added as property '_test_msg' to obj.
@@ -37,7 +37,7 @@ def create_test_object(obj: object, msg: str, val: object=None) -> object:
 
 
 def assert_mathobjects(mo: _mo.MathObject) -> bool:
-    """Return True if and only if all elements in mo are instances of MathObject."""
+    """Return ``True`` if and only if all elements in ``mo`` are instances of `MathObject`."""
     if isinstance(mo, _mo.Set):
         result = True
         for elem in mo:
@@ -55,27 +55,30 @@ def assert_mathobjects(mo: _mo.MathObject) -> bool:
 def get_test_file_name(test_module: str, file_id: str) -> str:
     """Return the file name of a test file.
 
-    Test file names are composed of the test test_module file's base name with an appended dash
+    Test file names are composed of the test ``test_module`` file's base name with an appended dash
     ('-') and an identifying ``file_id``. ``file_id`` should end with the desired file extension.
 
     :param test_module: The name of the test to which the test file belongs. Typically
-        this will be `__file__`.
+        this will be passed as `__file__`.
     :param file_id: The identification of the file (final part of the name, including extension).
+        This function guarantees that there are no conflicts with outher test modules.
     """
-    name = os.path.basename(test_module)
+    name = _path.basename(test_module)
     assert name.endswith('.py')
     name = name[:-3]
     return name + '-' + file_id
 
 
 def get_test_file_path(test_module: str, file_id: str) -> str:
-    """Return the (absolute) file path of a test file. Test file names are composed
+    """Return the (absolute) file path of a test file.
 
-    :param test_module: The name of the test test_module to which the test file belongs. Typically
-        this will be `__file__`.
+    The file name is generated with `get_test_file_name`.
+
+    :param test_module: The name of the test to which the test file belongs. Typically
+        this will be passed as `__file__`.
     :param file_id: The identification of the file (final part of the name, including extension).
     """
-    return os.path.abspath(os.path.join(
-        os.path.dirname(test_module),
+    return _path.abspath(_path.join(
+        _path.dirname(test_module),
         get_test_file_name(test_module, file_id)
     ))
