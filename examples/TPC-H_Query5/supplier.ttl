@@ -1,0 +1,70 @@
+<tpch:supplier-1> <tpch:acctbal> 5755.94 .
+<tpch:supplier-1> <tpch:address> " N kD4on9OM Ipw3,gf0JBoQDd7tgrzrddZ" .
+<tpch:supplier-1> <tpch:comment> "each slyly above the careful" .
+<tpch:supplier-1> <tpch:name> "Supplier#000000001" .
+<tpch:supplier-1> <tpch:nationkey> 17 .
+<tpch:supplier-1> <tpch:phone> "27-918-335-1736" .
+<tpch:supplier-1> <tpch:suppkey> 1 .
+<tpch:supplier-2> <tpch:acctbal> 4032.68 .
+<tpch:supplier-2> <tpch:address> "89eJ5ksX3ImxJQBvxObC," .
+<tpch:supplier-2> <tpch:comment> " slyly bold instructions. idle dependen" .
+<tpch:supplier-2> <tpch:name> "Supplier#000000002" .
+<tpch:supplier-2> <tpch:nationkey> 5 .
+<tpch:supplier-2> <tpch:phone> "15-679-861-2259" .
+<tpch:supplier-2> <tpch:suppkey> 2 .
+<tpch:supplier-3> <tpch:acctbal> 4192.40 .
+<tpch:supplier-3> <tpch:address> "q1,G3Pj6OjIuUYfUoH18BFTKP5aU9bEV3" .
+<tpch:supplier-3> <tpch:comment> "blithely silent requests after the express dependencies are sl" .
+<tpch:supplier-3> <tpch:name> "Supplier#000000003" .
+<tpch:supplier-3> <tpch:nationkey> 1 .
+<tpch:supplier-3> <tpch:phone> "11-383-516-1199" .
+<tpch:supplier-3> <tpch:suppkey> 3 .
+<tpch:supplier-4> <tpch:acctbal> 4641.08 .
+<tpch:supplier-4> <tpch:address> "Bk7ah4CK8SYQTepEmvMkkgMwg" .
+<tpch:supplier-4> <tpch:comment> "riously even requests above the exp" .
+<tpch:supplier-4> <tpch:name> "Supplier#000000004" .
+<tpch:supplier-4> <tpch:nationkey> 15 .
+<tpch:supplier-4> <tpch:phone> "25-843-787-7479" .
+<tpch:supplier-4> <tpch:suppkey> 4 .
+<tpch:supplier-5> <tpch:acctbal> -283.84 .
+<tpch:supplier-5> <tpch:address> "Gcdm2rJRzl5qlTVzc" .
+<tpch:supplier-5> <tpch:comment> ". slyly regular pinto bea" .
+<tpch:supplier-5> <tpch:name> "Supplier#000000005" .
+<tpch:supplier-5> <tpch:nationkey> 11 .
+<tpch:supplier-5> <tpch:phone> "21-151-690-3663" .
+<tpch:supplier-5> <tpch:suppkey> 5 .
+<tpch:supplier-6> <tpch:acctbal> 1365.79 .
+<tpch:supplier-6> <tpch:address> "tQxuVm7s7CnK" .
+<tpch:supplier-6> <tpch:comment> "final accounts. regular dolphins use against the furiously ironic decoys. " .
+<tpch:supplier-6> <tpch:name> "Supplier#000000006" .
+<tpch:supplier-6> <tpch:nationkey> 14 .
+<tpch:supplier-6> <tpch:phone> "24-696-997-4969" .
+<tpch:supplier-6> <tpch:suppkey> 6 .
+<tpch:supplier-7> <tpch:acctbal> 6820.35 .
+<tpch:supplier-7> <tpch:address> "s,4TicNGB4uO6PaSqNBUq" .
+<tpch:supplier-7> <tpch:comment> "s unwind silently furiously regular courts. final requests are deposits. requests wake quietly blit" .
+<tpch:supplier-7> <tpch:name> "Supplier#000000007" .
+<tpch:supplier-7> <tpch:nationkey> 23 .
+<tpch:supplier-7> <tpch:phone> "33-990-965-2201" .
+<tpch:supplier-7> <tpch:suppkey> 7 .
+<tpch:supplier-8> <tpch:acctbal> 7627.85 .
+<tpch:supplier-8> <tpch:address> "9Sq4bBH2FQEmaFOocY45sRTxo6yuoG" .
+<tpch:supplier-8> <tpch:comment> "al pinto beans. asymptotes haggl" .
+<tpch:supplier-8> <tpch:name> "Supplier#000000008" .
+<tpch:supplier-8> <tpch:nationkey> 17 .
+<tpch:supplier-8> <tpch:phone> "27-498-742-3860" .
+<tpch:supplier-8> <tpch:suppkey> 8 .
+<tpch:supplier-9> <tpch:acctbal> 5302.37 .
+<tpch:supplier-9> <tpch:address> "1KhUgZegwM3ua7dsYmekYBsK" .
+<tpch:supplier-9> <tpch:comment> "s. unusual, even requests along the furiously regular pac" .
+<tpch:supplier-9> <tpch:name> "Supplier#000000009" .
+<tpch:supplier-9> <tpch:nationkey> 10 .
+<tpch:supplier-9> <tpch:phone> "20-403-398-8662" .
+<tpch:supplier-9> <tpch:suppkey> 9 .
+<tpch:supplier-10> <tpch:acctbal> 3891.91 .
+<tpch:supplier-10> <tpch:address> "Saygah3gYWMp72i PY" .
+<tpch:supplier-10> <tpch:comment> "ing waters. regular requests ar" .
+<tpch:supplier-10> <tpch:name> "Supplier#000000010" .
+<tpch:supplier-10> <tpch:nationkey> 24 .
+<tpch:supplier-10> <tpch:phone> "34-852-489-8585" .
+<tpch:supplier-10> <tpch:suppkey> 10 .

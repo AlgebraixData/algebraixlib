@@ -1,0 +1,16 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+
+# Sphinx documentation
+docs/_build/
+
+# IPython notebooks
+.ipynb_checkpoints/
+
+# PyCharm
+.idea
+
+#PyPI account information
+.pypirc
+algebraixlib.egg-info
