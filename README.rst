@@ -17,8 +17,6 @@
    This file is not included via toctree. Mark it as orphan to suppress the warning that it isn't
    included in any toctree.
 
-:orphan:
-
 |logo|_
 
 algebraixlib
