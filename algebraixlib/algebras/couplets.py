@@ -1,12 +1,7 @@
 """This module contains the :term:`algebra of couplets` and related functionality."""
 
-<<<<<<< HEAD
 # $Id: couplets.py 22804 2015-08-14 17:43:32Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-14 12:43:32 -0500 (Fri, 14 Aug 2015) $
-=======
-# $Id: couplets.py 22702 2015-07-28 20:20:56Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -22,11 +17,7 @@
 # --------------------------------------------------------------------------------------------------
 import algebraixlib.mathobjects as _mo
 import algebraixlib.structure as _structure
-<<<<<<< HEAD
 import algebraixlib.undef as _undef
-=======
-from algebraixlib.undef import make_or_raise_undef as _make_or_raise_undef
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 # --------------------------------------------------------------------------------------------------
@@ -50,19 +41,12 @@ class Algebra:
         """
         if _checked:
             if not is_member(couplet):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
         else:
             assert is_member(couplet)
         result = _mo.Couplet(left=couplet.right, right=couplet.left, direct_load=True)
         result.cache_absolute(couplet.cached_absolute).cache_reflexive(couplet.cached_reflexive)
         return result
-=======
-                return _make_or_raise_undef()
-        else:
-            assert is_member(couplet)
-        return _mo.Couplet(left=couplet.right, right=couplet.left, direct_load=True)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     # ----------------------------------------------------------------------------------------------
     # Binary algebra operations.
@@ -77,44 +61,28 @@ class Algebra:
         """
         if _checked:
             if not is_member(couplet1):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
             if not is_member(couplet2):
                 return _undef.make_or_raise_undef()
-=======
-                return _make_or_raise_undef()
-            if not is_member(couplet2):
-                return _make_or_raise_undef()
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         else:
             assert is_member(couplet1)
             assert is_member(couplet2)
         if couplet1.left != couplet2.right:
-<<<<<<< HEAD
             return _undef.make_or_raise_undef(2)
-=======
-            return _make_or_raise_undef(2)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         return _mo.Couplet(left=couplet2.left, right=couplet1.right, direct_load=True)
 
 
 # For convenience, make the members of class Algebra (they are all static functions) available at
 # the module level.
 
-<<<<<<< HEAD
 # pylint: disable=invalid-name
 
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #: Convenience redirection to `Algebra.transpose`.
 transpose = Algebra.transpose
 #: Convenience redirection to `Algebra.compose`.
 compose = Algebra.compose
 
-<<<<<<< HEAD
 # pylint: enable=invalid-name
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 # --------------------------------------------------------------------------------------------------
 # Metadata functions.
@@ -138,23 +106,15 @@ def get_absolute_ground_set() -> _structure.Structure:
 def is_member(obj: _mo.MathObject) -> bool:
     """Return whether ``obj`` is a member of the :term:`ground set` of this :term:`algebra`.
 
-<<<<<<< HEAD
      :return: ``True`` if ``obj`` is a :term:`couplet` (an instance of :class:`~.Couplet`),
         ``False`` if not.
     """
     return obj.is_couplet
-=======
-     :return: ``True`` if ``obj`` is an instance of :class:`~.Couplet`, ``False`` if not.
-    """
-    _mo.raise_if_not_mathobject(obj)
-    return isinstance(obj, _mo.Couplet)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 def is_absolute_member(obj: _mo.MathObject) -> bool:
     """Return whether ``obj`` is a member of the :term:`absolute ground set` of this algebra.
 
-<<<<<<< HEAD
     :type obj: _mo.MathObject|_mo.Couplet
     :return: ``True`` if ``obj`` is an :term:`absolute couplet`, ``False`` if not.
     """
@@ -186,11 +146,3 @@ def is_reflexive(couplet: '(M x M)', _checked=True) -> bool:
         reflexive = (couplet.left == couplet.right)
         couplet.cache_reflexive(_mo.CacheStatus.from_bool(reflexive))
     return couplet.cached_reflexive == _mo.CacheStatus.IS
-=======
-     :return: ``True`` if ``obj`` is an :term:`absolute couplet`, ``False`` if not.
-
-    .. note:: This function calls :meth:`~.MathObject.get_ground_set` on ``obj``.
-    """
-    _mo.raise_if_not_mathobject(obj)
-    return obj.get_ground_set().is_subset(get_absolute_ground_set())
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272

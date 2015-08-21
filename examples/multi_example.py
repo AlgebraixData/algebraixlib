@@ -2,11 +2,7 @@
 multiples.
 """
 
-<<<<<<< HEAD
 # $Id: multi_example.py 22799 2015-08-14 14:56:45Z gfiedler $
-=======
-# $Id: multi_example.py 22698 2015-07-28 17:09:23Z gfiedler $
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 # Copyright Algebraix Data Corporation 2015 - $$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
@@ -54,11 +50,7 @@ if ms_4 == simple_intersect:
           "result multiset.\n")
 
 # Multiset Addition operation Example
-<<<<<<< HEAD
 simple_addition = _multisets.add(ms_1, ms_2)
-=======
-simple_addition = _multisets.addition(ms_1, ms_2)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 print(str(ms_1) + ' ADDITION ' + str(ms_2))
 print('=> EVALUATES TO ' + str(simple_addition))

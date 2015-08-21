@@ -4,13 +4,8 @@ A :term:`multiclan` is also a :term:`multiset` (of :term:`relation`\s), and inhe
 of the :term:`algebra of multisets`. These are provided in :mod:`~.algebras.multisets`.
 """
 
-<<<<<<< HEAD
 # $Id: multiclans.py 22804 2015-08-14 17:43:32Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-14 12:43:32 -0500 (Fri, 14 Aug 2015) $
-=======
-# $Id: multiclans.py 22702 2015-07-28 20:20:56Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -31,11 +26,7 @@ import algebraixlib.algebras.sets as _sets
 import algebraixlib.mathobjects as _mo
 import algebraixlib.extension as _extension
 import algebraixlib.structure as _structure
-<<<<<<< HEAD
 import algebraixlib.undef as _undef
-=======
-from algebraixlib.undef import make_or_raise_undef as _make_or_raise_undef
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 # --------------------------------------------------------------------------------------------------
@@ -60,7 +51,6 @@ class Algebra:
         """
         if _checked:
             if not is_member(multiclan):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
         else:
             assert is_member(multiclan)
@@ -77,13 +67,6 @@ class Algebra:
             result.cache_regular(multiclan.cached_right_regular)
             result.cache_right_regular(multiclan.cached_regular)
         return result
-=======
-                return _make_or_raise_undef()
-        else:
-            assert is_member(multiclan)
-        return _extension.unary_multi_extend(multiclan, _functools.partial(
-            _relations.transpose, _checked=False), _checked=False)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     # ----------------------------------------------------------------------------------------------
     # Binary algebra operations.
@@ -100,7 +83,6 @@ class Algebra:
         """
         if _checked:
             if not is_member(multiclan1):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
             if not is_member(multiclan2):
                 return _undef.make_or_raise_undef()
@@ -173,58 +155,6 @@ class Algebra:
             if mclan1.cached_is_not_right_functional or mclan2.cached_is_not_right_functional:
                 result.cache_right_functional(_mo.CacheStatus.IS_NOT)
         return result
-=======
-                return _make_or_raise_undef()
-            if not is_member(multiclan2):
-                return _make_or_raise_undef()
-        else:
-            assert is_member(multiclan1)
-            assert is_member(multiclan2)
-        return _extension.binary_multi_extend(multiclan1, multiclan2, _functools.partial(
-            _relations.compose, _checked=False), _checked=False)
-
-    @staticmethod
-    def cross_union(multiclan1: 'P(P(M x M) x N)', multiclan2: 'P(P(M x M) x N)',
-                    _checked=True) -> 'P(P(M x M) x N)':
-        r"""Return the :term:`cross-union` of ``multiclan1`` and ``multiclan2``.
-
-        :return: The :term:`binary multi-extension` of :term:`union` from the
-            :term:`algebra of relations` (which inherits it from the :term:`algebra of sets`)
-            to the :term:`algebra of multiclans` applied to ``multiclan1`` and ``multiclan2``,
-            or `Undef()` if ``multiclan1`` or ``multiclan2`` are not :term:`multiclan`\s.
-        """
-        if _checked:
-            if not is_member(multiclan1):
-                return _make_or_raise_undef()
-            if not is_member(multiclan2):
-                return _make_or_raise_undef()
-        else:
-            assert is_member(multiclan1)
-            assert is_member(multiclan2)
-        return _extension.binary_multi_extend(multiclan1, multiclan2, _functools.partial(
-            _sets.union, _checked=False), _checked=False)
-
-    @staticmethod
-    def cross_functional_union(multiclan1: 'P(P(M x M) x N)', multiclan2: 'P(P(M x M) x N)',
-                               _checked=True) -> 'P(P(M x M) x N)':
-        r"""Return the :term:`cross-functional union` of ``multiclan1`` and ``multiclan2``.
-
-        :return: The :term:`binary multi-extension` of the :term:`functional union` from the
-            :term:`algebra of relations` to the :term:`algebra of multiclans`, applied to
-            ``multiclan1`` and ``multiclan2``, or `Undef()` if ``multiclan1`` or ``multiclan2`` are
-            not :term:`multiclan`\s.
-        """
-        if _checked:
-            if not is_member(multiclan1):
-                return _make_or_raise_undef()
-            if not is_member(multiclan2):
-                return _make_or_raise_undef()
-        else:
-            assert is_member(multiclan1)
-            assert is_member(multiclan2)
-        return _extension.binary_multi_extend(multiclan1, multiclan2, _functools.partial(
-            _relations.functional_union, _checked=False), _checked=False)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     @staticmethod
     def cross_right_functional_union(
@@ -239,7 +169,6 @@ class Algebra:
         """
         if _checked:
             if not is_member(multiclan1):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
             if not is_member(multiclan2):
                 return _undef.make_or_raise_undef()
@@ -254,16 +183,6 @@ class Algebra:
             if multiclan1.cached_is_not_functional or multiclan2.cached_is_not_functional:
                 result.cache_functional(_mo.CacheStatus.IS_NOT)
         return result
-=======
-                return _make_or_raise_undef()
-            if not is_member(multiclan2):
-                return _make_or_raise_undef()
-        else:
-            assert is_member(multiclan1)
-            assert is_member(multiclan2)
-        return _extension.binary_multi_extend(multiclan1, multiclan2, _functools.partial(
-            _relations.right_functional_union, _checked=False), _checked=False)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     @staticmethod
     def cross_intersect(multiclan1: 'P(P(M x M) x N)', multiclan2: 'PP(M x M)',
@@ -277,7 +196,6 @@ class Algebra:
         """
         if _checked:
             if not is_member(multiclan1):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
             if not is_member(multiclan2):
                 return _undef.make_or_raise_undef()
@@ -293,16 +211,6 @@ class Algebra:
             if multiclan1.cached_is_right_functional or multiclan2.cached_is_right_functional:
                 result.cache_right_functional(_mo.CacheStatus.IS)
         return result
-=======
-                return _make_or_raise_undef()
-            if not is_member(multiclan2):
-                return _make_or_raise_undef()
-        else:
-            assert is_member(multiclan1)
-            assert is_member(multiclan2)
-        return _extension.binary_multi_extend(multiclan1, multiclan2, _functools.partial(
-            _sets.intersect, _checked=False), _checked=False)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     @staticmethod
     def substrict(multiclan1: 'P(P(M x M) x N)', multiclan2: 'P(P(M x M) x N)',
@@ -320,7 +228,6 @@ class Algebra:
         """
         if _checked:
             if not is_member(multiclan1):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
             if not is_member(multiclan2):
                 return _undef.make_or_raise_undef()
@@ -346,16 +253,6 @@ class Algebra:
             if multiclan1.cached_is_right_regular:
                 result.cache_right_regular(_mo.CacheStatus.IS)
         return result
-=======
-                return _make_or_raise_undef()
-            if not is_member(multiclan2):
-                return _make_or_raise_undef()
-        else:
-            assert is_member(multiclan1)
-            assert is_member(multiclan2)
-        return _extension.binary_multi_extend(multiclan1, multiclan2, _functools.partial(
-            _sets.substrict, _checked=False), _checked=False)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     @staticmethod
     def superstrict(multiclan1: 'P(P(M x M) x N)', multiclan2: 'P(P(M x M) x N)',
@@ -373,7 +270,6 @@ class Algebra:
         """
         if _checked:
             if not is_member(multiclan1):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
             if not is_member(multiclan2):
                 return _undef.make_or_raise_undef()
@@ -399,26 +295,13 @@ class Algebra:
             if multiclan1.cached_is_right_regular:
                 result.cache_right_regular(_mo.CacheStatus.IS)
         return result
-=======
-                return _make_or_raise_undef()
-            if not is_member(multiclan2):
-                return _make_or_raise_undef()
-        else:
-            assert is_member(multiclan1)
-            assert is_member(multiclan2)
-        return _extension.binary_multi_extend(multiclan1, multiclan2, _functools.partial(
-            _sets.superstrict, _checked=False), _checked=False)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 # For convenience, make the members of class Algebra (they are all static functions) available at
 # the module level.
 
-<<<<<<< HEAD
 # pylint: disable=invalid-name
 
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #: Convenience redirection to `Algebra.transpose`.
 transpose = Algebra.transpose
 #: Convenience redirection to `Algebra.compose`.
@@ -436,10 +319,7 @@ substrict = Algebra.substrict
 #: Convenience redirection to `Algebra.superstrict`.
 superstrict = Algebra.superstrict
 
-<<<<<<< HEAD
 # pylint: enable=invalid-name
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 # --------------------------------------------------------------------------------------------------
 # Metadata functions.
@@ -464,7 +344,6 @@ def get_absolute_ground_set() -> _structure.Structure:
 def is_member(obj: _mo.MathObject) -> bool:
     """Return whether ``obj`` is a member of the :term:`ground set` of this :term:`algebra`.
 
-<<<<<<< HEAD
      :return: ``True`` if ``obj`` is a :term:`multiclan`, ``False`` if not.
 
     .. note:: This function may call :meth:`~.MathObject.get_ground_set` on ``obj``. The result of
@@ -473,13 +352,6 @@ def is_member(obj: _mo.MathObject) -> bool:
     if obj.cached_multiclan == _mo.CacheStatus.UNKNOWN:
         is_multiclan = obj.get_ground_set().is_subset(get_ground_set())
         obj.cache_multiclan(_mo.CacheStatus.from_bool(is_multiclan))
-=======
-    .. note:: This function calls :meth:`~.MathObject.get_ground_set` on ``obj``.
-    """
-    _mo.raise_if_not_mathobject(obj)
-    if not obj.cached_is_multiclan and not obj.cached_is_not_multiclan:
-        obj.cache_is_multiclan(obj.get_ground_set().is_subset(get_ground_set()))
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     return obj.cached_is_multiclan
 
 
@@ -488,7 +360,6 @@ def is_absolute_member(obj: _mo.MathObject) -> bool:
 
      :return: ``True`` if ``obj`` is an :term:`absolute clan`, ``False`` if not.
 
-<<<<<<< HEAD
     .. note:: This function may call :meth:`~.MathObject.get_ground_set` on ``obj``. The result
         of this operation is cached.
     """
@@ -693,9 +564,3 @@ def is_transitive(mclan, _checked=True) -> bool:
         transitive = all(_relations.is_transitive(rel, _checked=False) for rel in mclan.data)
         mclan.cache_transitive(_mo.CacheStatus.from_bool(transitive))
     return mclan.cached_transitive == _mo.CacheStatus.IS
-=======
-    .. note:: This function calls :meth:`~.MathObject.get_ground_set` on ``obj``.
-    """
-    _mo.raise_if_not_mathobject(obj)
-    return obj.get_ground_set().is_subset(get_absolute_ground_set())
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272

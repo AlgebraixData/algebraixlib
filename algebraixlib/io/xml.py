@@ -1,12 +1,7 @@
 """Import data from XML."""
 
-<<<<<<< HEAD
 # $Id: xml.py 22802 2015-08-14 16:31:22Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-14 11:31:22 -0500 (Fri, 14 Aug 2015) $
-=======
-# $Id: xml.py 22690 2015-07-27 20:23:37Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-27 15:23:37 -0500 (Mon, 27 Jul 2015) $
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -58,17 +53,10 @@ def import_xml(xml_file_or_filepath, convert_numerics: bool=False) -> 'P( A x M 
 
     text_left = _mo.Atom('$')
 
-<<<<<<< HEAD
     def _contains_text_node(set_: set) -> bool:
         # Return True if set_ (a set of Couplets) contains a couplet with the left component
         # text_left.
         for couplet in set_:
-=======
-    def _contains_text_node(set1: set) -> bool:
-        # Return True if set1 (a set of Couplets) contains a couplet with the left component
-        # text_left.
-        for couplet in set1:
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
             if couplet.left == text_left:
                 return True
         return False
@@ -113,7 +101,6 @@ def import_xml(xml_file_or_filepath, convert_numerics: bool=False) -> 'P( A x M 
     else:
         with open(xml_file_or_filepath, encoding='utf-8') as file:
             return _import_xml(file)
-<<<<<<< HEAD
 
 
 def xml_to_str(xml_file_or_filepath, indent_text='   ', truncate=True, max_line_len=95,
@@ -160,5 +147,3 @@ def xml_to_str(xml_file_or_filepath, indent_text='   ', truncate=True, max_line_
 
     return xml_str
 
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272

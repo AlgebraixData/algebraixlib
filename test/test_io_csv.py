@@ -1,12 +1,7 @@
 """Testing the io.csv module."""
 
-<<<<<<< HEAD
 # $Id: test_io_csv.py 22724 2015-08-03 23:40:02Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-03 18:40:02 -0500 (Mon, 03 Aug 2015) $
-=======
-# $Id: test_io_csv.py 22667 2015-07-23 22:52:32Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-23 17:52:32 -0500 (Thu, 23 Jul 2015) $
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -25,11 +20,7 @@ import os
 import unittest
 
 from algebraixlib.io.csv import import_csv
-<<<<<<< HEAD
 from algebraixlib.mathobjects import CacheStatus, Couplet, Set
-=======
-from algebraixlib.mathobjects import Couplet, Set
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 class IoCsvTests(unittest.TestCase):
@@ -43,58 +34,34 @@ class IoCsvTests(unittest.TestCase):
         clan = Set({Set({Couplet('a', '1'), Couplet('b', '2')})})
         st1 = import_csv(IoCsvTests.path('set1.csv'))
         self.assertEqual(clan, st1)
-<<<<<<< HEAD
         self.assertEqual(st1.cached_clan, CacheStatus.IS)
         self.assertEqual(st1.cached_functional, CacheStatus.IS)
         self.assertEqual(st1.cached_regular, CacheStatus.IS)
-=======
-        self.assertTrue(st1.cached_is_clan)
-        self.assertTrue(st1.cached_is_functional)
-        self.assertTrue(st1.cached_is_regular)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
         clan = Set({Set({Couplet('a', '1'), Couplet('b', '2')})})
         st1a = import_csv(IoCsvTests.path('set1a.csv'))
         # NOTE: duplicate row is removed
         self.assertEqual(clan, st1a)
-<<<<<<< HEAD
         self.assertEqual(st1a.cached_clan, CacheStatus.IS)
         self.assertEqual(st1a.cached_functional, CacheStatus.IS)
         self.assertEqual(st1a.cached_regular, CacheStatus.IS)
-=======
-        self.assertTrue(st1a.cached_is_clan)
-        self.assertTrue(st1a.cached_is_functional)
-        self.assertTrue(st1a.cached_is_regular)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
         clan = Set(Set({Couplet('a', '1'), Couplet('b', '2'), Couplet('row', 0)}),
                    Set({Couplet('a', '1'), Couplet('b', '2'), Couplet('row', 1)}))
         st1a = import_csv(IoCsvTests.path('set1a.csv'), index_column='row')
         # NOTE: duplicate row is NOT removed
         self.assertEqual(clan, st1a)
-<<<<<<< HEAD
         self.assertEqual(st1a.cached_clan, CacheStatus.IS)
         self.assertEqual(st1a.cached_functional, CacheStatus.IS)
         self.assertEqual(st1a.cached_regular, CacheStatus.IS)
-=======
-        self.assertTrue(st1a.cached_is_clan)
-        self.assertTrue(st1a.cached_is_functional)
-        self.assertTrue(st1a.cached_is_regular)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
         clan = Set({Set({Couplet('a', '1'), Couplet('b', '2')}),
                     Set({Couplet('a', '3'), Couplet('b', '4')})})
         st2 = import_csv(IoCsvTests.path('set2.csv'))
         self.assertEqual(clan, st2)
-<<<<<<< HEAD
         self.assertEqual(st2.cached_clan, CacheStatus.IS)
         self.assertEqual(st2.cached_functional, CacheStatus.IS)
         self.assertEqual(st2.cached_regular, CacheStatus.IS)
-=======
-        self.assertTrue(st2.cached_is_clan)
-        self.assertTrue(st2.cached_is_functional)
-        self.assertTrue(st2.cached_is_regular)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
         clan = Set(Set([Couplet(s, c) for s, c in zip('abcd', [1, 2, 3, 4])]),
                    Set([Couplet(s, c) for s, c in zip('abc', [5, 6, 7])]),
@@ -104,15 +71,9 @@ class IoCsvTests(unittest.TestCase):
         # print("expected", clan)
         # print("actual", st3)
         self.assertEqual(clan, st3)
-<<<<<<< HEAD
         self.assertEqual(st3.cached_clan, CacheStatus.IS)
         self.assertEqual(st3.cached_functional, CacheStatus.IS)
         self.assertEqual(st3.cached_regular, CacheStatus.IS_NOT)
-=======
-        self.assertTrue(st3.cached_is_clan)
-        self.assertTrue(st3.cached_is_functional)
-        self.assertTrue(st3.cached_is_not_regular)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 # --------------------------------------------------------------------------------------------------

@@ -1,12 +1,7 @@
 """Facilities for extending operations from one :term:`algebra` to another."""
 
-<<<<<<< HEAD
 # $Id: extension.py 22754 2015-08-06 22:27:31Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-06 17:27:31 -0500 (Thu, 06 Aug 2015) $
-=======
-# $Id: extension.py 22702 2015-07-28 20:20:56Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -45,13 +40,8 @@ def binary_extend(set1: 'P( M )', set2: 'P( M )', op, _checked=True) -> 'P( M )'
         if not isinstance(set2, _mo.Set):
             return _ud.make_or_raise_undef()
     else:
-<<<<<<< HEAD
         assert set1.is_set
         assert set2.is_set
-=======
-        assert isinstance(set1, _mo.Set)
-        assert isinstance(set2, _mo.Set)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     def _get_values(_set1, _set2):
         for e1 in _set1:
@@ -84,13 +74,8 @@ def binary_multi_extend(multiset1: 'P( M x N )', multiset2: 'P( M x N )', op,
         if not isinstance(multiset2, _mo.Multiset):
             return _ud.make_or_raise_undef()
     else:
-<<<<<<< HEAD
         assert multiset1.is_multiset
         assert multiset2.is_multiset
-=======
-        assert isinstance(multiset1, _mo.Multiset)
-        assert isinstance(multiset2, _mo.Multiset)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     def _get_values(_set1, _set2):
         return_count = _collections.Counter()
@@ -105,17 +90,12 @@ def binary_multi_extend(multiset1: 'P( M x N )', multiset2: 'P( M x N )', op,
     return _mo.Multiset(_get_values(multiset1, multiset2), direct_load=True)
 
 
-<<<<<<< HEAD
 def unary_extend(set_: 'P( M )', op, _checked=True) -> 'P( M )':
-=======
-def unary_extend(set1: 'P( M )', op, _checked=True) -> 'P( M )':
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     r"""Return the :term:`unary extension` of ``op`` from one :term:`algebra` to another algebra.
 
     For this extension, the elements of the extended algebra must be :term:`set`\s of the elements
     of the original algebra.
 
-<<<<<<< HEAD
     :param set_: A :term:`set` with elements on which ``op`` operates.
     :param op: A :term:`unary operation` that operates on the elements of ``set_``.
     :return: A set that consists of the defined results of ``op`` when executed on the elements of
@@ -126,18 +106,6 @@ def unary_extend(set1: 'P( M )', op, _checked=True) -> 'P( M )':
             return _ud.make_or_raise_undef()
     else:
         assert set_.is_set
-=======
-    :param set1: A :term:`set` with elements on which ``op`` operates.
-    :param op: A :term:`unary operation` that operates on the elements of ``set1``.
-    :return: A set that consists of the defined results of ``op`` when executed on the elements of
-        ``set1``, or `Undef()` if ``set1`` is not a :class:`~.Set`.
-    """
-    if _checked:
-        if not isinstance(set1, _mo.Set):
-            return _ud.make_or_raise_undef()
-    else:
-        assert isinstance(set1, _mo.Set)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     def _get_values(_set):
         for e in _set:
@@ -145,23 +113,15 @@ def unary_extend(set1: 'P( M )', op, _checked=True) -> 'P( M )':
             if result is not _ud.Undef():
                 yield result
 
-<<<<<<< HEAD
     return _mo.Set(_get_values(set_), direct_load=True)
 
 
 def unary_multi_extend(multiset: 'P( M x N )', op, _checked=True) -> 'P( M x N )':
-=======
-    return _mo.Set(_get_values(set1), direct_load=True)
-
-
-def unary_multi_extend(multiset1: 'P( M x N )', op, _checked=True) -> 'P( M x N )':
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     r"""Return the :term:`unary extension` of ``op`` from one :term:`algebra` to another algebra.
 
     For this extension, the elements of the extended algebra must be :term:`multiset`\s of the
     elements of the original algebra.
 
-<<<<<<< HEAD
     :param multiset: A :term:`multiset` with elements on which ``op`` operates.
     :param op: A :term:`unary operation` that operates on the elements of ``multiset``.
     :return: A set that consists of the defined results of ``op`` when executed on the elements of
@@ -172,18 +132,6 @@ def unary_multi_extend(multiset1: 'P( M x N )', op, _checked=True) -> 'P( M x N 
             return _ud.make_or_raise_undef()
     else:
         assert multiset.is_multiset
-=======
-    :param multiset1: A :term:`multiset` with elements on which ``op`` operates.
-    :param op: A :term:`unary operation` that operates on the elements of ``multiset1``.
-    :return: A set that consists of the defined results of ``op`` when executed on the elements of
-        ``multiset1``, or `Undef()` if ``set1`` is not a :class:`~.Multiset`.
-    """
-    if _checked:
-        if not isinstance(multiset1, _mo.Multiset):
-            return _ud.make_or_raise_undef()
-    else:
-        assert isinstance(multiset1, _mo.Multiset)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     def _get_values(_multiset):
         return_count = _collections.Counter()
@@ -194,8 +142,4 @@ def unary_multi_extend(multiset1: 'P( M x N )', op, _checked=True) -> 'P( M x N 
 
         return return_count
 
-<<<<<<< HEAD
     return _mo.Multiset(_get_values(multiset))
-=======
-    return _mo.Multiset(_get_values(multiset1))
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272

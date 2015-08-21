@@ -1,12 +1,7 @@
 """Test utilities."""
 
-<<<<<<< HEAD
 # $Id: test.py 22728 2015-08-04 17:55:42Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-04 12:55:42 -0500 (Tue, 04 Aug 2015) $
-=======
-# $Id: test.py 22692 2015-07-27 23:21:10Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-27 18:21:10 -0500 (Mon, 27 Jul 2015) $
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -44,18 +39,9 @@ def create_test_object(obj: object, msg: str, val: object=None) -> object:
 def assert_mathobjects(mo: _mo.MathObject) -> bool:
     """Return ``True`` if and only if all elements in ``mo`` are instances of `MathObject`."""
     if isinstance(mo, _mo.Set):
-<<<<<<< HEAD
         return all(assert_mathobjects(elem) for elem in mo)
     elif isinstance(mo, _mo.Multiset):
         return all(assert_mathobjects(elem) for elem in mo.data)
-=======
-        result = True
-        for elem in mo:
-            result = result and assert_mathobjects(elem)
-            if not result:
-                return False
-        return True
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     elif isinstance(mo, _mo.Couplet):
         return assert_mathobjects(mo.left) and assert_mathobjects(mo.right)
     elif isinstance(mo, _mo.Atom):

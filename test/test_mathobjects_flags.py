@@ -1,12 +1,7 @@
 """Testing the mathobjects.flags module."""
 
-<<<<<<< HEAD
 # $Id: test_mathobjects_flags.py 22762 2015-08-07 21:19:50Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-07 16:19:50 -0500 (Fri, 07 Aug 2015) $
-=======
-# $Id: test_mathobjects_flags.py 22698 2015-07-28 17:09:23Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 12:09:23 -0500 (Tue, 28 Jul 2015) $
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -22,22 +17,15 @@
 # --------------------------------------------------------------------------------------------------
 import inspect
 import os
-<<<<<<< HEAD
 import time
 import unittest
 from ctypes import c_uint8
 
 from algebraixlib.mathobjects.utils import CacheStatus
-=======
-import unittest
-from ctypes import c_uint32
-
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 # noinspection PyProtectedMember
 from algebraixlib.mathobjects._flags import Flags
 
 
-<<<<<<< HEAD
 # SIZE_IN_BITS is hardcoded here. There doesn't seem to be a good way to get the maximum number of
 # bits in a ctypes type. This number relates to the definition of `asint` as `c_uint64`.
 SIZE_IN_BITS = 32
@@ -194,28 +182,6 @@ class MathObjectFlagsTest(unittest.TestCase):
             # time_rels()
             time_clans()
             time_multiclans()
-=======
-class MathObjectFlagsTest(unittest.TestCase):
-    def test_initial(self):
-        flags = Flags()
-        self.assertLessEqual(len(flags._fields_), 32)
-        for field_name, field_type, field_size in flags._fields_:
-            self.assertEqual(field_type, c_uint32)
-            self.assertEqual(field_size, 1)
-            self.assertEqual(getattr(flags, field_name), 0)
-
-    def test_relation(self):
-        flags = Flags(_relation=True)
-        flags.relation = True  # No change = no problem
-        self.assertTrue(flags.relation)
-        self.assertRaises(AssertionError, lambda: setattr(flags, 'relation', False))
-
-    def test_clan(self):
-        flags = Flags(_clan=1)
-        flags.clan = True  # No change = no problem
-        self.assertTrue(flags.clan)
-        self.assertRaises(AssertionError, lambda: setattr(flags, 'clan', False))
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 # --------------------------------------------------------------------------------------------------
 if __name__ == '__main__':

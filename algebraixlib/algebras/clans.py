@@ -4,13 +4,8 @@ A :term:`clan` is also a :term:`set` (of :term:`relation`\s), and inherits all o
 of the :term:`algebra of sets`. These are provided in :mod:`~.algebras.sets`.
 """
 
-<<<<<<< HEAD
 # $Id: clans.py 22804 2015-08-14 17:43:32Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-14 12:43:32 -0500 (Fri, 14 Aug 2015) $
-=======
-# $Id: clans.py 22702 2015-07-28 20:20:56Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -31,11 +26,7 @@ import algebraixlib.algebras.sets as _sets
 import algebraixlib.mathobjects as _mo
 import algebraixlib.extension as _extension
 import algebraixlib.structure as _structure
-<<<<<<< HEAD
 import algebraixlib.undef as _undef
-=======
-from algebraixlib.undef import make_or_raise_undef as _make_or_raise_undef
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 # --------------------------------------------------------------------------------------------------
@@ -60,7 +51,6 @@ class Algebra:
         """
         if _checked:
             if not is_member(clan):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
         else:
             assert is_member(clan)
@@ -76,18 +66,6 @@ class Algebra:
             result.cache_transitive(clan.cached_transitive)
             result.cache_regular(clan.cached_right_regular)
             result.cache_right_regular(clan.cached_regular)
-=======
-                return _make_or_raise_undef()
-        else:
-            assert is_member(clan)
-        result = _extension.unary_extend(clan, _functools.partial(
-            _relations.transpose, _checked=False), _checked=False).cache_is_clan(True)
-        if not result.is_empty:
-            if clan.cached_is_functional or clan.cached_is_not_functional:
-                result.cache_is_right_functional(clan.cached_is_functional)
-            if clan.cached_is_right_functional or clan.cached_is_not_right_functional:
-                result.cache_is_functional(clan.cached_is_right_functional)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         return result
 
     # ----------------------------------------------------------------------------------------------
@@ -103,7 +81,6 @@ class Algebra:
         """
         if _checked:
             if not is_member(clan1):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
             if not is_member(clan2):
                 return _undef.make_or_raise_undef()
@@ -121,16 +98,6 @@ class Algebra:
             if clan1.cached_is_right_functional and clan2.cached_is_right_functional:
                 result.cache_right_functional(_mo.CacheStatus.IS)
         return result
-=======
-                return _make_or_raise_undef()
-            if not is_member(clan2):
-                return _make_or_raise_undef()
-        else:
-            assert is_member(clan1)
-            assert is_member(clan2)
-        return _extension.binary_extend(clan1, clan2, _functools.partial(
-            _relations.compose, _checked=False), _checked=False).cache_is_clan(True)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     @staticmethod
     def cross_union(clan1: 'PP(M x M)', clan2: 'PP(M x M)', _checked=True) -> 'PP(M x M)':
@@ -146,7 +113,6 @@ class Algebra:
         """
         if _checked:
             if not is_member(clan1):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
             if not is_member(clan2):
                 return _undef.make_or_raise_undef()
@@ -162,17 +128,6 @@ class Algebra:
             if clan1.cached_is_not_right_functional or clan2.cached_is_not_right_functional:
                 result.cache_right_functional(_mo.CacheStatus.IS_NOT)
         return result
-=======
-                return _make_or_raise_undef()
-            if not is_member(clan2):
-                return _make_or_raise_undef()
-        else:
-            assert is_member(clan1)
-            assert is_member(clan2)
-        return _extension.binary_extend(
-            clan1, clan2, _functools.partial(
-                _sets.union, _checked=False), _checked=False).cache_is_clan(True)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     @staticmethod
     def cross_functional_union(clan1: 'PP(M x M)', clan2: 'PP(M x M)',
@@ -188,7 +143,6 @@ class Algebra:
         """
         if _checked:
             if not is_member(clan1):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
             if not is_member(clan2):
                 return _undef.make_or_raise_undef()
@@ -203,17 +157,6 @@ class Algebra:
             if clan1.cached_is_not_right_functional or clan2.cached_is_not_right_functional:
                 result.cache_right_functional(_mo.CacheStatus.IS_NOT)
         return result
-=======
-                return _make_or_raise_undef()
-            if not is_member(clan2):
-                return _make_or_raise_undef()
-        else:
-            assert is_member(clan1)
-            assert is_member(clan2)
-        return _extension.binary_extend(
-            clan1, clan2, _functools.partial(_relations.functional_union, _checked=False),
-            _checked=False).cache_is_clan(True).cache_is_functional(True)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     @staticmethod
     def lhs_cross_functional_union(lhs: 'PP( MxM )', rhs: 'PP( MxM )',
@@ -229,20 +172,13 @@ class Algebra:
         """
         if _checked:
             if not is_member(lhs):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
             if not is_member(rhs):
                 return _undef.make_or_raise_undef()
-=======
-                return _make_or_raise_undef()
-            if not is_member(rhs):
-                return _make_or_raise_undef()
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         else:
             assert is_member(lhs)
             assert is_member(rhs)
 
-<<<<<<< HEAD
         cfu = cross_functional_union(lhs, rhs, _checked=False)
         lhs_rest = _mo.Set(
             lhs_elem for lhs_elem in lhs
@@ -256,15 +192,6 @@ class Algebra:
                 result.cache_right_functional(_mo.CacheStatus.IS_NOT)
             if not rhs.is_empty and not lhs_rest.is_empty:
                 result.cache_regular(_mo.CacheStatus.IS_NOT)
-=======
-        result = _sets.union(
-            cross_functional_union(lhs, rhs, _checked=False),
-            _mo.Set(lhs_elem for lhs_elem in lhs if cross_functional_union(
-                _mo.Set(lhs_elem, direct_load=True), rhs).is_empty), _checked=False)
-
-        if lhs.cached_is_functional:
-            result.cache_is_functional(True)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         return result
 
     @staticmethod
@@ -282,7 +209,6 @@ class Algebra:
         """
         if _checked:
             if not is_member(clan1):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
             if not is_member(clan2):
                 return _undef.make_or_raise_undef()
@@ -297,17 +223,6 @@ class Algebra:
             if clan1.cached_is_not_functional or clan2.cached_is_not_functional:
                 result.cache_functional(_mo.CacheStatus.IS_NOT)
         return result
-=======
-                return _make_or_raise_undef()
-            if not is_member(clan2):
-                return _make_or_raise_undef()
-        else:
-            assert is_member(clan1)
-            assert is_member(clan2)
-        return _extension.binary_extend(
-            clan1, clan2, _functools.partial(_relations.right_functional_union, _checked=False),
-            _checked=False).cache_is_clan(True).cache_is_right_functional(True)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     @staticmethod
     def cross_intersect(clan1: 'PP(M x M)', clan2: 'PP(M x M)', _checked=True) -> 'PP(M x M)':
@@ -323,7 +238,6 @@ class Algebra:
         """
         if _checked:
             if not is_member(clan1):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
             if not is_member(clan2):
                 return _undef.make_or_raise_undef()
@@ -339,17 +253,6 @@ class Algebra:
             if clan1.cached_is_right_functional or clan2.cached_is_right_functional:
                 result.cache_right_functional(_mo.CacheStatus.IS)
         return result
-=======
-                return _make_or_raise_undef()
-            if not is_member(clan2):
-                return _make_or_raise_undef()
-        else:
-            assert is_member(clan1)
-            assert is_member(clan2)
-        return _extension.binary_extend(
-            clan1, clan2, _functools.partial(
-                _sets.intersect, _checked=False), _checked=False).cache_is_clan(True)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     @staticmethod
     def substrict(clan1: 'PP(M x M)', clan2: 'PP(M x M)', _checked=True) -> 'PP(M x M)':
@@ -364,7 +267,6 @@ class Algebra:
         """
         if _checked:
             if not is_member(clan1):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
             if not is_member(clan2):
                 return _undef.make_or_raise_undef()
@@ -389,20 +291,6 @@ class Algebra:
                 result.cache_regular(_mo.CacheStatus.IS)
             if clan1.cached_is_right_regular:
                 result.cache_right_regular(_mo.CacheStatus.IS)
-=======
-                return _make_or_raise_undef()
-            if not is_member(clan2):
-                return _make_or_raise_undef()
-        else:
-            assert is_member(clan1)
-            assert is_member(clan2)
-        result = _extension.binary_extend(
-            clan1, clan2, _functools.partial(
-                _sets.substrict, _checked=False), _checked=False).cache_is_clan(True)
-        # The subset of clan1 that is returned has all properties of clan1
-        if not result.is_empty:
-            result.copy_flags(clan1)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         return result
 
     @staticmethod
@@ -418,20 +306,13 @@ class Algebra:
         """
         if _checked:
             if not is_member(clan1):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
             if not is_member(clan2):
                 return _undef.make_or_raise_undef()
-=======
-                return _make_or_raise_undef()
-            if not is_member(clan2):
-                return _make_or_raise_undef()
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         else:
             assert is_member(clan1)
             assert is_member(clan2)
         result = _extension.binary_extend(clan1, clan2, _functools.partial(
-<<<<<<< HEAD
             _sets.superstrict, _checked=False), _checked=False)
         if not result.is_empty:
             result.cache_clan(_mo.CacheStatus.IS)
@@ -449,22 +330,12 @@ class Algebra:
                 result.cache_regular(_mo.CacheStatus.IS)
             if clan1.cached_is_right_regular:
                 result.cache_right_regular(_mo.CacheStatus.IS)
-=======
-            _sets.superstrict, _checked=False)).cache_is_clan(True)
-
-        # The subset of clan1 that is returned has all properties of clan1
-        if not result.is_empty:
-            result.copy_flags(clan1)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         return result
 
 
 # For convenience, make the members of class Algebra (they are all static functions) available at
 # the module level.
-<<<<<<< HEAD
 # pylint: disable=invalid-name
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 #: Convenience redirection to `Algebra.transpose`.
 transpose = Algebra.transpose
@@ -485,10 +356,7 @@ substrict = Algebra.substrict
 #: Convenience redirection to `Algebra.superstrict`.
 superstrict = Algebra.superstrict
 
-<<<<<<< HEAD
 # pylint: enable=invalid-name
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 # --------------------------------------------------------------------------------------------------
 # Metadata functions.
@@ -511,7 +379,6 @@ def get_absolute_ground_set() -> _structure.Structure:
 def is_member(obj: _mo.MathObject) -> bool:
     """Return whether ``obj`` is a member of the :term:`ground set` of this :term:`algebra`.
 
-<<<<<<< HEAD
      :return: ``True`` if ``obj`` is a :term:`clan`, ``False`` if not.
 
     .. note:: This function may call :meth:`~.MathObject.get_ground_set` on ``obj``. The result of
@@ -520,21 +387,12 @@ def is_member(obj: _mo.MathObject) -> bool:
     if obj.cached_clan == _mo.CacheStatus.UNKNOWN:
         is_clan = obj.get_ground_set().is_subset(get_ground_set())
         obj.cache_clan(_mo.CacheStatus.from_bool(is_clan))
-=======
-    .. note:: This function may call :meth:`~.MathObject.get_ground_set` on ``obj``. The result of
-        this operation is cached.
-    """
-    _mo.raise_if_not_mathobject(obj)
-    if not obj.cached_is_clan and not obj.cached_is_not_clan:
-        obj.cache_is_clan(obj.get_ground_set().is_subset(get_ground_set()))
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     return obj.cached_is_clan
 
 
 def is_absolute_member(obj: _mo.MathObject) -> bool:
     """Return whether ``obj`` is a member of the :term:`absolute ground set` of this algebra.
 
-<<<<<<< HEAD
      :return: ``True`` if ``obj`` is an :term:`absolute clan`, ``False`` if not.
 
     .. note:: This function may call :meth:`~.MathObject.get_ground_set` on ``obj``. The result
@@ -563,14 +421,6 @@ def is_absolute_member(obj: _mo.MathObject) -> bool:
         obj.cache_absolute(_mo.CacheStatus.from_bool(is_absolute_clan))
     # At this point, cached_clan == IS. Return whether it is an absolute clan.
     return obj.cached_is_absolute
-=======
-     :return: Whether ``obj`` is an :term:`absolute clan`.
-
-    .. note:: This function calls :meth:`~.MathObject.get_ground_set` on ``obj``.
-    """
-    _mo.raise_if_not_mathobject(obj)
-    return obj.get_ground_set().is_subset(get_absolute_ground_set())
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 # --------------------------------------------------------------------------------------------------
@@ -584,11 +434,7 @@ def get_lefts(clan: 'PP(M x M)', _checked=True) -> 'P( M )':
     """
     if _checked:
         if not is_member(clan):
-<<<<<<< HEAD
             return _undef.make_or_raise_undef()
-=======
-            return _make_or_raise_undef()
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     else:
         assert is_member(clan)
     if clan.is_empty:
@@ -599,12 +445,9 @@ def get_lefts(clan: 'PP(M x M)', _checked=True) -> 'P( M )':
     for rel in clan_itr:
         left_set = _sets.union(
             _relations.get_lefts(rel, _checked=False), left_set, _checked=False)
-<<<<<<< HEAD
     if not left_set.is_empty:
         if clan.cached_is_absolute:
             left_set.cache_absolute(_mo.CacheStatus.IS)
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     return left_set
 
 
@@ -616,11 +459,7 @@ def get_rights(clan: 'PP(M x M)', _checked=True) -> "P( M )":
     """
     if _checked:
         if not is_member(clan):
-<<<<<<< HEAD
             return _undef.make_or_raise_undef()
-=======
-            return _make_or_raise_undef()
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     else:
         assert is_member(clan)
     if clan.is_empty:
@@ -631,7 +470,6 @@ def get_rights(clan: 'PP(M x M)', _checked=True) -> "P( M )":
     for rel in clan_itr:
         right_set = _sets.union(
             _relations.get_rights(rel, _checked=False), right_set, _checked=False)
-<<<<<<< HEAD
     if not right_set.is_empty:
         if clan.cached_is_absolute:
             right_set.cache_absolute(_mo.CacheStatus.IS)
@@ -680,20 +518,10 @@ def is_regular(clan, _checked=True) -> bool:
     """Return whether ``clan`` is (left-)regular.
 
     :return: ``True`` if ``clan`` is :term:`regular`, ``False`` if not, or `Undef()` if ``clan``
-=======
-    return right_set
-
-
-def is_regular(clan, _checked=True) -> bool:
-    """Return whether ``clan`` is regular.
-
-    :return: ``True`` if ``clan`` is :term:`regular`, ``False`` if not or `Undef()` if ``clan``
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         is not a :term:`clan`.
     """
     if _checked:
         if not is_member(clan):
-<<<<<<< HEAD
             return _undef.make_or_raise_undef()
     else:
         assert is_member(clan)
@@ -801,28 +629,6 @@ def is_transitive(clan, _checked=True) -> bool:
     return clan.cached_transitive == _mo.CacheStatus.IS
 
 
-=======
-            return _make_or_raise_undef()
-    else:
-        assert is_member(clan)
-
-    if not clan.cached_is_regular and not clan.cached_is_not_regular:
-        # NOTE: The empty case is handled in Set().__init__ via flags initialization
-        if clan.cached_is_not_functional:
-            clan.cache_is_regular(False)
-            return False
-        itr = iter(clan)
-        rel = next(itr)
-        if not rel.is_functional():
-            clan.cache_is_regular(False)
-            return False
-        left_set = rel.get_left_set()
-        regular = all(rel.is_functional() and left_set == rel.get_left_set() for rel in itr)
-        clan.cache_is_regular(regular)
-    return clan.cached_is_regular
-
-
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 def project(clan: 'PP(M x M)', *lefts) -> 'PP(M x M)':
     r"""Return a clan that contains only the couplets with lefts from ``clan`` that match ``lefts``.
 
@@ -846,7 +652,6 @@ def from_set(left: '( M )', *values: '( M )') -> 'PP(M x M)':
         of ``left`` and a right component from ``values``.
     """
     left_mo = _mo.auto_convert(left)
-<<<<<<< HEAD
     clan = _mo.Set(
         (_mo.Set(_mo.Couplet(left_mo, _mo.auto_convert(right), direct_load=True), direct_load=True)
             .cache_relation(_mo.CacheStatus.IS)
@@ -856,18 +661,12 @@ def from_set(left: '( M )', *values: '( M )') -> 'PP(M x M)':
     clan.cache_clan(_mo.CacheStatus.IS)
     clan.cache_functional(_mo.CacheStatus.IS).cache_right_functional(_mo.CacheStatus.IS)
     clan.cache_regular(_mo.CacheStatus.IS).cache_right_regular(_mo.CacheStatus.IS)
-=======
-    clan = _mo.Set((_mo.Set(_mo.Couplet(left_mo, _mo.auto_convert(right), direct_load=True),
-                            direct_load=True).cache_is_relation(True)
-                    for right in values), direct_load=True).cache_is_clan(True)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     return clan
 
 
 def from_dict(dict1: dict) -> 'PP(M x M)':
     r"""Return a :term:`clan` with a single :term:`relation` where the :term:`couplet`\s are the
     elements of ``dict1``."""
-<<<<<<< HEAD
     rel = _mo.Set((_mo.Couplet(left, right) for left, right in dict1.items()), direct_load=True)
     rel.cache_relation(_mo.CacheStatus.IS)
     rel.cache_functional(_mo.CacheStatus.IS)
@@ -875,11 +674,6 @@ def from_dict(dict1: dict) -> 'PP(M x M)':
     clan.cache_clan(_mo.CacheStatus.IS)
     clan.cache_functional(_mo.CacheStatus.IS)
     clan.cache_regular(_mo.CacheStatus.IS)
-=======
-    clan = _mo.Set(_mo.Set((_mo.Couplet(left, right) for left, right in dict1.items()),
-                           direct_load=True).cache_is_relation(True),
-                   direct_load=True).cache_is_clan(True)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     return clan
 
 
@@ -889,21 +683,16 @@ def diag(*args, _checked=True) -> 'PP(M x M)':
     :param args: Pass in the elements from which the :term:`clan diagonal` is formed. (If you want
         to pass in an iterable, you need to prefix it with an asterisk ``*``.)
     """
-<<<<<<< HEAD
     clan = _mo.Set(_relations.diag(*args, _checked=_checked), direct_load=True)
     clan.cache_clan(_mo.CacheStatus.IS)
     clan.cache_functional(_mo.CacheStatus.IS).cache_right_functional(_mo.CacheStatus.IS)
     clan.cache_reflexive(_mo.CacheStatus.IS).cache_symmetric(_mo.CacheStatus.IS)
     clan.cache_regular(_mo.CacheStatus.IS).cache_right_regular(_mo.CacheStatus.IS)
-=======
-    clan = _mo.Set(_relations.diag(*args, _checked=_checked), direct_load=True).cache_is_clan(True)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     return clan
 
 
 def defined_at(clan, left, _checked=True):
     r"""Return the :term:`relation`\s of ``clan`` that are defined for ``left``."""
-<<<<<<< HEAD
     result = _extension.unary_extend(
         clan, _functools.partial(_relations.defined_at, left=left, _checked=_checked),
         _checked=_checked)
@@ -918,8 +707,3 @@ def defined_at(clan, left, _checked=True):
         if clan.cached_is_right_regular:
             result.cache_right_regular(_mo.CacheStatus.IS)
     return result
-=======
-    clan = _extension.unary_extend(clan, _functools.partial(
-        _relations.defined_at, left=left, _checked=_checked), _checked=_checked).cache_is_clan(True)
-    return clan
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272

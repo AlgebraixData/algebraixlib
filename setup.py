@@ -2,13 +2,8 @@
 
 """Install algebraixlib or builds its installation package."""
 
-<<<<<<< HEAD
 # $Id: setup.py 22842 2015-08-21 17:48:54Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-21 12:48:54 -0500 (Fri, 21 Aug 2015) $
-=======
-# $Id: setup.py 22690 2015-07-27 20:23:37Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-27 15:23:37 -0500 (Mon, 27 Jul 2015) $
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -43,11 +38,7 @@ with open('README.rst') as file:
 
 setup(
     name="algebraixlib",
-<<<<<<< HEAD
     version="1.2",
-=======
-    version="1.1",
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     description="A data algebra library",
     long_description=long_description,
     author="Algebraix Data Corporation",
@@ -61,10 +52,6 @@ setup(
         "Development Status :: 2 - Pre-Alpha",
         "Environment :: Console",
         'Intended Audience :: Developers',
-<<<<<<< HEAD
-=======
-        'Intended Audience :: Developers',
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         'Intended Audience :: Education',
         'Intended Audience :: Information Technology',
         'Intended Audience :: Science/Research',

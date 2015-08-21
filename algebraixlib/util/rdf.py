@@ -22,13 +22,8 @@ API
 
 """
 
-<<<<<<< HEAD
 # $Id: rdf.py 22754 2015-08-06 22:27:31Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-06 17:27:31 -0500 (Thu, 06 Aug 2015) $
-=======
-# $Id: rdf.py 22702 2015-07-28 20:20:56Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -47,10 +42,7 @@ import urllib.parse as _urlparse
 import urllib.request as _urlreq
 
 import algebraixlib.algebras.clans as _clans
-<<<<<<< HEAD
 import algebraixlib.algebras.properties as _properties
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 import algebraixlib.algebras.relations as _relations
 import algebraixlib.mathobjects as _mo
 
@@ -76,19 +68,13 @@ def get_file_url(path: str) -> str:
 
 def is_triple(obj: _mo.MathObject) -> bool:
     """Return ``True`` if ``obj`` is a valid `triple`, ``False`` if not."""
-<<<<<<< HEAD
     # noinspection PyTypeChecker
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     return _relations.is_member(obj) and _check_triple(obj)
 
 
 def is_absolute_triple(obj: _mo.MathObject) -> bool:
     """Return ``True`` if ``obj`` is an :term:`absolute` :term:`triple`, ``False`` if not."""
-<<<<<<< HEAD
     # noinspection PyTypeChecker
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     return _relations.is_absolute_member(obj) and _check_triple(obj)
 
 
@@ -166,12 +152,7 @@ def _check_triple(obj: 'P(A x M)') -> bool:
     ``obj`` is expected to be a :term:`relation`.
     """
     # noinspection PyUnresolvedReferences
-<<<<<<< HEAD
     return obj.is_set and obj.cardinality == 3 and obj.get_left_set() == _mo.Set('s', 'p', 'o')
-=======
-    return isinstance(obj, _mo.Set) and obj.cardinality == 3 \
-        and obj.get_left_set() == _mo.Set('s', 'p', 'o')
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 def _check_graph(obj: _mo.MathObject) -> bool:
@@ -179,13 +160,8 @@ def _check_graph(obj: _mo.MathObject) -> bool:
 
     ``obj`` is expected to be a :term:`clan`.
     """
-<<<<<<< HEAD
     return obj.is_set and obj.get_left_set() == _mo.Set('s', 'p', 'o') \
         and _properties.is_regular(obj)
-=======
-    return isinstance(obj, _mo.Set) and obj.get_left_set() == _mo.Set('s', 'p', 'o') \
-        and obj.is_regular()
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 def match_and_project(graph: 'PP(A x A)', pattern: dict=None, projection: dict=None):

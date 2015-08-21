@@ -1,12 +1,7 @@
 """Testing the mathobjects.couplet module."""
 
-<<<<<<< HEAD
 # $Id: test_mathobjects_couplet.py 22763 2015-08-07 23:06:46Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-07 18:06:46 -0500 (Fri, 07 Aug 2015) $
-=======
-# $Id: test_mathobjects_couplet.py 22674 2015-07-24 20:45:24Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-24 15:45:24 -0500 (Fri, 24 Jul 2015) $
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -24,13 +19,9 @@ import inspect
 import os
 import unittest
 
-<<<<<<< HEAD
 from algebraixlib.algebras.properties import is_functional, is_right_functional, is_bijective, \
     is_reflexive, is_transitive, is_equivalence_relation
 from algebraixlib.mathobjects import Atom, CacheStatus, Couplet, MathObject, Set
-=======
-from algebraixlib.mathobjects import Atom, Couplet, MathObject, Set
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 from algebraixlib.structure import CartesianProduct, GenesisSetA, PowerSet
 from algebraixlib.undef import Undef
 
@@ -89,11 +80,7 @@ class CoupletTest(unittest.TestCase):
         self.assertEqual(test_couplet.get_ground_set(), _basic_couplets_structs[test_couplet_name])
         # Test left set and functionality.
         self.assertIs(couplet.get_left_set(), Undef())
-<<<<<<< HEAD
         self.assertIs(is_functional(couplet), Undef())
-=======
-        self.assertIs(couplet.is_functional(), Undef())
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         self.assertIs(couplet('callable'), Undef())
         # Make sure that the representation evaluates to a couplet that compares equal.
         repr_exec = 'self.assertEqual(couplet, {0})'.format(repr(couplet))
@@ -120,7 +107,6 @@ class CoupletTest(unittest.TestCase):
     def test_properties(self):
         def _test_undef(cc):
             self.assertIs(cc.get_left_set(), Undef())
-<<<<<<< HEAD
             self.assertIs(is_functional(cc), Undef())
             self.assertIs(cc.get_right_set(), Undef())
             self.assertIs(is_right_functional(cc), Undef())
@@ -160,53 +146,6 @@ class CoupletTest(unittest.TestCase):
         self.assertRaises(Exception, lambda: c.cache_regular(CacheStatus.IS_NOT))
         self.assertRaises(Exception, lambda: c.cache_symmetric(CacheStatus.IS_NOT))
         self.assertRaises(Exception, lambda: c.cache_transitive(CacheStatus.IS_NOT))
-=======
-            self.assertIs(cc.is_functional(), Undef())
-            self.assertIs(cc.get_right_set(), Undef())
-            self.assertIs(cc.is_right_functional(), Undef())
-            self.assertIs(cc.is_bijective(), Undef())
-            self.assertIs(cc.is_transitive(), Undef())
-            self.assertIs(cc.is_equivalence_relation(), Undef())
-        c = Couplet(1, 2)
-        _test_undef(c)
-        self.assertFalse(c.is_reflexive())
-        c = Couplet(1)
-        _test_undef(c)
-        self.assertTrue(c.is_reflexive())
-
-    def test_flags_cache(self):
-        c = Couplet(1, 2)
-        self.assertFalse(c.cached_is_relation)
-        self.assertTrue(c.cached_is_not_relation)
-        self.assertFalse(c.cached_is_clan)
-        self.assertTrue(c.cached_is_not_clan)
-        self.assertFalse(c.cached_is_multiclan)
-        self.assertTrue(c.cached_is_not_multiclan)
-        self.assertFalse(c.cached_is_functional)
-        self.assertFalse(c.cached_is_not_functional)
-        self.assertFalse(c.cached_is_right_functional)
-        self.assertFalse(c.cached_is_not_right_functional)
-        self.assertFalse(c.cached_is_regular)
-        self.assertFalse(c.cached_is_not_regular)
-        self.assertFalse(c.cached_is_reflexive)
-        self.assertFalse(c.cached_is_not_reflexive)
-        self.assertFalse(c.cached_is_symmetric)
-        self.assertFalse(c.cached_is_not_symmetric)
-        self.assertFalse(c.cached_is_transitive)
-        self.assertFalse(c.cached_is_not_transitive)
-
-        self.assertRaises(AssertionError, lambda: c.cache_is_relation(True))
-        self.assertRaises(AssertionError, lambda: c.cache_is_clan(True))
-        self.assertRaises(AssertionError, lambda: c.cache_is_multiclan(True))
-
-        self.assertRaises(Exception, lambda: c.cache_is_transitive(False))
-        self.assertRaises(Exception, lambda: c.cache_is_functional(False))
-        self.assertRaises(Exception, lambda: c.cache_is_right_functional(False))
-        self.assertRaises(Exception, lambda: c.cache_is_regular(False))
-        self.assertRaises(Exception, lambda: c.cache_is_reflexive(False))
-        self.assertRaises(Exception, lambda: c.cache_is_symmetric(False))
-        self.assertRaises(Exception, lambda: c.cache_is_transitive(False))
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     def test__str__(self):
         """Verify __str__() returns the representation of a Couplet object."""

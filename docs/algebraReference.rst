@@ -1,11 +1,6 @@
 .. Algebraix Technology Core Library documentation.
-<<<<<<< HEAD
    $Id: algebraReference.rst 22809 2015-08-18 23:13:27Z mhaque $
    Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-18 18:13:27 -0500 (Tue, 18 Aug 2015) $
-=======
-   $Id: algebraReference.rst 22675 2015-07-24 21:01:36Z mhaque $
-   Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-24 16:01:36 -0500 (Fri, 24 Jul 2015) $
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
    This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 
@@ -63,14 +58,11 @@ Algebra Reference
         :math:`P(A \times A)`; this requires :term:`atom`\s to form the couplets that form the
         relations.
 
-<<<<<<< HEAD
     absolute multiset
         An :term:`absolute` :term:`multiset` is a multiset that is an element of the :term:`power
         set` of the :term:`Cartesian product` of |set A| with |set N| (:math:`P(A \times N)`.
         Such a multiset has only :term:`atom`\s as elements. Example: :math:`\[1{:}3, 'a'{:}5\]`.
 
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     absolute relation
         An :term:`absolute` :term:`relation` is a set that is an element of the :term:`power set`
         of the :term:`Cartesian product` of |set A| (:math:`P(A \times A)`. Such a set has only
@@ -79,11 +71,7 @@ Algebra Reference
 
     absolute set
         An :term:`absolute` :term:`set` is a set that is an element of the :term:`power set` of
-<<<<<<< HEAD
         |set A| (:math:`P(A)`. Such a set has only :term:`atom`\s as elements. Example:
-=======
-        |set A| (:math:`P(A)`. Sukch a set has only :term:`atom`\s as elements. Example:
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         :math:`\{1, 2\}`.
 
     algebra
@@ -385,11 +373,7 @@ Algebra Reference
 
         .. math:: x{\mapsto}y \in R\ \& \ x{\mapsto}z \in R \implies y = z
 
-<<<<<<< HEAD
         A :term:`clan` :math:`\mathbb{C}` is said to be (left-)functional if all its relations are
-=======
-        A :term:`clan` \mathbb{C} is said to be (left-)functional if all its relations are
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         functional:
 
         .. math:: \forall R \in \mathbb{C}: R \text{ is left-functional}
@@ -630,12 +614,9 @@ Algebra Reference
         this is that the :term:`power set` of :math:`M` :math:`P(M)` cannot be represented in a
         given system, and therefore is not an element of :math:`M`.)
 
-<<<<<<< HEAD
     set N
         The :term:`set` :math:`N` is the set of all positive integers.
 
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     submultiset
         The **submultiset** relation is a :term:`binary relation` of :term:`multiset`\s. A multiset
         :math:`\dot{S}` is a submultiset of a multiset :math:`\dot{T}` if the following holds:
@@ -755,10 +736,7 @@ Algebra Reference
 
 .. |set A| replace:: :term:`set A` (:math:`A`)
 .. |set M| replace:: :term:`set M` (:math:`M`)
-<<<<<<< HEAD
 .. |set N| replace:: :term:`set N` (:math:`N`)
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 .. _binary relation:
     http://en.wikipedia.org/wiki/Binary_relation

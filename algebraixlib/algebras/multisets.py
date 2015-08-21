@@ -1,12 +1,7 @@
 """This module contains the :term:`algebra of multisets` and related functionality."""
 
-<<<<<<< HEAD
 # $Id: multisets.py 22804 2015-08-14 17:43:32Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-14 12:43:32 -0500 (Fri, 14 Aug 2015) $
-=======
-# $Id: multisets.py 22702 2015-07-28 20:20:56Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -25,11 +20,7 @@ import functools as _functools
 import algebraixlib.algebras.sets as _sets
 import algebraixlib.mathobjects as _mo
 import algebraixlib.structure as _structure
-<<<<<<< HEAD
 import algebraixlib.undef as _undef
-=======
-from algebraixlib.undef import make_or_raise_undef as _make_or_raise_undef
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 # --------------------------------------------------------------------------------------------------
@@ -51,25 +42,16 @@ class Algebra:
         :return: The :term:`multiset union` of ``multiset1`` and ``multiset2`` or `Undef()` if
             ``multiset1`` or ``multiset2`` are not instances of :class:`~.Multiset`.
         """
-<<<<<<< HEAD
         # pylint: disable=too-many-branches
         if _checked:
             if not is_member(multiset1):
                 return _undef.make_or_raise_undef()
             if not is_member(multiset2):
                 return _undef.make_or_raise_undef()
-=======
-        if _checked:
-            if not is_member(multiset1):
-                return _make_or_raise_undef()
-            if not is_member(multiset2):
-                return _make_or_raise_undef()
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         else:
             assert is_member(multiset1)
             assert is_member(multiset2)
         values = multiset1.data | multiset2.data
-<<<<<<< HEAD
         result = _mo.Multiset(values, direct_load=True)
         if not result.is_empty:
             # Multiclan flags:
@@ -95,9 +77,6 @@ class Algebra:
             elif multiset1.cached_is_not_multiclan or multiset2.cached_is_not_multiclan:
                 result.cache_multiclan(_mo.CacheStatus.IS_NOT)
         return result
-=======
-        return _mo.Multiset(values, direct_load=True)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     @staticmethod
     def intersect(multiset1: 'P( M x N )', multiset2: 'P( M x N )', _checked=True) -> 'P( M x N )':
@@ -108,20 +87,13 @@ class Algebra:
         """
         if _checked:
             if not is_member(multiset1):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
             if not is_member(multiset2):
                 return _undef.make_or_raise_undef()
-=======
-                return _make_or_raise_undef()
-            if not is_member(multiset2):
-                return _make_or_raise_undef()
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         else:
             assert is_member(multiset1)
             assert is_member(multiset2)
         values = multiset1.data & multiset2.data
-<<<<<<< HEAD
         result = _mo.Multiset(values)
         if not result.is_empty:
             # Multiclan flags:
@@ -138,9 +110,6 @@ class Algebra:
                 if multiset1.cached_is_right_regular or multiset2.cached_is_right_regular:
                     result.cache_right_regular(_mo.CacheStatus.IS)
         return result
-=======
-        return _mo.Multiset(values)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     @staticmethod
     def minus(multiset1: 'P( M x N )', multiset2: 'P( M x N )', _checked=True) -> 'P( M x N )':
@@ -151,20 +120,13 @@ class Algebra:
         """
         if _checked:
             if not is_member(multiset1):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
             if not is_member(multiset2):
                 return _undef.make_or_raise_undef()
-=======
-                return _make_or_raise_undef()
-            if not is_member(multiset2):
-                return _make_or_raise_undef()
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         else:
             assert is_member(multiset1)
             assert is_member(multiset2)
         values = multiset1.data - multiset2.data
-<<<<<<< HEAD
         result = _mo.Multiset(values)
         if not result.is_empty:
             # Multiclan flags:
@@ -184,36 +146,21 @@ class Algebra:
 
     @staticmethod
     def add(multiset1: 'P( M x N )', multiset2: 'P( M x N )', _checked=True) -> 'P( M x N )':
-=======
-        return _mo.Multiset(values)
-
-    @staticmethod
-    def addition(multiset1: 'P( M x N )', multiset2: 'P( M x N )', _checked=True) -> 'P( M x N )':
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         """Return the multiset addition of ``multiset1`` and ``multiset2``.
 
         :return: The :term:`multiset addition` of ``multiset1`` and ``multiset2`` or `Undef()` if
             ``multiset1`` or ``multiset2`` are not instances of :class:`~.Multiset`.
         """
-<<<<<<< HEAD
         # pylint: disable=too-many-branches
         if _checked:
             if not is_member(multiset1):
                 return _undef.make_or_raise_undef()
             if not is_member(multiset2):
                 return _undef.make_or_raise_undef()
-=======
-        if _checked:
-            if not is_member(multiset1):
-                return _make_or_raise_undef()
-            if not is_member(multiset2):
-                return _make_or_raise_undef()
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         else:
             assert is_member(multiset1)
             assert is_member(multiset2)
         values = multiset1.data + multiset2.data
-<<<<<<< HEAD
         result = _mo.Multiset(values, direct_load=True)
         if not result.is_empty:
             # Multiclan flags:
@@ -239,9 +186,6 @@ class Algebra:
             elif multiset1.cached_is_not_multiclan or multiset2.cached_is_not_multiclan:
                 result.cache_multiclan(_mo.CacheStatus.IS_NOT)
         return result
-=======
-        return _mo.Multiset(values)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     @staticmethod
     def substrict(multiset1: 'P( M x N )', multiset2: 'P( M x N )', _checked=True) -> 'P( M x N )':
@@ -253,20 +197,13 @@ class Algebra:
         """
         if _checked:
             if not is_member(multiset1):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
             if not is_member(multiset2):
                 return _undef.make_or_raise_undef()
-=======
-                return _make_or_raise_undef()
-            if not is_member(multiset2):
-                return _make_or_raise_undef()
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         else:
             assert is_member(multiset1)
             assert is_member(multiset2)
         if not is_subset_of(multiset1, multiset2, _checked=False):
-<<<<<<< HEAD
             return _undef.make_or_raise_undef(2)
         if not multiset1.is_empty:
             # Multiclan flags:
@@ -281,9 +218,6 @@ class Algebra:
                     multiset1.cache_regular(_mo.CacheStatus.IS)
                 if multiset2.cached_is_right_regular:
                     multiset1.cache_right_regular(_mo.CacheStatus.IS)
-=======
-            return _make_or_raise_undef(2)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         return multiset1
 
     @staticmethod
@@ -297,20 +231,13 @@ class Algebra:
         """
         if _checked:
             if not is_member(multiset1):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
             if not is_member(multiset2):
                 return _undef.make_or_raise_undef()
-=======
-                return _make_or_raise_undef()
-            if not is_member(multiset2):
-                return _make_or_raise_undef()
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         else:
             assert is_member(multiset1)
             assert is_member(multiset2)
         if not is_superset_of(multiset1, multiset2, _checked=False):
-<<<<<<< HEAD
             return _undef.make_or_raise_undef(2)
         if not multiset1.is_empty:
             # Multiclan flags:
@@ -325,9 +252,6 @@ class Algebra:
                     multiset1.cache_regular(_mo.CacheStatus.IS_NOT)
                 if multiset2.cached_is_not_right_regular:
                     multiset1.cache_right_regular(_mo.CacheStatus.IS_NOT)
-=======
-            return _make_or_raise_undef(2)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         return multiset1
 
     # ----------------------------------------------------------------------------------------------
@@ -343,15 +267,9 @@ class Algebra:
         """
         if _checked:
             if not is_member(multiset1):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
             if not is_member(multiset2):
                 return _undef.make_or_raise_undef()
-=======
-                return _make_or_raise_undef()
-            if not is_member(multiset2):
-                return _make_or_raise_undef()
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         else:
             assert is_member(multiset1)
             assert is_member(multiset2)
@@ -370,15 +288,9 @@ class Algebra:
         """
         if _checked:
             if not is_member(multiset1):
-<<<<<<< HEAD
                 return _undef.make_or_raise_undef()
             if not is_member(multiset2):
                 return _undef.make_or_raise_undef()
-=======
-                return _make_or_raise_undef()
-            if not is_member(multiset2):
-                return _make_or_raise_undef()
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         else:
             assert is_member(multiset1)
             assert is_member(multiset2)
@@ -391,24 +303,16 @@ class Algebra:
 # For convenience, make the members of class Algebra (they are all static functions) available at
 # the module level.
 
-<<<<<<< HEAD
 # pylint: disable=invalid-name
 
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #: Convenience redirection to `Algebra.union`.
 union = Algebra.union
 #: Convenience redirection to `Algebra.intersect`.
 intersect = Algebra.intersect
 #: Convenience redirection to `Algebra.minus`.
 minus = Algebra.minus
-<<<<<<< HEAD
 #: Convenience redirection to `Algebra.add`.
 add = Algebra.add
-=======
-#: Convenience redirection to `Algebra.addition`.
-addition = Algebra.addition
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #: Convenience redirection to `Algebra.substrict`.
 substrict = Algebra.substrict
 #: Convenience redirection to `Algebra.superstrict`.
@@ -418,10 +322,7 @@ is_subset_of = Algebra.is_subset_of
 #: Convenience redirection to `Algebra.is_superset_of`.
 is_superset_of = Algebra.is_superset_of
 
-<<<<<<< HEAD
 # pylint: enable=invalid-name
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 # --------------------------------------------------------------------------------------------------
 # Metadata functions.
@@ -445,23 +346,15 @@ def get_absolute_ground_set() -> _structure.Structure:
 def is_member(obj: _mo.MathObject) -> bool:
     """Return whether ``obj`` is a member of the :term:`ground set` of this :term:`algebra`.
 
-<<<<<<< HEAD
      :return: ``True`` if ``obj`` is a :term:`multiset` (an instance of :class:`~.Multiset`),
         ``False`` if not.
      """
     return obj.is_multiset
-=======
-     :return: ``True`` if ``obj`` is an instance of :class:`~.Multiset`, ``False`` if not.
-     """
-    _mo.raise_if_not_mathobject(obj)
-    return isinstance(obj, _mo.Multiset)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 def is_absolute_member(obj: _mo.MathObject) -> bool:
     """Return whether ``obj`` is a member of the :term:`absolute ground set` of this algebra.
 
-<<<<<<< HEAD
     :type obj: _mo.MathObject|_mo.Multiset
     :return: ``True`` if ``obj`` is an :term:`absolute multiset`, ``False`` if not.
     """
@@ -484,13 +377,6 @@ def is_absolute_member(obj: _mo.MathObject) -> bool:
     # In order to determine whether this is an absolute multiset, we need to also examine whether
     # this is a multiclan (also a multisets). Absolute multiclans are not absolute multisets.
     return obj.cached_is_absolute and not obj.cached_is_multiclan
-=======
-     :return: ``True`` if ``obj`` is an :term:`absolute set`, ``False`` if not.
-
-    .. note:: This function calls :meth:`~.MathObject.get_ground_set` on ``obj``."""
-    _mo.raise_if_not_mathobject(obj)
-    return obj.get_ground_set().is_subset(get_absolute_ground_set())
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 # --------------------------------------------------------------------------------------------------
@@ -500,7 +386,6 @@ def demultify(multiset: 'P( M x N )', _checked=True) -> 'P( M )':
     """Return a :term:`set` based on ``multiset`` that contains all elements without multiples."""
     if _checked:
         if not is_member(multiset):
-<<<<<<< HEAD
             return _undef.make_or_raise_undef()
     else:
         assert is_member(multiset)
@@ -520,12 +405,6 @@ def demultify(multiset: 'P( M x N )', _checked=True) -> 'P( M )':
         # a multiset that is converted into a set may be a relation without us being able to know
         # this here. Because of this, the only flags we can propagate are multiclan flags.
     return result
-=======
-            return _make_or_raise_undef()
-    else:
-        assert is_member(multiset)
-    return _mo.Set(multiset.data.keys(), direct_load=True)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 def big_union(set_of_multisets: 'PP( M x N )', _checked=True) -> 'P( M x N )':
@@ -537,21 +416,12 @@ def big_union(set_of_multisets: 'PP( M x N )', _checked=True) -> 'P( M x N )':
     """
     if _checked:
         if not isinstance(set_of_multisets, _mo.Set):
-<<<<<<< HEAD
             return _undef.make_or_raise_undef()
         for element in set_of_multisets:
             if not is_member(element):
                 return _undef.make_or_raise_undef()
     else:
         assert set_of_multisets.is_set
-=======
-            return _make_or_raise_undef()
-        for element in set_of_multisets:
-            if not is_member(element):
-                return _make_or_raise_undef()
-    else:
-        assert isinstance(set_of_multisets, _mo.Set)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     return _sets.chain_binary_operation(
         set_of_multisets, _functools.partial(union, _checked=False), is_member)
 
@@ -565,20 +435,11 @@ def big_intersect(set_of_multisets: 'PP( M x N )', _checked=True) -> 'P( M x N )
     """
     if _checked:
         if not isinstance(set_of_multisets, _mo.Set):
-<<<<<<< HEAD
             return _undef.make_or_raise_undef()
         for element in set_of_multisets:
             if not is_member(element):
                 return _undef.make_or_raise_undef()
     else:
         assert set_of_multisets.is_set
-=======
-            return _make_or_raise_undef()
-        for element in set_of_multisets:
-            if not is_member(element):
-                return _make_or_raise_undef()
-    else:
-        assert isinstance(set_of_multisets, _mo.Set)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     return _sets.chain_binary_operation(
         set_of_multisets, _functools.partial(intersect, _checked=False), is_member)

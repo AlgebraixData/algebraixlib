@@ -24,19 +24,12 @@ The modules that contain classes that represent data are:
 
 -   :mod:`~.multiset`: Contains the class :class:`~.Multiset` that represents a :term:`multiset`.
 
-<<<<<<< HEAD
 -   :mod:`~.utils`: Provides various utilities for the other modules in this package.
 
 In addition to the modules with classes that represent data, there is a private module
 ``_flags``. It contains the class ``_flags.Flags`` that provides a mechanism to cache
 certain properties of :class:`~.MathObject`\s. It is used by property accessors like
 :attr:`~.MathObject.cached_relation` and is not meant to be used by itself. (See also
-=======
-In addition to the modules with classes that represent data, there is a private module
-``_flags``. It contains the class ``_flags.Flags`` that provides a mechanism to cache
-certain properties of :class:`~.MathObject`\s. It is used by property accessors like
-:attr:`~.MathObject.cached_is_relation` and is not meant to be used by itself. (See also
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 [PropCache]_.)
 
 All module-level symbols (functions and classes, except ``_flags.Flags``) are exposed at the
@@ -45,13 +38,8 @@ imported. (Similarly, ``from mathobjects import ...`` can be used to import indi
 from the package.)
 """
 
-<<<<<<< HEAD
 # $Id: __init__.py 22730 2015-08-04 20:39:34Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-04 15:39:34 -0500 (Tue, 04 Aug 2015) $
-=======
-# $Id: __init__.py 22702 2015-07-28 20:20:56Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -72,7 +60,4 @@ from .couplet import Couplet
 from .mathobject import MathObject, raise_if_not_mathobject, raise_if_not_mathobjects
 from .multiset import Multiset
 from .set import Set
-<<<<<<< HEAD
 from .utils import CacheStatus
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272

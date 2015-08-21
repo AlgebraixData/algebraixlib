@@ -1,12 +1,7 @@
 """Provide the class :class:`~.Multiset`; it represents a :term:`multiset`."""
 
-<<<<<<< HEAD
 # $Id: multiset.py 22803 2015-08-14 17:08:50Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-14 12:08:50 -0500 (Fri, 14 Aug 2015) $
-=======
-# $Id: multiset.py 22702 2015-07-28 20:20:56Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -27,25 +22,16 @@ import algebraixlib.structure as _structure
 import algebraixlib.undef as _ud
 import algebraixlib.util.miscellaneous as _misc
 
-<<<<<<< HEAD
 from .atom import auto_convert
 from .mathobject import MathObject, raise_if_not_mathobject
 from .utils import CacheStatus
 from ._flags import Flags as _Flags
-=======
-from algebraixlib.mathobjects.atom import auto_convert
-from algebraixlib.mathobjects.couplet import Couplet
-from algebraixlib.mathobjects.mathobject import MathObject, raise_if_not_mathobject
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 # On-demand import 'statements' that avoid problems with circular imports.
 
 def _multisets():
-<<<<<<< HEAD
     """Load :mod:`~.algebras.multisets` on demand."""
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     _multisets.algebra = getattr(_multisets, 'algebra', None)
     if _multisets.algebra is None:
         import algebraixlib.algebras.multisets as multisets
@@ -55,7 +41,6 @@ def _multisets():
 
 # --------------------------------------------------------------------------------------------------
 
-<<<<<<< HEAD
 def _init_cache_not_empty() -> int:
     """Initialization function for `Multiset._INIT_CACHE_NOT_EMPTY` for non-empty multisets."""
     # This instance may be a multiclan.
@@ -101,11 +86,6 @@ class Multiset(MathObject):
     _INIT_CACHE_NOT_EMPTY = _init_cache_not_empty()
     _INIT_CACHE_EMPTY = _init_cache_empty()
 
-=======
-class Multiset(MathObject):
-    """A :term:`multiset` consisting of zero or more different `MathObject` instances."""
-
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     def __init__(self, *args, direct_load=False):
         """
         :param args: Zero or more unnamed arguments that are placed into the created ``Multiset``.
@@ -120,11 +100,7 @@ class Multiset(MathObject):
         :param direct_load: (Optional) Set to ``True`` if you know that all arguments (or all
             elements of the iterable) are instances of `MathObject`.
         """
-<<<<<<< HEAD
         super().__init__(self._INIT_CACHE_NOT_EMPTY)
-=======
-        super().__init__()
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         elements = args[0] if len(args) == 1 else args
 
         # Normally load an argument. May come from 'elements' or from unnamed arguments.
@@ -157,15 +133,8 @@ class Multiset(MathObject):
             else:
                 self._data = _collections.Counter({auto_convert(elements): 1})
         self._hash = 0
-<<<<<<< HEAD
         if self.is_empty:
             self._flags.asint = self._INIT_CACHE_EMPTY
-=======
-        self._flags._not_relation = True
-        self._flags._not_clan = True
-        if self.is_empty:
-            self._flags._multiclan = True
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     # ----------------------------------------------------------------------------------------------
     # Characteristics of the instance.
@@ -184,11 +153,7 @@ class Multiset(MathObject):
 
     @property
     def is_empty(self) -> bool:
-<<<<<<< HEAD
         """Return ``True`` if this :term:`multiset` is empty, ``False`` if not."""
-=======
-        """Return ``True`` if this :term:`multiset` is empty."""
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         return not self._data
 
     def has_element(self, elem: MathObject) -> bool:
@@ -220,14 +185,6 @@ class Multiset(MathObject):
             return _structure.PowerSet(_structure.CartesianProduct(
                 elements_ground_set, _structure.GenesisSetN()))
 
-<<<<<<< HEAD
-=======
-    def is_regular(self) -> bool:
-        """Return whether ``self`` is :term:`regular`. Return `Undef()` if not applicable."""
-        tmp_clan = _multisets().demultify(self)
-        return tmp_clan.is_regular()
-
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     # ----------------------------------------------------------------------------------------------
     # (Python-)Special functions.
 
@@ -287,15 +244,9 @@ class Multiset(MathObject):
         """The initial function assigned to ``_getitem_redirect``. Determine whether ``self`` is a
         multirelation, set ``_getitem_redirect`` accordingly and return the appropriate
         result."""
-<<<<<<< HEAD
         def is_multirelation():  # pylint: disable=missing-docstring
             for elem in self.data.keys():
                 if not elem.is_couplet:
-=======
-        def is_multirelation():
-            for elem in self.data.keys():
-                if not isinstance(elem, Couplet):
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
                     return False
             return True
 
@@ -310,11 +261,7 @@ class Multiset(MathObject):
         """Return a multiset with the rights of all the couplets that have a left of ``left``."""
         left_mo = auto_convert(left)
 
-<<<<<<< HEAD
         def _sum_same_left_relations(left_mo_):  # pylint: disable=missing-docstring
-=======
-        def _sum_same_left_relations(left_mo_):
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
             return_count = _collections.Counter()
             for elem, multi in self.data.items():
                 if elem.left == left_mo_:
@@ -324,11 +271,7 @@ class Multiset(MathObject):
         return Multiset(_sum_same_left_relations(left_mo), direct_load=True)
 
     # noinspection PyMethodMayBeStatic,PyUnusedLocal
-<<<<<<< HEAD
     def _getitem_undef(self, left):  # pylint: disable=unused-argument, no-self-use
-=======
-    def _getitem_undef(self, left):
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         """Return ``Undef()``. Used for ``self``s that are neither relations nor clans."""
         return _ud.Undef()
 
@@ -347,14 +290,3 @@ class Multiset(MathObject):
             Return `Undef()` if ``self`` is not a multi-relation.
         """
         return self._getitem_redirect(left)
-<<<<<<< HEAD
-=======
-
-    # ----------------------------------------------------------------------------------------------
-    # Overrides for property cache setters that are defined in base class MathObject.
-
-    def cache_is_multiclan(self, value: bool):
-        """Cache whether ``self`` is or is not a :term:`multiclan`. See [PropCache]_."""
-        self._flags.multiclan = value
-        return self
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272

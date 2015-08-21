@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 r"""Provide the class :class:`~.Set`; it represents a :term:`set`."""
 
 # $Id: set.py 22803 2015-08-14 17:08:50Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-14 12:08:50 -0500 (Fri, 14 Aug 2015) $
-=======
-"""Provide the class :class:`~.Set`; it represents a :term:`set`."""
-
-# $Id: set.py 22702 2015-07-28 20:20:56Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -29,24 +22,16 @@ import algebraixlib.structure as _structure
 import algebraixlib.undef as _ud
 import algebraixlib.util.miscellaneous as _misc
 
-<<<<<<< HEAD
 from .atom import auto_convert, Atom
 from .mathobject import MathObject, raise_if_not_mathobject
 from .utils import CacheStatus
 from ._flags import Flags as _Flags
-=======
-from algebraixlib.mathobjects.atom import auto_convert, Atom
-from algebraixlib.mathobjects.mathobject import MathObject, raise_if_not_mathobject
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 # On-demand import 'statements' that avoid problems with circular imports.
 
 def _couplets():
-<<<<<<< HEAD
     """Load :mod:`~.algebras.couplets` on demand."""
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     _couplets.algebra = getattr(_couplets, 'algebra', None)
     if _couplets.algebra is None:
         import algebraixlib.algebras.couplets as couplets
@@ -55,10 +40,7 @@ def _couplets():
 
 
 def _sets():
-<<<<<<< HEAD
     """Load :mod:`~.algebras.sets` on demand."""
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     _sets.algebra = getattr(_sets, 'algebra', None)
     if _sets.algebra is None:
         import algebraixlib.algebras.sets as sets
@@ -67,10 +49,7 @@ def _sets():
 
 
 def _relations():
-<<<<<<< HEAD
     """Load :mod:`~.algebras.relations` on demand."""
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     _relations.algebra = getattr(_relations, 'algebra', None)
     if _relations.algebra is None:
         import algebraixlib.algebras.relations as relations
@@ -79,10 +58,7 @@ def _relations():
 
 
 def _clans():
-<<<<<<< HEAD
     """Load :mod:`~.algebras.clans` on demand."""
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     _clans.algebra = getattr(_clans, 'algebra', None)
     if _clans.algebra is None:
         import algebraixlib.algebras.clans as clans
@@ -92,7 +68,6 @@ def _clans():
 
 # --------------------------------------------------------------------------------------------------
 
-<<<<<<< HEAD
 def _init_cache_not_empty() -> int:
     """Initialization function for `Set._INIT_CACHE` for non-empty sets."""
     # This instance may be a relation or clan.
@@ -135,11 +110,6 @@ class Set(MathObject):
     _INIT_CACHE_NOT_EMPTY = _init_cache_not_empty()
     _INIT_CACHE_EMPTY = _init_cache_empty()
 
-=======
-class Set(MathObject):
-    """A :term:`set` containing zero or more different `MathObject` instances."""
-
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     def __init__(self, *args, direct_load=False):
         """
         :param args: Zero or more unnamed arguments that are placed into the created :class:`~.Set`.
@@ -150,11 +120,7 @@ class Set(MathObject):
         :param direct_load: (Optional) Set to ``True`` if you know that all arguments (or all
             elements of the iterable) are instances of `MathObject`.
         """
-<<<<<<< HEAD
         super().__init__(self._INIT_CACHE_NOT_EMPTY)
-=======
-        super().__init__()
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         elements = args[0] if len(args) == 1 else args
 
         # Normally load an argument. May come from 'elements' or from unnamed arguments.
@@ -174,19 +140,7 @@ class Set(MathObject):
 
         self._hash = 0
         if self.is_empty:
-<<<<<<< HEAD
             self._flags.asint = self._INIT_CACHE_EMPTY
-=======
-            self._flags._clan = True
-            self._flags._relation = True
-            self._flags._functional = True
-            self._flags._regular = True
-            self._flags._right_functional = True
-            self._flags._reflexive = True
-            self._flags._symmetric = True
-            self._flags._transitive = True
-        self._flags._not_multiclan = True
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     # ----------------------------------------------------------------------------------------------
     # Characteristics of the instance.
@@ -205,11 +159,7 @@ class Set(MathObject):
 
     @property
     def is_empty(self) -> bool:
-<<<<<<< HEAD
         """Return ``True`` if this :term:`set` is empty, ``False`` if not."""
-=======
-        """Return ``True`` if this :term:`set` is empty."""
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         return not self._data
 
     def has_element(self, elem: MathObject) -> bool:
@@ -238,13 +188,8 @@ class Set(MathObject):
         if self.get_ground_set().get_powerset_level(_relations().get_ground_set()) > 0:
             _itr = iter(self)
             left_set = next(_itr).get_left_set()
-<<<<<<< HEAD
             for elem in _itr:
                 left_set = _sets().union(elem.get_left_set(), left_set, _checked=False)
-=======
-            for e in _itr:
-                left_set = _sets().union(e.get_left_set(), left_set, _checked=False)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
             return left_set
 
         return _ud.make_or_raise_undef()
@@ -256,161 +201,12 @@ class Set(MathObject):
         if self.get_ground_set().get_powerset_level(_relations().get_ground_set()) > 0:
             _itr = iter(self)
             left_set = next(_itr).get_right_set()
-<<<<<<< HEAD
             for elem in _itr:
                 left_set = _sets().union(elem.get_right_set(), left_set, _checked=False)
-=======
-            for e in _itr:
-                left_set = _sets().union(e.get_right_set(), left_set, _checked=False)
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
             return left_set
 
         return _ud.make_or_raise_undef(2)
 
-<<<<<<< HEAD
-=======
-    def _is_powerset_property(self, ground_set, method_name) -> bool:
-        """Execute ``method_name`` on all elements of this Set if it is element of an n-th power
-        set of ``ground_set``.
-
-        :param ground_set: The ground set of which this :class:`Set` should be part of (at the n-th
-            power set level).
-        :param method_name: A member function that should be run on all elements in this
-            :class:`Set`.
-        :return: Whether this instance is element of an n-th power set of ``ground_set`` and all
-            set elements return ``True`` for ``method_name``, or `Undef()` if it isn't an element
-            of an n-th power set.
-        """
-        if self.get_ground_set().get_powerset_level(ground_set) > 0:
-            result = True
-            for element in self:
-                res = getattr(element, method_name)()
-                if res is _ud.Undef():
-                    return res
-                if not res:
-                    return False
-            return result
-        return _ud.Undef()
-
-    def is_regular(self) -> bool:
-        """Return whether ``self`` is :term:`regular`. Return `Undef()` if not applicable."""
-        if self.cached_is_regular or self.cached_is_not_regular:
-            return self.cached_is_regular
-        if _clans().is_member(self):
-            return _clans().is_regular(self, _checked=False)
-
-        regular = False if self.cached_is_not_functional else self._is_powerset_property(
-            _clans().get_ground_set(), 'is_regular')
-        if regular is not _ud.Undef():
-            self.cache_is_regular(regular)
-            return regular
-        return _ud.make_or_raise_undef(2)
-
-    def is_functional(self) -> bool:
-        """Return whether ``self`` is :term:`functional`. Return `Undef()` if not applicable."""
-        if self.cached_is_functional or self.cached_is_not_functional:
-            return self.cached_is_functional
-        if _relations().is_member(self):
-            return _relations().is_functional(self, _checked=False)
-
-        functional = self._is_powerset_property(_relations().get_ground_set(), 'is_functional')
-        if functional is not _ud.Undef():
-            self.cache_is_functional(functional)
-            return functional
-
-        return _ud.make_or_raise_undef(2)
-
-    def is_right_functional(self) -> bool:
-        """Return whether ``self`` is :term:`right-functional`. Return `Undef()` if not
-        applicable."""
-        if self.cached_is_right_functional or self.cached_is_not_right_functional:
-            return self.cached_is_right_functional
-        if _relations().is_member(self):
-            return _relations().is_right_functional(self, _checked=False)
-
-        functional = self._is_powerset_property(
-            _relations().get_ground_set(), 'is_right_functional')
-        if functional is not _ud.Undef():
-            self.cache_is_right_functional(functional)
-            return functional
-
-        return _ud.make_or_raise_undef(2)
-
-    def is_bijective(self) -> bool:
-        """Return whether ``self`` is :term:`bijective`. Return `Undef()` if not applicable."""
-        if ((self.cached_is_functional or self.cached_is_not_functional) and
-                (self.cached_is_right_functional or self.cached_is_not_right_functional)):
-            return self.cached_is_functional and self.cached_is_right_functional
-        sf = self.is_functional()
-        if sf is not _ud.Undef():
-            # If the left-functional check did not return Undef, the right-functional won't either.
-            if not sf:
-                return False
-            cf = self.is_right_functional()
-            if cf is not _ud.Undef():
-                return cf and sf
-        return _ud.make_or_raise_undef(2)
-
-    def is_reflexive(self) -> bool:
-        """Return whether ``self`` is :term:`reflexive`. Return `Undef()` if not applicable."""
-        if self.cached_is_reflexive or self.cached_is_not_reflexive:
-            return self.cached_is_reflexive
-        if _relations().is_member(self):
-            return _relations().is_reflexive(self, _checked=False)
-
-        reflexive = self._is_powerset_property(_relations().get_ground_set(), 'is_reflexive')
-        if reflexive is not _ud.Undef():
-            self.cache_is_reflexive(reflexive)
-            return reflexive
-
-        return _ud.make_or_raise_undef(2)
-
-    def is_symmetric(self) -> bool:
-        """Return whether ``self`` is :term:`symmetric`. Return `Undef()` if not applicable."""
-        if self.cached_is_symmetric or self.cached_is_not_symmetric:
-            return self.cached_is_symmetric
-        if _relations().is_member(self):
-            return _relations().is_symmetric(self, _checked=False)
-
-        symmetric = self._is_powerset_property(_relations().get_ground_set(), 'is_symmetric')
-        if symmetric is not _ud.Undef():
-            self.cache_is_symmetric(symmetric)
-            return symmetric
-
-        return _ud.make_or_raise_undef()
-
-    def is_transitive(self) -> bool:
-        """Return whether ``self`` is :term:`transitive`. Return `Undef()` if not applicable."""
-        if self.cached_is_transitive or self.cached_is_not_transitive:
-            return self.cached_is_transitive
-        if _relations().is_member(self):
-            return _relations().is_transitive(self, _checked=False)
-
-        transitive = self._is_powerset_property(_relations().get_ground_set(), 'is_transitive')
-        if transitive is not _ud.Undef():
-            self.cache_is_transitive(transitive)
-            return transitive
-
-        return _ud.make_or_raise_undef()
-
-    def is_equivalence_relation(self) -> bool:
-        """Return whether ``self`` is an :term:`equivalence relation`. Return `Undef()` if not
-        applicable."""
-        if ((self.cached_is_reflexive or self.cached_is_not_reflexive) and
-                (self.cached_is_symmetric or self.cached_is_not_symmetric) and
-                (self.cached_is_transitive or self.cached_is_not_transitive)):
-            return self.cached_is_reflexive and self.cached_is_symmetric \
-                and self.cached_is_transitive
-        r = self.is_reflexive()
-        if r is not _ud.Undef():
-            s = self.is_symmetric()
-            if s is not _ud.Undef():
-                t = self.is_transitive()
-                if t is not _ud.Undef():
-                    return r and s and t
-        return _ud.make_or_raise_undef()
-
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     # ----------------------------------------------------------------------------------------------
     # (Python-)Special functions.
 
@@ -471,11 +267,7 @@ class Set(MathObject):
 
     def _call_function(self, left):
         """Find a couplet with a left of ``left`` and return its right or Undef() if none found."""
-<<<<<<< HEAD
         def get_right():  # pylint: disable=missing-docstring
-=======
-        def get_right():
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
             left_mo = auto_convert(left)
             for elem in self:
                 if elem.left == left_mo:
@@ -484,11 +276,7 @@ class Set(MathObject):
         return get_right()
 
     # noinspection PyMethodMayBeStatic,PyUnusedLocal
-<<<<<<< HEAD
     def _call_undef(self, left):  # pylint: disable=unused-argument, no-self-use
-=======
-    def _call_undef(self, left):
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         """Return ``Undef()``. Used for ``self``s that are not functions."""
         return _ud.Undef()
 
@@ -542,11 +330,7 @@ class Set(MathObject):
         return result
 
     # noinspection PyMethodMayBeStatic,PyUnusedLocal
-<<<<<<< HEAD
     def _getitem_undef(self, left):  # pylint: disable=unused-argument, no-self-use
-=======
-    def _getitem_undef(self, left):
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         """Return ``Undef()``. Used for ``self``s that are neither relations nor clans."""
         return _ud.Undef()
 
@@ -567,59 +351,3 @@ class Set(MathObject):
             if ``self`` is neither a relation nor a clan.
         """
         return self._getitem_redirect(left)
-<<<<<<< HEAD
-=======
-
-    # ----------------------------------------------------------------------------------------------
-    # Overrides for property cache setters that are defined in base class MathObject.
-
-    def cache_is_relation(self, value: bool):
-        """Cache whether ``self`` is or is not a :term:`relation`. See [PropCache]_."""
-        if value:
-            assert not self.cached_is_clan or self.is_empty
-            assert not self.cached_is_multiclan
-            if value and not self.is_empty:
-                self.cache_is_clan(False)
-        self._flags.relation = value
-        return self
-
-    def cache_is_clan(self, value: bool):
-        """Cache whether ``self`` is or is not a :term:`clan`. See [PropCache]_."""
-        if value:
-            assert not self.cached_is_relation or self.is_empty
-            assert not self.cached_is_multiclan
-            if not self.is_empty:
-                self.cache_is_relation(False)
-        self._flags.clan = value
-        return self
-
-    def cache_is_functional(self, value: bool):
-        """Cache whether ``self`` is or is not :term:`functional`. See [PropCache]_."""
-        self._flags.functional = value
-        return self
-
-    def cache_is_right_functional(self, value: bool):
-        """Cache whether ``self`` is or is not a :term:`right-functional`. See [PropCache]_."""
-        self._flags.right_functional = value
-        return self
-
-    def cache_is_regular(self, value: bool):
-        """Cache whether ``self`` is or is not :term:`regular`. See [PropCache]_."""
-        self._flags.regular = value
-        return self
-
-    def cache_is_reflexive(self, value: bool):
-        """Cache whether ``self`` is or is not :term:`reflexive`. See [PropCache]_."""
-        self._flags.reflexive = value
-        return self
-
-    def cache_is_symmetric(self, value: bool):
-        """Cache whether ``self`` is or is not :term:`symmetric`. See [PropCache]_."""
-        self._flags.symmetric = value
-        return self
-
-    def cache_is_transitive(self, value: bool):
-        """Cache whether ``self`` is or is not :term:`transitive`. See [PropCache]_."""
-        self._flags.transitive = value
-        return self
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272

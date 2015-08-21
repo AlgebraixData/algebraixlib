@@ -1,12 +1,7 @@
 """Import data from JSON."""
 
-<<<<<<< HEAD
 # $Id: json.py 22810 2015-08-19 16:56:00Z jaustell $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-19 11:56:00 -0500 (Wed, 19 Aug 2015) $
-=======
-# $Id: json.py 22690 2015-07-27 20:23:37Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-27 15:23:37 -0500 (Mon, 27 Jul 2015) $
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -30,7 +25,6 @@ def import_json(json_file_or_filepath) -> 'P( A x M )':
     :return: A nested :term:`relation` that represents the JSON document.
     """
     def _process_nodes(nodes):
-<<<<<<< HEAD
         if isinstance(nodes, list):
             for list_data in nodes:
                 yield _mo.Set(*list(_process_nodes(list_data)))
@@ -47,20 +41,6 @@ def import_json(json_file_or_filepath) -> 'P( A x M )':
                     yield _mo.Couplet(_mo.Atom(key), _mo.Atom(value), direct_load=True)
                 else:
                     assert False  # Node type not supported.
-=======
-        for key, value in nodes.items():
-            if isinstance(value, list):
-                for list_data in value:
-                    child = _process_nodes(list_data)
-                    yield _mo.Couplet(_mo.Atom(key), _mo.Set(child), direct_load=True)
-            elif isinstance(value, dict):
-                children = _process_nodes(value)
-                yield _mo.Couplet(_mo.Atom(key), _mo.Set(children), direct_load=True)
-            elif isinstance(value, str):
-                yield _mo.Couplet(_mo.Atom(key), _mo.Atom(value), direct_load=True)
-            else:
-                assert False  # Node type not supported.
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     def _import_json(json_file):
         import json

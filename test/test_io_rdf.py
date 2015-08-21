@@ -1,12 +1,7 @@
 """Testing the io.rdf module."""
 
-<<<<<<< HEAD
 # $Id: test_io_rdf.py 22744 2015-08-05 22:16:56Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-05 17:16:56 -0500 (Wed, 05 Aug 2015) $
-=======
-# $Id: test_io_rdf.py 22690 2015-07-27 20:23:37Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-27 15:23:37 -0500 (Mon, 27 Jul 2015) $
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -188,11 +183,7 @@ class RdfTest(unittest.TestCase):
     def test_export_table(self):
         table = rt['1']
         lefts = table.get_left_set()
-<<<<<<< HEAD
         self.assertRaises(AttributeError, lambda: export_table(lefts, table, '1'))
-=======
-        self.assertRaises(TypeError, lambda: export_table(lefts, table, '1'))
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
         csv = io.StringIO(newline='')
         self.assertRaises(AssertionError, lambda: export_table(csv, lefts, table, '1'))

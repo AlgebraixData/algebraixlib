@@ -1,12 +1,7 @@
 r"""Utilities that present `MathObject`\s as HTML pages."""
 
-<<<<<<< HEAD
 # $Id: html.py 22800 2015-08-14 14:59:01Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-14 09:59:01 -0500 (Fri, 14 Aug 2015) $
-=======
-# $Id: html.py 22702 2015-07-28 20:20:56Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -161,11 +156,7 @@ def as_html_handle_data_algebra(mathobj):
         for elem in mathobj:
             if isinstance(elem, _mo.MathObject):
                 # latex
-<<<<<<< HEAD
                 temp += r"$$\(\require{color}\)\(\require{xcolor}\)" + \
-=======
-                temp += "$$\(\\require{color}\)\(\\require{xcolor}\)" + \
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
                         _html.escape(_latexprinter.math_object_to_latex(elem)) + "$$ <br //>"
             else:
                 # str
@@ -193,11 +184,7 @@ def build_descriptors_from_math_obj(mathobjects):
 
 def create_simple_web_page(mathobj: _mo.MathObject) -> str:
     """Return an HTML string for a simple HTML page from a single `MathObject`."""
-<<<<<<< HEAD
     web_template = r"""\
-=======
-    web_template = """\
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 <html>
     <head>
         <script
@@ -224,11 +211,7 @@ def create_simple_web_page(mathobj: _mo.MathObject) -> str:
         <h2>Input:</h2>
         <div id="dataAlgebraArea">{data_algebra_in!s}</div>
         <h2>Output:</h2>
-<<<<<<< HEAD
         <div id="latexArea">$$\(\require{color}\){latex_out}$$</div>
-=======
-        <div id="latexArea">$$\(\\require{color}\){latex_out}$$</div>
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     </body></html>
     """
     web_out = web_template.format(

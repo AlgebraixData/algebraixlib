@@ -1,11 +1,6 @@
 .. Algebraix Technology Core Library documentation.
-<<<<<<< HEAD
    $Id: README.rst 22838 2015-08-20 21:49:14Z gfiedler $
    Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-20 16:49:14 -0500 (Thu, 20 Aug 2015) $
-=======
-   $Id: README.rst 22693 2015-07-28 15:15:37Z gfiedler $
-   Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 10:15:37 -0500 (Tue, 28 Jul 2015) $
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
    This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 
@@ -19,7 +14,6 @@
    You should have received a copy of the GNU Lesser General Public License along with algebraixlib.
    If not, see <http://www.gnu.org/licenses/>.
 
-<<<<<<< HEAD
    This file is not included via toctree. Mark it as orphan to suppress the warning that it isn't
    included in any toctree.
 
@@ -27,14 +21,11 @@
 
 |logo|_
 
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 algebraixlib
 ============
 
 What Is It?
 -----------
-<<<<<<< HEAD
 
 ``algebraixlib`` is a library that provides constructs and facilities to harness the fundamentals
 of data algebra. Data algebra consists of mathematical constructs that can represent all data, no
@@ -97,24 +88,10 @@ How to Install
 --------------
 
 If you already have Python installed and are familiar with installing packages, you can install
-=======
-``algebraixlib`` is a library that provides constructs and facilities to harness the fundamentals
-of data algebra.
-
-Requirements
-------------
-`Python`_  3.4.3 or later.
-`IPython Notebook`_ 3.2 or later for the IPython notebook tutorials and examples.
-
-How to Install
---------------
-If you already have Python installed and are familiar with installing packages, you can get
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 ``algebraixlib`` with ``pip``::
 
 > pip install algebraixlib
 
-<<<<<<< HEAD
 Additional user permissions may be necessary to complete the installation. In such a situation,
 other options include installing the package for a single user (in the user's home directory)::
 
@@ -134,39 +111,17 @@ Unit Tests
 ----------
 
 The unit tests require the following libraries to be installed:
-=======
-Additional user permissions may be necessary to complete the installation. In such a situation
-other options include installing the package to the home directory::
-
-> pip install algebraixlib --user <username> 
-
-or in a virtual environment, see `Creation of virtual environments`_.
-
-You can also manually download ``algebraixlib`` from `GitHub`_ or `PyPI`_. To install from a
-download, unpack it and run the following from the top-level source directory using the terminal::
-
-> python setup.py install
-
-Unit Tests
-----------
-The unit tests require the following libraries be installed:
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 *   `nose`_
 *   `coverage`_
 
-<<<<<<< HEAD
 To execute the unit tests, use the following command in the algebraixlib directory (it contains the
 file runtests.py)::
-=======
-To execute the unit tests, from the console, in the algebraixlib directory, use the command::
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 > python runtests.py
 
 Document Build
 --------------
-<<<<<<< HEAD
 The document build requires the following libraries be installed:
 
 *   `Sphinx`_ (1.3 or later)
@@ -183,40 +138,11 @@ Legalese
 Copyright
 ---------
 
-=======
-The document builds require the following libraries be installed:
-
-*   `Sphinx`_ (1.3 or later)
-
-To execute the document builds, from the console, in the algebraixlib/docs directory, use command::
-
-> python build.py
-
-Documentation and Support
--------------------------
-
-*   Find documentation at `Read the Docs`_.
-*   Find the library on `PyPI`_.
-*   Find the library, the bugtracker and contribute on `GitHub`_.
-*   Find tutorials and example code in the `examples`_ directory on GitHub.
-*   Post questions about algebraixlib on `Stack Overflow`_ using the tag [algebraixlib].
-*   Post questions about the mathematics of data algebra on `math.stackexchange`_ using the tag
-    [data-algebra].
-*   Contact us at `email`_.
-
-See also our `GitHub project page`_. In addition, there is a book forthcoming about data algebra.
-
-Copyright
----------
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 Copyright(c) 2015 Algebraix Data Corporation.
 
 License
 -------
-<<<<<<< HEAD
 
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 ``algebraixlib`` is free software: you can redistribute it and/or modify it under the terms of
 `version 3 of the GNU Lesser General Public License`_ as published by the
 `Free Software Foundation`_. A copy of the GNU Lesser General Public License is published along
@@ -224,15 +150,11 @@ with ``algebraixlib`` on `GitHub`_. Otherwise, see `GNU licenses`_.
 
 Warranty
 --------
-<<<<<<< HEAD
 
-=======
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 ``algebraixlib`` is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU Lesser General Public License for more details.
 
-<<<<<<< HEAD
 .. _Python:
     http://python.org
 .. _Official multiple python versions on the same machine? (Stack Overflow):
@@ -247,28 +169,16 @@ GNU Lesser General Public License for more details.
     http://ipython.org/install.html
 .. _nbviewer:
     http://nbviewer.ipython.org/
-=======
-
-.. _Python:
-    http://python.org
-.. _IPython Notebook:
-    http://ipython.org/notebook.html
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 .. _email:
     mailto:algebraixlib@algebraixdata.com
 .. _Read the Docs:
     http://algebraixlib.rtfd.org/
-<<<<<<< HEAD
 .. _A Beginner's Introduction to Data Algebra:
     http://algebraixlib.readthedocs.org/en/latest/intro.html
 .. _Examples:
     https://github.com/AlgebraixData/algebraixlib/tree/master/examples
 .. _Hello_World.ipynb:
     https://github.com/AlgebraixData/algebraixlib/blob/master/examples/Hello_World.ipynb
-=======
-.. _Examples:
-    https://github.com/AlgebraixData/algebraixlib/tree/master/examples
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 .. _PyPI:
     http://pypi.python.org/pypi/algebraixlib
 .. _nose:
@@ -292,11 +202,7 @@ GNU Lesser General Public License for more details.
 .. _Free Software Foundation:
     http://www.fsf.org/
 .. _Creation of virtual environments:
-<<<<<<< HEAD
     https://docs.python.org/3/library/venv.html
 
 .. |logo| image:: https://raw.githubusercontent.com/AlgebraixData/algebraixlib/gh-pages/ALGBX-Logo-Color-150DPI.png
 .. _logo: http://www.algebraixdata.com/technology/#algebraix-library
-=======
-    https://docs.python.org/3/library/venv.html
->>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
