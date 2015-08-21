@@ -1,7 +1,12 @@
 """Miscellaneous utility functions and classes."""
 
+<<<<<<< HEAD
 # $Id: miscellaneous.py 22786 2015-08-12 14:50:38Z sjohnston $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-12 09:50:38 -0500 (Wed, 12 Aug 2015) $
+=======
+# $Id: miscellaneous.py 22702 2015-07-28 20:20:56Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -260,6 +265,7 @@ class FunctionTimer:
     def get_indent():
         """Return the current indent as string of spaces."""
         return ' ' * (FunctionTimer._indent_space_cnt * FunctionTimer._indent)
+<<<<<<< HEAD
 
 
 def core(string, begin_len=0, end_len=0):
@@ -273,3 +279,5 @@ def core(string, begin_len=0, end_len=0):
     if begin_len > 0 and end_len > 0 and begin_len - end_len < len(string):
         string = string[:begin_len] + '\n...\n' + string[-end_len:]
     return string
+=======
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272

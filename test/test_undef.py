@@ -1,7 +1,12 @@
 """Test the undef module."""
 
+<<<<<<< HEAD
 # $Id: test_undef.py 22724 2015-08-03 23:40:02Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-03 18:40:02 -0500 (Mon, 03 Aug 2015) $
+=======
+# $Id: test_undef.py 22614 2015-07-15 18:14:53Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -86,6 +91,7 @@ class UndefTest(unittest.TestCase):
 
     def test_make_or_raise_undef(self):
         """Test make_or_raise_undef() together with RaiseOnUndef."""
+<<<<<<< HEAD
         try:
             self.assertEqual(RaiseOnUndef.get_level(), 0)
             self.assertIs(make_or_raise_undef(), Undef())
@@ -99,6 +105,17 @@ class UndefTest(unittest.TestCase):
         except:  # Make sure RaiseOnUndef level gets reset.
             RaiseOnUndef.reset()
             raise
+=======
+        self.assertEqual(RaiseOnUndef.get_level(), 0)
+        self.assertIs(make_or_raise_undef(), Undef())
+        RaiseOnUndef.set_level(1)
+        self.assertRaises(UndefException, lambda: make_or_raise_undef())
+        self.assertIs(make_or_raise_undef(2), Undef())
+        RaiseOnUndef.set_level(2)
+        self.assertRaises(UndefException, lambda: make_or_raise_undef(2))
+        RaiseOnUndef.reset()
+        self.assertIs(make_or_raise_undef(2), Undef())
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 # --------------------------------------------------------------------------------------------------
 if __name__ == '__main__':

@@ -1,7 +1,12 @@
 """Test the algebras.clans module."""
 
+<<<<<<< HEAD
 # $Id: test_algebras_multiclans.py 22744 2015-08-05 22:16:56Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-05 17:16:56 -0500 (Wed, 05 Aug 2015) $
+=======
+# $Id: test_algebras_multiclans.py 22675 2015-07-24 21:01:36Z mhaque $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-24 16:01:36 -0500 (Fri, 24 Jul 2015) $
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -21,6 +26,10 @@ import unittest
 
 from algebraixlib.mathobjects import Atom, Couplet, Set, Multiset
 from algebraixlib.structure import CartesianProduct, GenesisSetA, GenesisSetM, GenesisSetN, PowerSet
+<<<<<<< HEAD
+=======
+from data_mathobjects import algebra_multiclans as ac
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 from algebraixlib.undef import RaiseOnUndef, Undef, UndefException
 
 from algebraixlib.algebras.multiclans import \
@@ -28,9 +37,12 @@ from algebraixlib.algebras.multiclans import \
     compose, transpose, cross_union, cross_functional_union, \
     cross_right_functional_union, cross_intersect, substrict, superstrict
 
+<<<<<<< HEAD
 # noinspection PyUnresolvedReferences
 from data_mathobjects import algebra_multiclans as ac
 
+=======
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 class MulticlansTest(unittest.TestCase):
     """Test the algebras.clans module."""
@@ -50,7 +62,11 @@ class MulticlansTest(unittest.TestCase):
         self.assertTrue(is_absolute_member(Multiset(Set(Couplet(1, 2)))))
         self.assertFalse(is_absolute_member(Multiset(Set(Couplet(Set([2, 3]), 4)))))
         # noinspection PyTypeChecker
+<<<<<<< HEAD
         self.assertRaises(AttributeError, lambda: is_member(3))
+=======
+        self.assertRaises(TypeError, lambda: is_member(3))
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     def test_set_ordering(self):
         self.assertEqual(ac['clan1'], ac['clan1reordered'])
@@ -127,6 +143,7 @@ class MulticlansTest(unittest.TestCase):
     # ----------------------------------------------------------------------------------------------
 
     def _check_wrong_argument_type_unary(self, operation):
+<<<<<<< HEAD
         try:
             self.assertRaises(AttributeError, lambda: operation(3))
             self.assertIs(operation(Atom(3)), Undef())
@@ -149,6 +166,22 @@ class MulticlansTest(unittest.TestCase):
         except:  # Make sure RaiseOnUndef level gets reset.
             RaiseOnUndef.reset()
             raise
+=======
+        self.assertRaises(TypeError, lambda: operation(3))
+        self.assertIs(operation(Atom(3)), Undef())
+        RaiseOnUndef.set_level(1)
+        self.assertRaises(UndefException, lambda: operation(Set('a', 'b')))
+        RaiseOnUndef.reset()
+
+    def _check_wrong_argument_types_binary(self, operation):
+        self.assertRaises(TypeError, lambda: operation(3, 4))
+        self.assertRaises(TypeError, lambda: operation(Multiset(Set(Couplet(1, 2))), 3))
+        self.assertIs(operation(Atom(3), Atom(4)), Undef())
+        self.assertIs(operation(Multiset(Set(Couplet(1, 2))), Atom(3)), Undef())
+        RaiseOnUndef.set_level(1)
+        self.assertRaises(UndefException, lambda: operation(Couplet(1, 2), Couplet(3, 4)))
+        RaiseOnUndef.reset()
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 # --------------------------------------------------------------------------------------------------
 if __name__ == '__main__':

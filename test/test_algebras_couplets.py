@@ -1,7 +1,12 @@
 """Test the algebras.couplets module."""
 
+<<<<<<< HEAD
 # $Id: test_algebras_couplets.py 22744 2015-08-05 22:16:56Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-05 17:16:56 -0500 (Wed, 05 Aug 2015) $
+=======
+# $Id: test_algebras_couplets.py 22698 2015-07-28 17:09:23Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 12:09:23 -0500 (Tue, 28 Jul 2015) $
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -52,11 +57,16 @@ class CoupletsTest(unittest.TestCase):
         self.assertFalse(is_member(Atom(3)))
         self.assertTrue(is_absolute_member(Couplet(1, 2)))
         self.assertFalse(is_absolute_member(Couplet(Set(1), 2)))
+<<<<<<< HEAD
         self.assertRaises(AttributeError, lambda: is_member(3))
+=======
+        self.assertRaises(TypeError, lambda: is_member(3))
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     def test_compose(self):
         """Basic tests of couplets.compose()."""
         # Wrong argument types.
+<<<<<<< HEAD
         try:
             self.assertRaises(AttributeError, lambda: compose(3, Couplet(1, 2)))
             self.assertRaises(AttributeError, lambda: compose(Couplet(1, 2), 3))
@@ -68,6 +78,15 @@ class CoupletsTest(unittest.TestCase):
         except:  # Make sure RaiseOnUndef level gets reset.
             RaiseOnUndef.reset()
             raise
+=======
+        self.assertRaises(TypeError, lambda: compose(3, Couplet(1, 2)))
+        self.assertRaises(TypeError, lambda: compose(Couplet(1, 2), 3))
+        self.assertIs(compose(Atom(3), Couplet(1, 2)), Undef())
+        self.assertIs(compose(Couplet(1, 2), Atom(3)), Undef())
+        RaiseOnUndef.set_level(1)
+        self.assertRaises(UndefException, lambda: compose(Set('a', 'b'), Set('c', 'd')))
+        RaiseOnUndef.reset()
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
         result = compose(_couplet_b_to_a, _couplet_c_to_b)
         self.assertEqual(result, _couplet_c_to_a)
@@ -75,6 +94,7 @@ class CoupletsTest(unittest.TestCase):
         result = compose(_couplet_c_to_b, _couplet_d_to_c)
         self.assertEqual(result, _couplet_d_to_b)
 
+<<<<<<< HEAD
         try:
             result = compose(_couplet_b_to_a, _couplet_d_to_c)
             self.assertIs(result, Undef())
@@ -84,6 +104,13 @@ class CoupletsTest(unittest.TestCase):
         except:  # Make sure RaiseOnUndef level gets reset.
             RaiseOnUndef.reset()
             raise
+=======
+        result = compose(_couplet_b_to_a, _couplet_d_to_c)
+        self.assertIs(result, Undef())
+        RaiseOnUndef.set_level(2)
+        self.assertRaises(UndefException, lambda: compose(_couplet_b_to_a, _couplet_d_to_c))
+        RaiseOnUndef.reset()
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
         result = compose(_couplet_c_to_b, _couplet_b_to_a)
         self.assertIs(result, Undef())
@@ -91,6 +118,7 @@ class CoupletsTest(unittest.TestCase):
     def test_transpose(self):
         """Basic tests of couplets.transpose()."""
         # Wrong argument types.
+<<<<<<< HEAD
         try:
             self.assertRaises(AttributeError, lambda: transpose(3))
             self.assertIs(transpose(Atom(3)), Undef())
@@ -100,6 +128,13 @@ class CoupletsTest(unittest.TestCase):
         except:  # Make sure RaiseOnUndef level gets reset.
             RaiseOnUndef.reset()
             raise
+=======
+        self.assertRaises(TypeError, lambda: transpose(3))
+        self.assertIs(transpose(Atom(3)), Undef())
+        RaiseOnUndef.set_level(1)
+        self.assertRaises(UndefException, lambda: transpose(Set('a', 'b')))
+        RaiseOnUndef.reset()
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
         result = transpose(_couplet_b_to_a)
         self.assertEqual(result, _couplet_a_to_b)

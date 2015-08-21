@@ -4,8 +4,13 @@ The main entry point is the function `math_object_to_latex`; it delegates to the
 conversion function according to the argument type.
 """
 
+<<<<<<< HEAD
 # $Id: latexprinter.py 22800 2015-08-14 14:59:01Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-14 09:59:01 -0500 (Fri, 14 Aug 2015) $
+=======
+# $Id: latexprinter.py 22702 2015-07-28 20:20:56Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -61,6 +66,7 @@ def math_object_to_latex(mobj, short: bool=False, _depth: int=0):
     :param _depth: (Optional) Internal use only. Indicate levels of nested (multi)sets. Is
         incremented for every nesting level. Default is 0.
     """
+<<<<<<< HEAD
     if isinstance(mobj, _mo.MathObject):
         if mobj.is_set:
             return set_to_latex(mobj, short, _depth)
@@ -76,6 +82,19 @@ def math_object_to_latex(mobj, short: bool=False, _depth: int=0):
         return r"\mathit{undef}"
     else:
         return str(mobj)
+=======
+    if isinstance(mobj, _mo.Set):
+        return set_to_latex(mobj, short, _depth)
+    if isinstance(mobj, _mo.Multiset):
+        return mset_to_latex(mobj, short, _depth)
+    if isinstance(mobj, _mo.Couplet):
+        return couplet_to_latex(mobj, short)
+    if isinstance(mobj, _mo.Atom):
+        return atom_to_latex(mobj, short)
+    if mobj is _undef.Undef():
+        return "\mathit{undef}"
+    return str(mobj)
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 # noinspection PyPackageRequirements
@@ -108,7 +127,11 @@ def iprint_latex(variable_name: str, variable_value=None, short: bool=False):
 
 # --------------------------------------------------------------------------------------------------
 
+<<<<<<< HEAD
 def atom_to_latex(atom: _mo.Atom, short: bool=False):
+=======
+def atom_to_latex(atom, short: bool=False):
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     """Return a `string` that represents the value of an Atom in LaTeX markup.
 
     :param atom: The :class:`~.Atom` to be represented in LaTeX markup.
@@ -116,7 +139,11 @@ def atom_to_latex(atom: _mo.Atom, short: bool=False):
         Longer parts are abbreviated with ellipses ('...'). Defaults to ``False``. See also
         `Config.short_atom_len`.
     """
+<<<<<<< HEAD
     assert atom.is_atom
+=======
+    assert isinstance(atom, _mo.Atom)
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     atom_str = str(atom)
     if short and len(atom_str) > Config.short_atom_len + 3:
@@ -128,7 +155,11 @@ def atom_to_latex(atom: _mo.Atom, short: bool=False):
     return result_value
 
 
+<<<<<<< HEAD
 def couplet_to_latex(couplet: _mo.Couplet, short: bool=False):
+=======
+def couplet_to_latex(couplet, short: bool=False):
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     r"""Return a `string` that represents a Couplet in LaTeX markup.
 
     :param couplet: The :class:`~.Couplet` to be represented in LaTeX markup.
@@ -138,7 +169,11 @@ def couplet_to_latex(couplet: _mo.Couplet, short: bool=False):
         ``Couplet`` directly, it may affect the :term:`left` and :term:`right component`\s of
         it.)
     """
+<<<<<<< HEAD
     assert couplet.is_couplet
+=======
+    assert isinstance(couplet, _mo.Couplet)
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     left_color = _Colors().red if Config.colorize_output else None
     right_color = _Colors().blue if Config.colorize_output else None
@@ -147,7 +182,11 @@ def couplet_to_latex(couplet: _mo.Couplet, short: bool=False):
         latex_str = math_object_to_latex(comp, short=short)
         if color:
             latex_str = ''.join((_Tokens.color, color, '{', latex_str, '}'))
+<<<<<<< HEAD
         if comp.is_atom:
+=======
+        if isinstance(comp, _mo.Atom):
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
             return latex_str
         return '{}{}{}'.format(_Tokens.left_paren_dyn, latex_str, _Tokens.right_paren_dyn)
 
@@ -158,7 +197,11 @@ def couplet_to_latex(couplet: _mo.Couplet, short: bool=False):
     return result_value
 
 
+<<<<<<< HEAD
 def set_to_latex(set_: _mo.Set, short: bool=False, _depth: int=0):
+=======
+def set_to_latex(set_, short: bool=False, _depth=0):
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     """Return a `string` that represents a Set in LaTeX markup.
 
     This function sorts the input ``set_`` to make the output consistent, so be careful with big
@@ -171,7 +214,11 @@ def set_to_latex(set_: _mo.Set, short: bool=False, _depth: int=0):
     :param _depth: (Optional) Internal use only. Indicate levels of nested (multi)sets. Is
         incremented for every nesting level. Default is 0.
     """
+<<<<<<< HEAD
     assert set_.is_set
+=======
+    assert isinstance(set_, _mo.Set)
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     result = _Tokens.left_brace_dyn
 
@@ -202,15 +249,26 @@ def set_to_latex(set_: _mo.Set, short: bool=False, _depth: int=0):
         elem_itr = iter(sorted(set_.data))
 
         if short and set_.cardinality > Config.short_set_len + 1:
+<<<<<<< HEAD
             is_couplet_list = [elem.is_couplet
                 for elem in _itertools.islice(set_, Config.short_set_len)]
         else:
             is_couplet_list = [elem.is_couplet for elem in set_]
+=======
+            is_couplet_list = [isinstance(
+                elem, _mo.Couplet) for elem in _itertools.islice(set_, Config.short_set_len)]
+        else:
+            is_couplet_list = [isinstance(elem, _mo.Couplet) for elem in set_]
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         parenthesize_couplets = any(is_couplet_list) and not all(is_couplet_list)
 
         def optionally_parenthesize_couplet(element):
             def do_paren(e):
+<<<<<<< HEAD
                 return parenthesize_couplets and e.is_couplet
+=======
+                return parenthesize_couplets and isinstance(e, _mo.Couplet)
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
             left = _Tokens.left_paren if do_paren(element) else ''
             right = _Tokens.right_paren if do_paren(element) else ''
@@ -231,7 +289,11 @@ def set_to_latex(set_: _mo.Set, short: bool=False, _depth: int=0):
     return result
 
 
+<<<<<<< HEAD
 def mset_to_latex(mset: _mo.Multiset, short: bool=False, _depth: int=0):
+=======
+def mset_to_latex(mset, short: bool=False, _depth=0):
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     """Return a `string` that represents a Multiset in LaTeX markup.
 
     This function sorts the input ``mset`` to make the output consistent, so be careful with big
@@ -245,7 +307,11 @@ def mset_to_latex(mset: _mo.Multiset, short: bool=False, _depth: int=0):
     :param _depth: (Optional) Internal use only. Indicate levels of nested (multi)sets. Is
         incremented for every nesting level. Default is 0.
     """
+<<<<<<< HEAD
     assert mset.is_multiset
+=======
+    assert isinstance(mset, _mo.Multiset)
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     def latex_mset(value, multiple):
         return '{value}{separator}{multiple}'.format(
@@ -299,7 +365,11 @@ def _nested_set_helper(depth):
 def _set_hasa_set(a_set):
     """Determe whether a (multi)set has elements that are also (multi)sets."""
     for element in a_set:
+<<<<<<< HEAD
         if element.is_set or element.is_multiset:
+=======
+        if isinstance(element, _mo.Set) or isinstance(element, _mo.Multiset):
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
             return True
     return False
 

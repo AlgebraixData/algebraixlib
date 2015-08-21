@@ -1,7 +1,12 @@
 """Test the mathobjects.set module."""
 
+<<<<<<< HEAD
 # $Id: test_mathobjects_multiset.py 22742 2015-08-05 20:53:46Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-05 15:53:46 -0500 (Wed, 05 Aug 2015) $
+=======
+# $Id: test_mathobjects_multiset.py 22695 2015-07-28 16:20:45Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 11:20:45 -0500 (Tue, 28 Jul 2015) $
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -21,6 +26,7 @@ import unittest
 
 import collections as _collections
 
+<<<<<<< HEAD
 from algebraixlib.mathobjects import Atom, CacheStatus, Couplet, Multiset, Set
 from algebraixlib.structure import CartesianProduct, GenesisSetN, GenesisSetA, PowerSet, Structure
 from algebraixlib.undef import Undef
@@ -28,6 +34,13 @@ from algebraixlib.undef import Undef
 # noinspection PyUnresolvedReferences
 # from data_mathobjects import basic_multisets
 
+=======
+# from data_mathobjects import basic_multisets
+from algebraixlib.mathobjects import Atom, Multiset, Set, Couplet
+from algebraixlib.structure import CartesianProduct, GenesisSetN, GenesisSetA, PowerSet, Structure
+from algebraixlib.undef import Undef
+# noinspection PyProtectedMember
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 # Ground set structures for the basic_sets.
 _atom_multiset_struct = PowerSet(CartesianProduct(GenesisSetA(), GenesisSetN()))
@@ -162,6 +175,7 @@ class MultisetTest(unittest.TestCase):
     def test_flags_empty_set(self):
         s = Multiset()
 
+<<<<<<< HEAD
         self.assertEqual(s.cached_relation, CacheStatus.IS_NOT)
         self.assertEqual(s.cached_clan, CacheStatus.IS_NOT)
         self.assertEqual(s.cached_multiclan, CacheStatus.IS)
@@ -184,6 +198,39 @@ class MultisetTest(unittest.TestCase):
         self.assertRaises(Exception, lambda: s.cache_reflexive(CacheStatus.IS_NOT))
         self.assertRaises(Exception, lambda: s.cache_symmetric(CacheStatus.IS_NOT))
         self.assertRaises(Exception, lambda: s.cache_transitive(CacheStatus.IS_NOT))
+=======
+        self.assertFalse(s.cached_is_relation)
+        self.assertTrue(s.cached_is_not_relation)
+        self.assertFalse(s.cached_is_clan)
+        self.assertTrue(s.cached_is_not_clan)
+        self.assertTrue(s.cached_is_multiclan)
+        self.assertFalse(s.cached_is_not_multiclan)
+        self.assertFalse(s.cached_is_functional)
+        self.assertFalse(s.cached_is_not_functional)
+        self.assertFalse(s.cached_is_right_functional)
+        self.assertFalse(s.cached_is_not_right_functional)
+        self.assertFalse(s.cached_is_regular)
+        self.assertFalse(s.cached_is_not_regular)
+        self.assertFalse(s.cached_is_reflexive)
+        self.assertFalse(s.cached_is_not_reflexive)
+        self.assertFalse(s.cached_is_symmetric)
+        self.assertFalse(s.cached_is_not_symmetric)
+        self.assertFalse(s.cached_is_transitive)
+        self.assertFalse(s.cached_is_not_transitive)
+
+        self.assertRaises(AssertionError, lambda: s.cache_is_relation(True))
+        self.assertRaises(AssertionError, lambda: s.cache_is_clan(True))
+        self.assertRaises(AssertionError, lambda: s.cache_is_multiclan(False))
+        s.cache_is_multiclan(True)
+
+        self.assertRaises(Exception, lambda: s.cache_is_transitive(False))
+        self.assertRaises(Exception, lambda: s.cache_is_functional(False))
+        self.assertRaises(Exception, lambda: s.cache_is_right_functional(False))
+        self.assertRaises(Exception, lambda: s.cache_is_regular(False))
+        self.assertRaises(Exception, lambda: s.cache_is_reflexive(False))
+        self.assertRaises(Exception, lambda: s.cache_is_symmetric(False))
+        self.assertRaises(Exception, lambda: s.cache_is_transitive(False))
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 # --------------------------------------------------------------------------------------------------

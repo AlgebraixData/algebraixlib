@@ -1,7 +1,12 @@
 """Test the mathobjects.set module."""
 
+<<<<<<< HEAD
 # $Id: test_mathobjects_set.py 22799 2015-08-14 14:56:45Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-14 09:56:45 -0500 (Fri, 14 Aug 2015) $
+=======
+# $Id: test_mathobjects_set.py 22673 2015-07-24 20:10:43Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-24 15:10:43 -0500 (Fri, 24 Jul 2015) $
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -21,6 +26,7 @@ import io
 import os
 import unittest
 
+<<<<<<< HEAD
 from algebraixlib.algebras.properties import is_functional, is_right_functional, is_bijective, \
     is_reflexive, is_symmetric, is_transitive, is_equivalence_relation, is_regular
 import algebraixlib.algebras.relations as relations
@@ -32,6 +38,16 @@ from algebraixlib.undef import Undef
 
 # noinspection PyProtectedMember
 from algebraixlib.io.csv import _convert_clan_to_list_of_dicts, export_csv
+=======
+import algebraixlib.algebras.relations as relations
+import algebraixlib.algebras.sets as sets
+from algebraixlib.mathobjects import Atom, Couplet, MathObject, Set
+from algebraixlib.structure import CartesianProduct, GenesisSetA, PowerSet, Structure
+from algebraixlib.undef import Undef
+# noinspection PyProtectedMember
+from algebraixlib.io.csv import _convert_clan_to_list_of_dicts, export_csv
+
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 # noinspection PyUnresolvedReferences
 from data_mathobjects import basic_sets, basic_clans, algebra_clans, basic_hordes
 
@@ -179,6 +195,7 @@ class SetTest(unittest.TestCase):
         ss = basic_hordes['left func2'].get_right_set()
         self.assertEqual(ss, right2)
 
+<<<<<<< HEAD
     def test_regular(self):
         lefts = basic_sets['left func/lefts']
         self.assertTrue(is_regular(Set()))
@@ -213,6 +230,52 @@ class SetTest(unittest.TestCase):
         self.assertEqual(s.cached_functional, CacheStatus.IS)
         s = basic_sets['not left func']
         self.assertEqual(s.cached_functional, CacheStatus.IS_NOT)
+=======
+    def test_is_powerset_property_method_return_undef(self):
+        s1 = Set({Set({Set({Atom(3)})})})
+        s2 = Set({Atom(1)}).get_ground_set()
+        self.assertIs(s1._is_powerset_property(s2, 'get_left_set'), Undef())
+
+    def test_regular(self):
+        lefts = basic_sets['left func/lefts']
+        self.assertTrue(Set().is_regular())
+        self.assertIs(lefts.is_regular(), Undef())
+        self.assertIs(basic_sets['left func'].is_regular(), Undef())
+        self.assertTrue(basic_clans['left func'].is_regular())
+        self.assertFalse(basic_clans['left func2'].is_regular())
+        self.assertFalse(basic_clans['not left func'].is_regular())
+        embedded_has_irregular_left = Set(basic_sets['left func'], basic_sets['not left func'])
+        self.assertFalse(embedded_has_irregular_left.is_regular())
+        self.assertTrue(basic_hordes['left func'].is_regular())
+        self.assertFalse(basic_hordes['left func2'].is_regular())
+
+        s = basic_sets['left func']
+        self.assertFalse(s.cached_is_regular)
+        self.assertFalse(s.cached_is_not_regular)
+
+    def test_functional(self):
+        self.assertTrue(Set().is_functional())
+        self.assertIs(Undef(), Set('a', 'b', 'c').is_functional())
+        f = basic_sets['left func'].is_functional()
+        self.assertTrue(f)
+        f = basic_sets['not left func'].is_functional()
+        self.assertFalse(f)
+        f = basic_clans['left func'].is_functional()
+        self.assertTrue(f)
+        f = basic_clans['not left func'].is_functional()
+        self.assertFalse(f)
+        f = basic_hordes['left func'].is_functional()
+        self.assertTrue(f)
+        f = basic_hordes['not left func'].is_functional()
+        self.assertFalse(f)
+
+        s = basic_sets['left func']
+        self.assertTrue(s.cached_is_functional)
+        self.assertFalse(s.cached_is_not_functional)
+        s = basic_sets['not left func']
+        self.assertFalse(s.cached_is_functional)
+        self.assertTrue(s.cached_is_not_functional)
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     def test_callable(self):
         # Undefined:
@@ -261,6 +324,7 @@ class SetTest(unittest.TestCase):
         self.assertEqual(algebra_clans['clan5']['d'], Set())
 
     def test_right_functional(self):
+<<<<<<< HEAD
         self.assertTrue(is_right_functional(Set()))
         self.assertIs(is_right_functional(Set('a', 'b', 'c')), Undef())
         f = is_right_functional(basic_sets['left func'])
@@ -404,6 +468,164 @@ class SetTest(unittest.TestCase):
         self.assertEqual(s.cached_reflexive, CacheStatus.IS)
         self.assertEqual(s.cached_symmetric, CacheStatus.IS)
         self.assertEqual(s.cached_transitive, CacheStatus.IS)
+=======
+        self.assertTrue(Set().is_right_functional())
+        self.assertIs(Undef(), Set('a', 'b', 'c').is_right_functional())
+        f = basic_sets['left func'].is_right_functional()
+        self.assertTrue(f)
+        f = basic_sets['not right func'].is_right_functional()
+        self.assertFalse(f)
+        f = basic_clans['left func'].is_right_functional()
+        self.assertTrue(f)
+        f = basic_clans['not right func'].is_right_functional()
+        self.assertFalse(f)
+        f = basic_hordes['left func'].is_right_functional()
+        self.assertTrue(f)
+        f = basic_hordes['not right func'].is_right_functional()
+        self.assertFalse(f)
+
+        s = basic_sets['left func']
+        self.assertTrue(s.cached_is_right_functional)
+        self.assertFalse(s.cached_is_not_right_functional)
+        s = basic_sets['not right func']
+        self.assertFalse(s.cached_is_right_functional)
+        self.assertTrue(s.cached_is_not_right_functional)
+
+    def test_bijection(self):
+        self.assertTrue(Set().is_bijective())
+        self.assertIs(Undef(), Set('a', 'b', 'c').is_bijective())
+        f = basic_sets['left func'].is_bijective()
+        self.assertTrue(f)
+        f = basic_sets['not left func'].is_bijective()
+        self.assertFalse(f)
+        f = basic_sets['not right func'].is_bijective()
+        self.assertFalse(f)
+        f = basic_clans['left func'].is_bijective()
+        self.assertTrue(f)
+        f = basic_clans['not right func'].is_bijective()
+        self.assertFalse(f)
+        f = basic_hordes['left func'].is_bijective()
+        self.assertTrue(f)
+        f = basic_hordes['not right func'].is_bijective()
+        self.assertFalse(f)
+
+        s = basic_sets['left func']
+        self.assertTrue(s.cached_is_functional)
+        self.assertTrue(s.cached_is_right_functional)
+        self.assertFalse(s.cached_is_not_functional)
+        self.assertFalse(s.cached_is_not_right_functional)
+        s = basic_sets['not left func']
+        self.assertFalse(s.cached_is_functional)
+        self.assertTrue(s.cached_is_not_functional)
+        # The right flags aren't checked if left fails
+        self.assertFalse(s.cached_is_right_functional)
+        self.assertFalse(s.cached_is_not_right_functional)
+
+    def test_reflexive(self):
+        self.assertTrue(Set().is_reflexive())
+        self.assertIs(Undef(), Set('a', 'b', 'c').is_reflexive())
+        f = basic_sets['not left func'].is_reflexive()
+        self.assertFalse(f)
+        f = basic_sets['diagonal'].is_reflexive()
+        self.assertTrue(f)
+        f = basic_clans['not left func'].is_reflexive()
+        self.assertFalse(f)
+        f = basic_clans['diagonal'].is_reflexive()
+        self.assertTrue(f)
+        f = basic_hordes['not left func'].is_reflexive()
+        self.assertFalse(f)
+        f = basic_hordes['diagonal'].is_reflexive()
+        self.assertTrue(f)
+
+        s = basic_sets['diagonal']
+        self.assertTrue(s.cached_is_reflexive)
+        self.assertFalse(s.cached_is_not_reflexive)
+        s = basic_sets['not left func']
+        self.assertFalse(s.cached_is_reflexive)
+        self.assertTrue(s.cached_is_not_reflexive)
+
+    def test_symmetric(self):
+        self.assertTrue(Set().is_symmetric())
+        self.assertTrue(Set([Couplet(s, c) for s, c in zip('abcd', 'badc')]).is_symmetric())
+        self.assertIs(Undef(), Set('a', 'b', 'c').is_symmetric())
+        f = basic_sets['not left func'].is_symmetric()
+        self.assertFalse(f)
+        f = basic_sets['diagonal'].is_symmetric()
+        self.assertTrue(f)
+        f = basic_clans['not left func'].is_symmetric()
+        self.assertFalse(f)
+        f = basic_clans['diagonal'].is_symmetric()
+        self.assertTrue(f)
+        f = basic_hordes['not left func'].is_symmetric()
+        self.assertFalse(f)
+        f = basic_hordes['diagonal'].is_symmetric()
+        self.assertTrue(f)
+
+        s = basic_sets['diagonal']
+        self.assertTrue(s.cached_is_symmetric)
+        self.assertFalse(s.cached_is_not_symmetric)
+        s = basic_sets['not left func']
+        self.assertFalse(s.cached_is_symmetric)
+        self.assertTrue(s.cached_is_not_symmetric)
+
+    def test_transitive(self):
+        self.assertTrue(Set().is_transitive())
+        self.assertTrue(Set([Couplet(s, c) for c, s in zip('aba', 'bcc')]).is_transitive())
+        self.assertIs(Undef(), Set('a', 'b', 'c').is_transitive())
+        rel = Set(Couplet(s, c) for c, s in zip('aba', 'bcd'))
+        self.assertFalse(rel.is_transitive())
+        f = basic_sets['left func'].is_transitive()
+        self.assertTrue(f)
+        f = basic_sets['not left func'].is_transitive()
+        self.assertTrue(f)
+        f = basic_sets['diagonal'].is_transitive()
+        self.assertTrue(f)
+        f = basic_clans['not left func'].is_transitive()
+        self.assertTrue(f)
+        f = basic_clans['diagonal'].is_transitive()
+        self.assertTrue(f)
+        f = basic_hordes['not left func'].is_transitive()
+        self.assertTrue(f)
+        f = basic_hordes['diagonal'].is_transitive()
+        self.assertTrue(f)
+
+        s = basic_sets['left func']
+        self.assertTrue(s.cached_is_transitive)
+        self.assertFalse(s.cached_is_not_transitive)
+
+        self.assertFalse(rel.cached_is_transitive)
+        self.assertTrue(rel.cached_is_not_transitive)
+
+    def test_equivalence_relation(self):
+        self.assertTrue(Set().is_equivalence_relation())
+        self.assertFalse(Set([Couplet(s, c) for c, s in
+                              zip('aba', 'bcc')]).is_equivalence_relation())
+        self.assertIs(Undef(), Set('a', 'b', 'c').is_equivalence_relation())
+        self.assertFalse(Set([Couplet(s, c) for c, s in
+                              zip('aba', 'bcd')]).is_equivalence_relation())
+        f = basic_sets['left func'].is_equivalence_relation()
+        self.assertFalse(f)
+        f = basic_sets['not left func'].is_equivalence_relation()
+        self.assertFalse(f)
+        f = basic_sets['diagonal'].is_equivalence_relation()
+        self.assertTrue(f)
+        f = basic_clans['not left func'].is_equivalence_relation()
+        self.assertFalse(f)
+        f = basic_clans['diagonal'].is_equivalence_relation()
+        self.assertTrue(f)
+        f = basic_hordes['not left func'].is_equivalence_relation()
+        self.assertFalse(f)
+        f = basic_hordes['diagonal'].is_equivalence_relation()
+        self.assertTrue(f)
+
+        s = basic_sets['diagonal']
+        self.assertTrue(s.cached_is_reflexive)
+        self.assertFalse(s.cached_is_not_reflexive)
+        self.assertTrue(s.cached_is_symmetric)
+        self.assertFalse(s.cached_is_not_symmetric)
+        self.assertTrue(s.cached_is_transitive)
+        self.assertFalse(s.cached_is_not_transitive)
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     def test_project(self):
         clan = basic_clans['left func']
@@ -431,6 +653,7 @@ class SetTest(unittest.TestCase):
 
     def test_flags_empty_set(self):
         s = Set()
+<<<<<<< HEAD
         self.assertEqual(s.cached_relation, CacheStatus.IS)
         self.assertEqual(s.cached_clan, CacheStatus.IS)
         self.assertEqual(s.cached_multiclan, CacheStatus.IS_NOT)
@@ -474,6 +697,73 @@ class SetTest(unittest.TestCase):
         self.assertTrue(relations.is_member(r))  # This will trigger structure check
         self.assertEqual(r.cached_relation, CacheStatus.IS)
         self.assertEqual(r.cached_clan, CacheStatus.IS_NOT)
+=======
+        self.assertTrue(s.cached_is_relation)
+        self.assertFalse(s.cached_is_not_relation)
+        self.assertTrue(s.cached_is_clan)
+        self.assertFalse(s.cached_is_not_clan)
+        self.assertFalse(s.cached_is_multiclan)
+        self.assertTrue(s.cached_is_not_multiclan)
+        self.assertTrue(s.cached_is_functional)
+        self.assertFalse(s.cached_is_not_functional)
+        self.assertTrue(s.cached_is_right_functional)
+        self.assertFalse(s.cached_is_not_right_functional)
+        self.assertTrue(s.cached_is_regular)
+        self.assertFalse(s.cached_is_not_regular)
+        self.assertTrue(s.cached_is_reflexive)
+        self.assertFalse(s.cached_is_not_reflexive)
+        self.assertTrue(s.cached_is_symmetric)
+        self.assertFalse(s.cached_is_not_symmetric)
+        self.assertTrue(s.is_transitive())
+        self.assertTrue(s.cached_is_transitive)
+        self.assertFalse(s.cached_is_not_transitive)
+
+        self.assertRaises(AssertionError, lambda: s.cache_is_relation(False))
+        self.assertRaises(AssertionError, lambda: s.cache_is_clan(False))
+        self.assertRaises(AssertionError, lambda: s.cache_is_multiclan(True))
+
+        self.assertRaises(AssertionError, lambda: s.cache_is_transitive(False))
+        self.assertRaises(AssertionError, lambda: s.cache_is_functional(False))
+        self.assertRaises(AssertionError, lambda: s.cache_is_right_functional(False))
+        self.assertRaises(AssertionError, lambda: s.cache_is_regular(False))
+        self.assertRaises(AssertionError, lambda: s.cache_is_reflexive(False))
+        self.assertRaises(AssertionError, lambda: s.cache_is_symmetric(False))
+        self.assertRaises(AssertionError, lambda: s.cache_is_transitive(False))
+
+    def test_flags_set(self):
+        s = Set(1, 2, 3)
+        self.assertFalse(s.cached_is_relation)
+        self.assertFalse(s.cached_is_not_relation)
+        self.assertFalse(s.cached_is_clan)
+        self.assertFalse(s.cached_is_not_clan)
+        self.assertTrue(sets.is_member(s))  # This will NOT trigger structure check
+        self.assertFalse(s.cached_is_relation)
+        self.assertFalse(s.cached_is_not_relation)
+        self.assertFalse(s.cached_is_clan)
+        self.assertFalse(s.cached_is_not_clan)
+        self.assertFalse(relations.is_member(s))  # This will trigger structure check
+        self.assertFalse(s.cached_is_relation)
+        self.assertTrue(s.cached_is_not_relation)
+        self.assertFalse(s.cached_is_clan)
+        self.assertFalse(s.cached_is_not_clan)
+
+    def test_flags_relation(self):
+        r = Set(Couplet(s, c) for s, c in zip('abc', [1, 2, 3]))
+        self.assertFalse(r.cached_is_relation)
+        self.assertFalse(r.cached_is_not_relation)
+        self.assertFalse(r.cached_is_clan)
+        self.assertFalse(r.cached_is_not_clan)
+        self.assertTrue(sets.is_member(r))  # This will NOT trigger structure check
+        self.assertFalse(r.cached_is_relation)
+        self.assertFalse(r.cached_is_not_relation)
+        self.assertFalse(r.cached_is_clan)
+        self.assertFalse(r.cached_is_not_clan)
+        self.assertTrue(relations.is_member(r))  # This will trigger structure check
+        self.assertTrue(r.cached_is_relation)
+        self.assertFalse(r.cached_is_not_relation)
+        self.assertFalse(r.cached_is_clan)
+        self.assertTrue(r.cached_is_not_clan)
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 # --------------------------------------------------------------------------------------------------
 if __name__ == '__main__':

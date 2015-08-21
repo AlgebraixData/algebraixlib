@@ -3,8 +3,13 @@ r"""Provide the class :class:`Atom` that represents :term:`atom`\s and the funct
 :class:`Atom` instances.
 """
 
+<<<<<<< HEAD
 # $Id: atom.py 22803 2015-08-14 17:08:50Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-14 12:08:50 -0500 (Fri, 14 Aug 2015) $
+=======
+# $Id: atom.py 22702 2015-07-28 20:20:56Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -21,9 +26,13 @@ r"""Provide the class :class:`Atom` that represents :term:`atom`\s and the funct
 import algebraixlib.structure as _structure
 from algebraixlib.util.miscellaneous import get_hash as _get_hash
 
+<<<<<<< HEAD
 from .mathobject import MathObject
 from .utils import CacheStatus
 from ._flags import Flags as _Flags
+=======
+from algebraixlib.mathobjects.mathobject import MathObject
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 # --------------------------------------------------------------------------------------------------
@@ -37,6 +46,7 @@ def auto_convert(arg):
     return arg if isinstance(arg, MathObject) else Atom(arg)
 
 
+<<<<<<< HEAD
 def _init_cache() -> int:
     """Initialization function for `Atom._INIT_CACHE`."""
     flags = _Flags()
@@ -60,6 +70,8 @@ def _init_cache() -> int:
     return flags.asint
 
 
+=======
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 class Atom(MathObject):
     """Represent a value (of a non-`MathObject`, hashable type) like numbers or strings.
 
@@ -80,13 +92,19 @@ class Atom(MathObject):
         :return: ``value`` if it is an instance of :class:`Atom` (in this case we simply reuse it).
             If not, follow the normal path for creating an instance.
         """
+<<<<<<< HEAD
         # pylint: disable=unused-argument
+=======
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         if isinstance(value, Atom):
             return value
         return super().__new__(cls)
 
+<<<<<<< HEAD
     _INIT_CACHE = _init_cache()
 
+=======
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     def __init__(self, value, direct_load=False):
         """
         :param value: The value of this instance. May not be an instance of `MathObject` other
@@ -100,7 +118,11 @@ class Atom(MathObject):
         if hasattr(self, '_value'):
             return
 
+<<<<<<< HEAD
         super().__init__(self._INIT_CACHE)
+=======
+        super().__init__()
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
         if direct_load:
             assert not isinstance(value, MathObject)
@@ -109,6 +131,12 @@ class Atom(MathObject):
                 raise TypeError("'value' must not be a MathObject")
         self._value = value
         self._hash = _get_hash('algebraixlib.mathobjects.atom.Atom', self._value)
+<<<<<<< HEAD
+=======
+        self._flags._not_relation = True
+        self._flags._not_clan = True
+        self._flags._not_multiclan = True
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     # ----------------------------------------------------------------------------------------------
     # Characteristics of the instance.
@@ -130,20 +158,32 @@ class Atom(MathObject):
     def __eq__(self, other):
         """A value-based comparison for equality. Return ``True`` if types and values match.
 
+<<<<<<< HEAD
         Type-matching follows Python rules, so ``not Atom(1) == Atom(1.0)``.
         """
         return (isinstance(other, Atom)
                 and isinstance(other.value, type(self.value))
                 and other.value == self.value)
+=======
+        Type-matching follows Python rules, so ``Atom(1) != Atom(1.0)``.
+        """
+        return (isinstance(other, Atom) and isinstance(
+            other.value, type(self.value)) and other.value == self.value)
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     def __ne__(self, other):
         """A value-based comparison for inequality. Return ``True`` if types or values don't match.
 
         Type-matching follows Python rules, so ``Atom(1) != Atom(1.0)``.
         """
+<<<<<<< HEAD
         return (not isinstance(other, Atom)
                 or not isinstance(other.value, type(self.value))
                 or other.value != self.value)
+=======
+        return (not isinstance(other, Atom) or not isinstance(
+            other.value, type(self.value)) or other.value != self.value)
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     def __lt__(self, other):
         """A value-based comparison for less than. Return ``True`` if ``self < other``."""

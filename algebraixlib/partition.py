@@ -1,7 +1,12 @@
 r"""Operations for partitioning :term:`set`\s and :term:`multiset`\s."""
 
+<<<<<<< HEAD
 # $Id: partition.py 22724 2015-08-03 23:40:02Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-03 18:40:02 -0500 (Mon, 03 Aug 2015) $
+=======
+# $Id: partition.py 22702 2015-07-28 20:20:56Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -61,7 +66,11 @@ def partition(set_, class_invariant_func):
 
     partition_dict = _create_partition_dict(set_, class_invariant_func)
     # Create the resulting Set of Sets from the partition components
+<<<<<<< HEAD
     return _mo.Set((_mo.Set(components, direct_load=True).cache_clan(set_.cached_clan)
+=======
+    return _mo.Set((_mo.Set(components, direct_load=True).cache_is_clan(set_.cache_is_clan)
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
                     for components in partition_dict.values()), direct_load=True)
 
 

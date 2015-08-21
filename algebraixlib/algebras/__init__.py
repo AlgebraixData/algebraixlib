@@ -28,6 +28,7 @@ The algebras that are provided are:
 -   :mod:`~.multiclans`: The :term:`algebra of multiclans`. (A :term:`multiclan` is a
     :term:`multiset` of :term:`relation`\s; that is, a :term:`multiset` of :term:`set`\s of
     :term:`couplet`\s).
+<<<<<<< HEAD
 
 Additional modules:
 
@@ -37,6 +38,12 @@ Additional modules:
 
 # $Id: __init__.py 22735 2015-08-04 22:59:12Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-04 17:59:12 -0500 (Tue, 04 Aug 2015) $
+=======
+"""
+
+# $Id: __init__.py 22656 2015-07-23 17:44:24Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-23 12:44:24 -0500 (Thu, 23 Jul 2015) $
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

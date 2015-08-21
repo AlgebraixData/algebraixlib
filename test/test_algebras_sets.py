@@ -1,7 +1,12 @@
 """Test the algebras.sets module."""
 
+<<<<<<< HEAD
 # $Id: test_algebras_sets.py 22744 2015-08-05 22:16:56Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-05 17:16:56 -0500 (Wed, 05 Aug 2015) $
+=======
+# $Id: test_algebras_sets.py 22698 2015-07-28 17:09:23Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 12:09:23 -0500 (Tue, 28 Jul 2015) $
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -57,7 +62,11 @@ class SetsTest(unittest.TestCase):
         self.assertFalse(is_member(Atom(3)))
         self.assertTrue(is_absolute_member(Set(3)))
         self.assertFalse(is_absolute_member(Set(Couplet(3, 4))))
+<<<<<<< HEAD
         self.assertRaises(AttributeError, lambda: is_member(3))
+=======
+        self.assertRaises(TypeError, lambda: is_member(3))
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     def test_union(self):
         self._check_wrong_argument_types_binary(union)
@@ -143,6 +152,7 @@ class SetsTest(unittest.TestCase):
         self.assertIs(operation(Atom(3)), Undef())
         self.assertIs(operation(Set(Atom(3))), Undef())
 
+<<<<<<< HEAD
         try:
             RaiseOnUndef.set_level(1)
             self.assertRaises(UndefException, lambda: operation(Atom(3)))
@@ -155,10 +165,21 @@ class SetsTest(unittest.TestCase):
     def _check_wrong_argument_types_binary(self, operation):
         """Negative tests for set algebra binary operations."""
         self.assertRaises(AttributeError, lambda: operation(3, Set(Atom(3))))
+=======
+        RaiseOnUndef.set_level(1)
+        self.assertRaises(UndefException, lambda: operation(Atom(3)))
+        self.assertRaises(UndefException, lambda: operation(Set(Atom(3))))
+        RaiseOnUndef.reset()
+
+    def _check_wrong_argument_types_binary(self, operation):
+        """Negative tests for set algebra binary operations."""
+        self.assertRaises(TypeError, lambda: operation(3, Set(Atom(3))))
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         self.assertIs(operation(Atom(3), Set(Atom(4))), Undef())
         self.assertRaises(TypeError, lambda: operation(Set(Atom(3), 4)))
         self.assertIs(operation(Set(Atom(3)), Atom(4)), Undef())
 
+<<<<<<< HEAD
         try:
             RaiseOnUndef.set_level(1)
             self.assertRaises(UndefException, lambda: operation(Atom(3), Set(Atom(4))))
@@ -167,6 +188,12 @@ class SetsTest(unittest.TestCase):
         except:  # Make sure RaiseOnUndef level gets reset.
             RaiseOnUndef.reset()
             raise
+=======
+        RaiseOnUndef.set_level(1)
+        self.assertRaises(UndefException, lambda: operation(Atom(3), Set(Atom(4))))
+        self.assertRaises(UndefException, lambda: operation(Set(Atom(3)), Atom(4)))
+        RaiseOnUndef.reset()
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 # --------------------------------------------------------------------------------------------------

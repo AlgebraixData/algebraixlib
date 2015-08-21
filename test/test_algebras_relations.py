@@ -1,7 +1,12 @@
 """Test the algebras.relations module."""
 
+<<<<<<< HEAD
 # $Id: test_algebras_relations.py 22744 2015-08-05 22:16:56Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-05 17:16:56 -0500 (Wed, 05 Aug 2015) $
+=======
+# $Id: test_algebras_relations.py 22675 2015-07-24 21:01:36Z mhaque $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-24 16:01:36 -0500 (Fri, 24 Jul 2015) $
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -19,6 +24,7 @@ import inspect
 import os
 import unittest
 
+<<<<<<< HEAD
 import algebraixlib.algebras.sets as sets
 from algebraixlib.mathobjects import Atom, CacheStatus, Couplet, Set
 from algebraixlib.structure import CartesianProduct, GenesisSetA, GenesisSetM, PowerSet
@@ -28,6 +34,15 @@ from algebraixlib.algebras.relations import *
 
 # noinspection PyUnresolvedReferences
 from data_mathobjects import algebra_relations as ar
+=======
+from algebraixlib.mathobjects import Atom, Couplet, Set
+from algebraixlib.structure import CartesianProduct, GenesisSetA, GenesisSetM, PowerSet
+from data_mathobjects import algebra_relations as ar
+from algebraixlib.undef import RaiseOnUndef, Undef, UndefException
+
+from algebraixlib.algebras.relations import *
+import algebraixlib.algebras.sets as sets
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 class RelationsTest(unittest.TestCase):
@@ -47,7 +62,11 @@ class RelationsTest(unittest.TestCase):
         self.assertFalse(is_member(Couplet(3, 4)))
         self.assertTrue(is_absolute_member(Set(Couplet(1, 2))))
         self.assertFalse(is_absolute_member(Set(Couplet(Set(3), 4))))
+<<<<<<< HEAD
         self.assertRaises(AttributeError, lambda: is_member(3))
+=======
+        self.assertRaises(TypeError, lambda: is_member(3))
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
         s = Set(Couplet('field', Set(Couplet('name', 'Value'))),
                 Couplet('field', Set(Couplet('name', 'Year'), Atom('1960'))))
@@ -137,7 +156,11 @@ class RelationsTest(unittest.TestCase):
 
     def test_get_left(self):
         """Basic tests of relations.get_left()."""
+<<<<<<< HEAD
         self.assertRaises(AttributeError, lambda: get_left(3, 4))
+=======
+        self.assertRaises(TypeError, lambda: get_left(3, 4))
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         self.assertIs(get_left(Atom(3), 4), Undef())
         self.assertIs(get_left(Set(Couplet(1, 1), Couplet(2, 1)), Atom(1)), Undef())
         self.assertIs(get_left(Set(Couplet(1, 1), Couplet(1, 2)), Atom(0)), Undef())
@@ -152,7 +175,11 @@ class RelationsTest(unittest.TestCase):
 
     def test_get_right(self):
         """Basic tests of relations.get_right()."""
+<<<<<<< HEAD
         self.assertRaises(AttributeError, lambda: get_right(3, 4))
+=======
+        self.assertRaises(TypeError, lambda: get_right(3, 4))
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         self.assertIs(get_right(Atom(3), 4), Undef())
         self.assertIs(get_right(Set(Couplet(1, 2), Couplet(1, 3)), Atom(1)), Undef())
         self.assertIs(get_right(Set(Couplet(1, 2), Couplet(1, 3)), Atom(0)), Undef())
@@ -167,7 +194,11 @@ class RelationsTest(unittest.TestCase):
 
     def test_is_functional(self):
         """Basic tests of relations.is_functional()."""
+<<<<<<< HEAD
         self.assertRaises(AttributeError, lambda: is_functional(3))
+=======
+        self.assertRaises(TypeError, lambda: is_functional(3))
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         self.assertIs(is_functional(Atom(3)), Undef())
         for rel_idx in range(1, 3):
             rel_name = 'rel' + str(rel_idx)
@@ -175,7 +206,11 @@ class RelationsTest(unittest.TestCase):
 
     def test_is_right_functional(self):
         """Basic tests of relations.is_right_functional()."""
+<<<<<<< HEAD
         self.assertRaises(AttributeError, lambda: is_right_functional(3))
+=======
+        self.assertRaises(TypeError, lambda: is_right_functional(3))
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         self.assertIs(is_right_functional(Atom(3)), Undef())
         for rel_idx in range(1, 3):
             rel_name = 'rel' + str(rel_idx)
@@ -199,15 +234,26 @@ class RelationsTest(unittest.TestCase):
         self.assertEqual(swap(relation2a, Set(Couplet('a', 'b'), Couplet('c', 'd'))), relation2c)
 
     def test_union(self):
+<<<<<<< HEAD
         rel1 = Set(Couplet('a', 1), Couplet('b', 2)).cache_relation(CacheStatus.IS)
         rel2 = Set(Couplet('c', 3))
         self.assertEqual(sets.union(rel1, rel2).cached_relation, CacheStatus.UNKNOWN)
         self.assertTrue(is_member(rel2))
         self.assertEqual(sets.union(rel1, rel2).cached_relation, CacheStatus.IS)
+=======
+        rel1 = Set(Couplet('a', 1), Couplet('b', 2)).cache_is_relation(True)
+        rel2 = Set(Couplet('c', 3))
+        self.assertFalse(sets.union(rel1, rel2).cached_is_relation)
+        self.assertFalse(sets.union(rel1, rel2).cached_is_not_relation)
+        self.assertTrue(is_member(rel2))
+        self.assertTrue(sets.union(rel1, rel2).cached_is_relation)
+        self.assertFalse(sets.union(rel1, rel2).cached_is_not_relation)
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     # ----------------------------------------------------------------------------------------------
 
     def _check_wrong_argument_type_unary(self, operation):
+<<<<<<< HEAD
         try:
             self.assertRaises(AttributeError, lambda: operation(3))
             self.assertIs(operation(Atom(3)), Undef())
@@ -230,6 +276,22 @@ class RelationsTest(unittest.TestCase):
         except:  # Make sure RaiseOnUndef level gets reset.
             RaiseOnUndef.reset()
             raise
+=======
+        self.assertRaises(TypeError, lambda: operation(3))
+        self.assertIs(operation(Atom(3)), Undef())
+        RaiseOnUndef.set_level(1)
+        self.assertRaises(UndefException, lambda: operation(Set('a', 'b')))
+        RaiseOnUndef.reset()
+
+    def _check_wrong_argument_types_binary(self, operation):
+        self.assertRaises(TypeError, lambda: operation(3, Set(Couplet(1, 2))))
+        self.assertRaises(TypeError, lambda: operation(Set(Couplet(1, 2)), 4))
+        self.assertIs(operation(Set(Couplet(1, 2)), Atom(4)), Undef())
+        self.assertIs(operation(Atom(3), Set(Couplet(1, 2))), Undef())
+        RaiseOnUndef.set_level(1)
+        self.assertRaises(UndefException, lambda: operation(Couplet(1, 2), Couplet(3, 4)))
+        RaiseOnUndef.reset()
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 # --------------------------------------------------------------------------------------------------
 if __name__ == '__main__':

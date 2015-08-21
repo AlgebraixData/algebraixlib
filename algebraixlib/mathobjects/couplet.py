@@ -1,7 +1,12 @@
 """Provide the class :class:`~.Couplet`; it represents a :term:`couplet`."""
 
+<<<<<<< HEAD
 # $Id: couplet.py 22744 2015-08-05 22:16:56Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-05 17:16:56 -0500 (Wed, 05 Aug 2015) $
+=======
+# $Id: couplet.py 22702 2015-07-28 20:20:56Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 15:20:56 -0500 (Tue, 28 Jul 2015) $
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -18,14 +23,20 @@
 import algebraixlib.structure as _structure
 import algebraixlib.util.miscellaneous as _misc
 
+<<<<<<< HEAD
 from .atom import auto_convert
 from .mathobject import MathObject
 from .utils import CacheStatus
 from ._flags import Flags as _Flags
+=======
+from algebraixlib.mathobjects.atom import auto_convert
+from algebraixlib.mathobjects.mathobject import MathObject
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 # --------------------------------------------------------------------------------------------------
 
+<<<<<<< HEAD
 def _init_cache() -> int:
     """Initialization function for `Couplet._INIT_CACHE`."""
     flags = _Flags()
@@ -52,6 +63,11 @@ class Couplet(MathObject):
 
     _INIT_CACHE = _init_cache()
 
+=======
+class Couplet(MathObject):
+    """A :term:`couplet` containing a :term:`left component` and a :term:`right component`."""
+
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     def __init__(self, left, right=None, direct_load=False):
         """
         :param left: The :term:`left component` of the couplet, and the default value for the
@@ -64,7 +80,11 @@ class Couplet(MathObject):
         :param direct_load: (Optional) Set to ``True`` if you know that both ``left`` and ``right``
             are instances of `MathObject`.
         """
+<<<<<<< HEAD
         super().__init__(self._INIT_CACHE)
+=======
+        super().__init__()
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         if direct_load:
             assert isinstance(left, MathObject)
             self._left = left
@@ -80,6 +100,12 @@ class Couplet(MathObject):
             else:
                 self._right = auto_convert(right)
         self._hash = 0
+<<<<<<< HEAD
+=======
+        self._flags._not_relation = True
+        self._flags._not_clan = True
+        self._flags._not_multiclan = True
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     # ----------------------------------------------------------------------------------------------
     # Characteristics of the instance.
@@ -100,6 +126,13 @@ class Couplet(MathObject):
         return _structure.CartesianProduct(
             self.left.get_ground_set(), self.right.get_ground_set())
 
+<<<<<<< HEAD
+=======
+    def is_reflexive(self) -> bool:
+        """Return whether this :term:`couplet` is :term:`reflexive`."""
+        return self.left == self.right
+
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     # ----------------------------------------------------------------------------------------------
     # (Python-)Special functions.
 

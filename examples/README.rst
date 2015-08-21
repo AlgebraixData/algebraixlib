@@ -1,6 +1,11 @@
 .. Algebraix Technology Core Library documentation.
+<<<<<<< HEAD
    $Id: README.rst 22836 2015-08-20 21:24:11Z gfiedler $
    Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-20 16:24:11 -0500 (Thu, 20 Aug 2015) $
+=======
+   $Id: README.rst 22686 2015-07-27 16:58:26Z gfiedler $
+   Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-27 11:58:26 -0500 (Mon, 27 Jul 2015) $
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
    This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 
@@ -43,7 +48,10 @@ or you can use the direct links provided here.
 
     -   `Hello World`_: A basic introduction into our API and math concepts.
     -   `Hello Multisets`_: A similarly basic introduction into multisets.
+<<<<<<< HEAD
     -   `Hello XML`_: An introduction into the representation of hierarchical data.
+=======
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     -   `TPC-H Query 5 (directory)`_: The directory with the TPC-H Query 5 example notebooks:
 
         -   `1-Introduction`_, `2-Tables`_, `3-Graphs`_, `4-Hierarchies`_, `5-Query`_
@@ -52,7 +60,10 @@ or you can use the direct links provided here.
 .. _examples (directory): http://nbviewer.ipython.org/github/AlgebraixData/algebraixlib/blob/master/examples/
 .. _Hello World: http://nbviewer.ipython.org/github/AlgebraixData/algebraixlib/blob/master/examples/Hello_World.ipynb
 .. _Hello Multisets: http://nbviewer.ipython.org/github/AlgebraixData/algebraixlib/blob/master/examples/Hello_Multisets.ipynb
+<<<<<<< HEAD
 .. _Hello XML: http://nbviewer.ipython.org/github/AlgebraixData/algebraixlib/blob/master/examples/Hello_XML.ipynb
+=======
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 .. _TPC-H Query 5 (directory): http://nbviewer.ipython.org/github/AlgebraixData/algebraixlib/blob/master/examples/TPC-H_Query5/
 .. _1-Introduction: http://nbviewer.ipython.org/github/AlgebraixData/algebraixlib/blob/master/examples/TPC-H_Query5/1-Introduction.ipynb
 .. _2-Tables: http://nbviewer.ipython.org/github/AlgebraixData/algebraixlib/blob/master/examples/TPC-H_Query5/2-Tables.ipynb

@@ -1,7 +1,12 @@
 """Import and export facilities for RDF data."""
 
+<<<<<<< HEAD
 # $Id: rdf.py 22754 2015-08-06 22:27:31Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-06 17:27:31 -0500 (Thu, 06 Aug 2015) $
+=======
+# $Id: rdf.py 22697 2015-07-28 16:44:51Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 11:44:51 -0500 (Tue, 28 Jul 2015) $
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -84,13 +89,21 @@ class _ExportTable(_abc.ABC):
             if len(ordered_lefts) == 0:
                 raise AssertionError("'ordered_lefts' must contain at least one left component")
             for left in ordered_lefts:
+<<<<<<< HEAD
                 if not left.is_atom:
+=======
+                if not isinstance(left, _mo.Atom):
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
                     raise TypeError("'ordered_lefts' must consist of Atom instances")
             self._ordered_lefts = ordered_lefts
         elif leftset is not None:
             self._ordered_lefts = []
             for left in leftset:
+<<<<<<< HEAD
                 if not left.is_atom:
+=======
+                if not isinstance(left, _mo.Atom):
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
                     raise TypeError("'lefts' must consist of Atom instances")
                 self._ordered_lefts.append(left)
             if len(self._ordered_lefts) == 0:

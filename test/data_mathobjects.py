@@ -1,7 +1,12 @@
 """Math object example data for tests."""
 
+<<<<<<< HEAD
 # $Id: data_mathobjects.py 22742 2015-08-05 20:53:46Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-05 15:53:46 -0500 (Wed, 05 Aug 2015) $
+=======
+# $Id: data_mathobjects.py 22698 2015-07-28 17:09:23Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 12:09:23 -0500 (Tue, 28 Jul 2015) $
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -57,7 +62,11 @@ basic_sets = {key: _create_test_object(Set(val), key, val) for key, val in {
     'str in array': [Atom(el) for el in 'abc'],
     'single num': 1,
     'single Coupl': Couplet(right='a', left='b'),
+<<<<<<< HEAD
     'left func': [Couplet(l, r) for l, r in zip('abc', [1, 2, 3])],
+=======
+    'left func': [Couplet(s, c) for s, c in zip('abc', [1, 2, 3])],
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     'left func/lefts': ['a', 'b', 'c'],
     'left func/rights': [1, 2, 3],
     'not left func': [Couplet(s, c) for s, c in zip('abca', [1, 2, 3, 4])],
@@ -299,6 +308,7 @@ _print_object_collection('algebra_multiclans')
 
 
 basic_hordes = {key: _create_test_object(Set(*val), key, val) for key, val in {
+<<<<<<< HEAD
     'left func': [basic_clans['left func']],
     'left func2': [
         basic_clans['left func2'], Set(Set([Couplet(s, c) for s, c in zip('ghi', [7, 8, 9])]))
@@ -306,6 +316,15 @@ basic_hordes = {key: _create_test_object(Set(*val), key, val) for key, val in {
     'not left func': [basic_clans['not left func']],
     'not right func': [basic_clans['not right func']],
     'diagonal': [basic_clans['diagonal']]
+=======
+    'left func': basic_clans['left func'],
+    'left func2': [
+        basic_clans['left func2'], Set(Set([Couplet(s, c) for s, c in zip('ghi', [7, 8, 9])]))
+    ],
+    'not left func': basic_clans['not left func'],
+    'not right func': basic_clans['not right func'],
+    'diagonal': basic_clans['diagonal']
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 }.items()}
 """Basic Horde instances."""
 _print_object_collection('basic_hordes')

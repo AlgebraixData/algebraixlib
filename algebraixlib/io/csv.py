@@ -1,7 +1,12 @@
 r"""Import :term:`regular` :term:`clan`\s from and export them to CSV data."""
 
+<<<<<<< HEAD
 # $Id: csv.py 22735 2015-08-04 22:59:12Z gfiedler $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-04 17:59:12 -0500 (Tue, 04 Aug 2015) $
+=======
+# $Id: csv.py 22696 2015-07-28 16:33:58Z jaustell $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 11:33:58 -0500 (Tue, 28 Jul 2015) $
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -48,7 +53,11 @@ def export_csv(absolute_clan: 'PP(A x A)', file_or_path, ordered_lefts=None, sor
     if not _clans.is_absolute_member(absolute_clan) \
             and not _multiclans.is_absolute_member(absolute_clan):
         return _ud.make_or_raise_undef()
+<<<<<<< HEAD
     if ordered_lefts is None and not _clans.is_regular(absolute_clan):
+=======
+    if ordered_lefts is None and not absolute_clan.is_regular():
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         return _ud.make_or_raise_undef()
 
     if ordered_lefts is None:
@@ -162,21 +171,36 @@ def import_csv(csv_file_or_filepath, types=None, skip_rows=0, index_column=None,
                 _index += 1
             yield _mo.Set(
                 (_mo.Couplet(left=_util.get_left_cached(left), right=_mo.Atom(right),
+<<<<<<< HEAD
                 direct_load=True) for left, right in filtered_row.items()), direct_load=True)\
                 .cache_relation(_mo.CacheStatus.IS).cache_functional(_mo.CacheStatus.IS)
+=======
+                             direct_load=True) for left, right in filtered_row.items()),
+                direct_load=True).cache_is_relation(True).cache_is_functional(True)
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     if hasattr(csv_file_or_filepath, "readlines"):  # Support StringIO.
         if has_dup_rows:
             return _mo.Multiset(_import_csv(csv_file_or_filepath), direct_load=True)
         else:
+<<<<<<< HEAD
             return _mo.Set(_import_csv(csv_file_or_filepath), direct_load=True)\
                 .cache_clan(_mo.CacheStatus.IS).cache_functional(_mo.CacheStatus.IS)\
                 .cache_regular(_mo.CacheStatus.from_bool(import_csv.regular))
+=======
+            return _mo.Set(_import_csv(csv_file_or_filepath), direct_load=True).cache_is_clan(
+                True).cache_is_functional(True).cache_is_regular(import_csv.regular)
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     else:
         with open(csv_file_or_filepath, encoding='utf-8', errors='ignore') as file:
             if has_dup_rows:
                 return _mo.Multiset(_import_csv(file), direct_load=True)
             else:
+<<<<<<< HEAD
                 return _mo.Set(_import_csv(file), direct_load=True)\
                     .cache_clan(_mo.CacheStatus.IS).cache_functional(_mo.CacheStatus.IS)\
                     .cache_regular(_mo.CacheStatus.from_bool(import_csv.regular))
+=======
+                return _mo.Set(_import_csv(file), direct_load=True).cache_is_clan(
+                    True).cache_is_functional(True).cache_is_regular(import_csv.regular)
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272

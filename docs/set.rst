@@ -1,6 +1,11 @@
 .. Algebraix Technology Core Library documentation.
+<<<<<<< HEAD
    $Id: set.rst 22843 2015-08-21 19:00:31Z mhaque $
    Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-21 14:00:31 -0500 (Fri, 21 Aug 2015) $
+=======
+   $Id: set.rst 22614 2015-07-15 18:14:53Z gfiedler $
+   Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
    This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 
@@ -74,7 +79,11 @@ or alternatively by going back to :math:`X` and saying
 To help write conditions precisely without creating too much clutter, we will sometimes use symbols
 to represent logical quantifiers such as :math:`\exists` to say "there exists" or :math:`\forall` to
 represent "for all".  For example, if we wanted to say that a set :math:`S` was a subset of a set
+<<<<<<< HEAD
 :math:`T`, that is, any element of :math:`S` is also an element of :math:`T`, we can write that as
+=======
+:math:`T`, that is, eny element of :math:`S` is also an element of :math:`T`, we can write that as
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     .. math:: \forall x, x \in S \implies x \in T.
 

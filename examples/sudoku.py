@@ -1,8 +1,13 @@
 """An example data algebra script.  Naively solve a Sudoku game using techniques a person would
 likely use.  This is a teaching exercise, not an attempt at writing the fastest solver possible."""
 
+<<<<<<< HEAD
 # $Id: sudoku.py 22726 2015-08-04 14:12:37Z jaustell $
 # Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-04 09:12:37 -0500 (Tue, 04 Aug 2015) $
+=======
+# $Id: sudoku.py 22698 2015-07-28 17:09:23Z gfiedler $
+# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 12:09:23 -0500 (Tue, 28 Jul 2015) $
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -20,7 +25,11 @@ import time
 from functools import partial
 import itertools
 
+<<<<<<< HEAD
 from algebraixlib.mathobjects import Atom, CacheStatus, Couplet, Set
+=======
+from algebraixlib.mathobjects import Atom, Couplet, Set
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 import algebraixlib.algebras.relations as relations
 import algebraixlib.algebras.clans as clans
 import algebraixlib.algebras.sets as sets
@@ -29,6 +38,7 @@ import algebraixlib.partition as partition
 from algebraixlib.undef import Undef
 
 
+<<<<<<< HEAD
 VERBOSE = False
 # VERBOSE = True
 
@@ -43,6 +53,23 @@ BANDS_STACKS = Set(
                           'stack': int((c - 1) / BLOCK_SIZE) + 1})
      for r, c in itertools.product(list(range(1, GRID_SIZE + 1)), list(range(1, GRID_SIZE + 1))))
 ).cache_clan(CacheStatus.IS).cache_functional(CacheStatus.IS).cache_regular(CacheStatus.IS)
+=======
+verbose = False
+# verbose = True
+
+BLOCK_SIZE = 3
+GRID_SIZE = BLOCK_SIZE*BLOCK_SIZE
+BLOCK_VALUES_CLAN = Set(Set(Couplet('value', i)
+                            ).cache_is_relation(True).cache_is_functional(True)
+                        for i in range(
+    1, GRID_SIZE+1)).cache_is_clan(True).cache_is_functional(True).cache_is_regular(True)
+BANDS_STACKS = Set((relations.from_dict({'row': r, 'col': c,
+                                         'band': int((r-1) / BLOCK_SIZE)+1,
+                                         'stack': int((c-1) / BLOCK_SIZE)+1})
+                    for r, c in itertools.product(list(range(1, GRID_SIZE+1)),
+                                                  list(range(1, GRID_SIZE+1))))
+                   ).cache_is_clan(True).cache_is_functional(True).cache_is_regular(True)
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
 
 def _sorted(iterable, key=None):
@@ -53,6 +80,7 @@ def _unsorted(iterable, key=None):
     _ = key
     return iterable  # sorting is for debugging...for performance don't sort
 
+<<<<<<< HEAD
 # _SORT = _sorted  # To get consistent timing/debugging
 _SORT = _unsorted
 
@@ -66,16 +94,39 @@ def make_board(_puzzle):
         row = int(i / GRID_SIZE) + 1
         band = int((row - 1) / BLOCK_SIZE) + 1
         stack = int((col - 1) / BLOCK_SIZE) + 1
+=======
+# _sort = _sorted  # To get consistent timing/debugging
+_sort = _unsorted
+
+
+def make_board(_puzzle):
+    assert len(_puzzle) == GRID_SIZE*GRID_SIZE
+    board = set()
+    for i, v in enumerate(_puzzle):
+        value = 0 if v == '.' else int(v)
+        col = (i % GRID_SIZE) + 1
+        row = int(i / GRID_SIZE) + 1
+        band = int((row-1) / BLOCK_SIZE)+1
+        stack = int((col-1) / BLOCK_SIZE)+1
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         # cell = {'row': row, 'col': col}
         cell = {'row': row, 'col': col, 'band': band, 'stack': stack}
         if value != 0:
             cell['value'] = value
         board.add(relations.from_dict(cell))
+<<<<<<< HEAD
     return Set(board, direct_load=True).cache_clan(CacheStatus.IS).cache_functional(CacheStatus.IS)
 
 
 def print_string(board):
     if VERBOSE:
+=======
+    return Set(board, direct_load=True).cache_is_clan(True).cache_is_functional(True)
+
+
+def print_string(board):
+    if verbose:
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         print(get_string(board))
 
 
@@ -105,7 +156,11 @@ def get_string(board):
         value = cell('value')
         digits.append(0 if value is Undef() else value.value)
 
+<<<<<<< HEAD
     assert len(digits) == GRID_SIZE * GRID_SIZE
+=======
+    assert len(digits) == GRID_SIZE*GRID_SIZE
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     return ''.join(str(x) for x in digits)
 
 
@@ -137,7 +192,11 @@ def get_missing_rowcols(block_clan):
 
 
 def get_new_board(board, new_cells):
+<<<<<<< HEAD
     if VERBOSE:
+=======
+    if verbose:
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         for cell in new_cells:
             row = cell('row').value
             col = cell('col').value
@@ -148,16 +207,27 @@ def get_new_board(board, new_cells):
     old_cells = clans.superstrict(board, cell_filter)
     new_board = sets.minus(board, old_cells)
 
+<<<<<<< HEAD
     band = new_cells['band']
     if not band:
+=======
+    t = new_cells['band']
+    if not t:
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         # print("missing band")
         bands_stacks = clans.superstrict(BANDS_STACKS, cell_filter)
         new_cells = clans.cross_functional_union(new_cells, bands_stacks)
 
     new_board = sets.union(new_board, new_cells)
+<<<<<<< HEAD
     # if VERBOSE:
     #     print(get_string(new_board))
     assert len(new_board) == GRID_SIZE * GRID_SIZE
+=======
+    # if verbose:
+    #     print(get_string(new_board))
+    assert len(new_board) == GRID_SIZE*GRID_SIZE
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     return new_board
 
 
@@ -165,15 +235,25 @@ def check_values(_board):
     """Look for values where only one is missing.  If there is only one missing, then there is
     only one cell where adding the value would not cause a duplicate in a row or column.  Fill
     in those cells if they exist."""
+<<<<<<< HEAD
     if VERBOSE:
+=======
+    if verbose:
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         print("* check_values")
     board = get_filled_cells(_board)
 
     new_cells = Set()
     value_clans = partition.partition(board, partial(by_key, 'value'))
+<<<<<<< HEAD
     for value_clan in _SORT(value_clans, key=partial(by_clan_key, 'value')):
         # If there is only 1 missing value..fill in the cell
         if value_clan.cardinality == GRID_SIZE - 1:
+=======
+    for value_clan in _sort(value_clans, key=partial(by_clan_key, 'value')):
+        # If there is only 1 missing value..fill in the cell
+        if value_clan.cardinality == GRID_SIZE-1:
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
             # Get the set of rows and cols containing value
             occupied_rows = project(value_clan, 'row')
             occupied_cols = project(value_clan, 'col')
@@ -195,17 +275,29 @@ def check_rows(_board, try_harder=0):
     the blocked cell.  The other value can be placed in the other cell.  Look for rows with more
     than two missing values.  Check each empty cell to see only one of the missing values can be
     placed in it.  Check each value to see if there is only one cell where it can be placed."""
+<<<<<<< HEAD
     if VERBOSE:
+=======
+    if verbose:
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         print("* check_rows")
     board = get_filled_cells(_board)
 
     all_rows_clans = partition.partition(board, partial(by_key, 'row'))
+<<<<<<< HEAD
     for row_clan in _SORT(all_rows_clans, key=partial(by_clan_key, 'row')):
+=======
+    for row_clan in _sort(all_rows_clans, key=partial(by_clan_key, 'row')):
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         row = project(row_clan, 'row')
         board_row = clans.superstrict(_board, row)
         values_clan = get_missing_values(row_clan)
 
+<<<<<<< HEAD
         if row_clan.cardinality == GRID_SIZE - 1:
+=======
+        if row_clan.cardinality == GRID_SIZE-1:
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
             # Row is missing only 1 value, remove row_clan from the board leaving target row_col
             row_col = sets.minus(board_row, row_clan)
             new_cells = clans.cross_union(row_col, values_clan)
@@ -217,7 +309,11 @@ def check_rows(_board, try_harder=0):
         row_possible = clans.cross_union(values_clan,
                                          project(sets.minus(board_row, row_clan), 'col'))
 
+<<<<<<< HEAD
         if row_clan.cardinality == GRID_SIZE - 2:
+=======
+        if row_clan.cardinality == GRID_SIZE-2:
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
             # The occupied_clan is the col/value pair that is a conflict for each col/value
             occupied_clan = project(clans.superstrict(board, row_possible), 'col', 'value')
@@ -292,7 +388,11 @@ def check_rows(_board, try_harder=0):
             # Partition by row/col
             placed = 0
             candidates = partition.partition(new_possible4, partial(by_keys, 'row', 'col'))
+<<<<<<< HEAD
             for candidate in _SORT(candidates, key=partial(by_clan_key, 'col')):
+=======
+            for candidate in _sort(candidates, key=partial(by_clan_key, 'col')):
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
                 # If any row/col has only 1 candidate, place it
                 if candidate.cardinality == 1:
                     # Remove band/stack
@@ -304,7 +404,11 @@ def check_rows(_board, try_harder=0):
 
             # Partition by value
             candidates = partition.partition(new_possible4, partial(by_key, 'value'))
+<<<<<<< HEAD
             for candidate in _SORT(candidates, key=partial(by_clan_key, 'value')):
+=======
+            for candidate in _sort(candidates, key=partial(by_clan_key, 'value')):
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
                 # If any value fits in only 1 cell, place it
                 if candidate.cardinality == 1:
                     # Remove band/stack
@@ -316,7 +420,11 @@ def check_rows(_board, try_harder=0):
                         # If this row of a sibling block must contain this value...
                         blocks = partition.partition(candidate, partial(by_keys, 'band', 'stack'))
                         if blocks.cardinality > 1:
+<<<<<<< HEAD
                             for block_clan in _SORT(blocks,
+=======
+                            for block_clan in _sort(blocks,
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
                                                     key=partial(by_clan_keys, 'band', 'stack')):
                                 block = project(block_clan, 'band', 'stack')
                                 board_block = clans.superstrict(board, block)
@@ -339,11 +447,16 @@ def check_rows(_board, try_harder=0):
 
 def check_cols(_board, try_harder=0):
     """Check the columns the same way rows are checked"""
+<<<<<<< HEAD
     if VERBOSE:
+=======
+    if verbose:
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         print("* check_cols")
 
     # Rotate the board by swapping row and col then call check_rows
     swaps = clans.from_dict({'row': 'col', 'band': 'stack'})
+<<<<<<< HEAD
     rotated = extension.binary_extend(
         _board, swaps, partial(relations.swap, _checked=False)).cache_clan(
             CacheStatus.IS).cache_functional(CacheStatus.IS)
@@ -353,6 +466,15 @@ def check_cols(_board, try_harder=0):
         _board = extension.binary_extend(
             new_board, swaps, partial(relations.swap, _checked=False)
         ).cache_clan(CacheStatus.IS).cache_functional(CacheStatus.IS)
+=======
+    rotated = extension.binary_extend(_board, swaps, partial(relations.swap, _checked=False)
+                                      ).cache_is_clan(True).cache_is_functional(True)
+
+    new_board = check_rows(rotated, try_harder)
+    if rotated is not new_board:
+        _board = extension.binary_extend(new_board, swaps, partial(relations.swap, _checked=False)
+                                         ).cache_is_clan(True).cache_is_functional(True)
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     return _board
 
 
@@ -363,7 +485,11 @@ def get_block_candidates(block_clan, board):
     # Get the set of missing values...see if any can be placed due to row/col information
     target_rowcols = get_missing_rowcols(block_clan)
 
+<<<<<<< HEAD
     if block_clan.cardinality == GRID_SIZE - 1:
+=======
+    if block_clan.cardinality == GRID_SIZE-1:
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         new_cells = clans.cross_union(target_rowcols, values_clan)
         return new_cells, Set()
 
@@ -382,7 +508,11 @@ def get_block_candidates(block_clan, board):
     if occupied_clan.is_empty:
         return Set(), Set()
 
+<<<<<<< HEAD
     all_possible = clans.cross_union(values_clan, target_rowcols).cache_functional(CacheStatus.IS)
+=======
+    all_possible = clans.cross_union(values_clan, target_rowcols).cache_is_functional(True)
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
 
     # Get the set of conflicts...conflicting row/value + col/value
     conflict = sets.union(
@@ -396,12 +526,20 @@ def get_block_candidates(block_clan, board):
 
 def check_blocks(_board):
     """Check each block.  If there is only one value missing..."""
+<<<<<<< HEAD
     if VERBOSE:
+=======
+    if verbose:
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         print("* check_blocks")
 
     board = get_filled_cells(_board)
     blocks = partition.partition(board, partial(by_keys, 'band', 'stack'))
+<<<<<<< HEAD
     for block_clan in _SORT(blocks, key=partial(by_clan_keys, 'band', 'stack')):
+=======
+    for block_clan in _sort(blocks, key=partial(by_clan_keys, 'band', 'stack')):
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         new_possible, conflict = get_block_candidates(block_clan, board)
 
         if new_possible.is_empty:
@@ -410,7 +548,11 @@ def check_blocks(_board):
             _board = get_new_board(_board, new_possible)
             continue
 
+<<<<<<< HEAD
         if block_clan.cardinality == GRID_SIZE - 2:
+=======
+        if block_clan.cardinality == GRID_SIZE-2:
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
             # Knowing that the value in conflict can't be placed in the conflict cell
             # ..it must go in the other...
             first_choice = clans.superstrict(new_possible, project(conflict, 'value'))
@@ -435,7 +577,11 @@ def check_blocks(_board):
 
         # Partition by value
         candidates = partition.partition(new_possible, partial(by_key, 'value'))
+<<<<<<< HEAD
         for candidate in _SORT(candidates, key=partial(by_clan_key, 'value')):
+=======
+        for candidate in _sort(candidates, key=partial(by_clan_key, 'value')):
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
             # If any value fits in only 1 cell, place it
             if candidate.cardinality == 1:
                 # Remove band/stack
@@ -447,12 +593,21 @@ def check_blocks(_board):
 
 def check_done(_board):
     board = get_filled_cells(_board)
+<<<<<<< HEAD
     if board.cardinality == GRID_SIZE * GRID_SIZE:
         if VERBOSE:
             print("done")
         return True
     if VERBOSE:
         print("> %d cells remaining" % (GRID_SIZE * GRID_SIZE - board.cardinality))
+=======
+    if board.cardinality == GRID_SIZE*GRID_SIZE:
+        if verbose:
+            print("done")
+        return True
+    if verbose:
+        print("> %d cells remaining" % (GRID_SIZE*GRID_SIZE - board.cardinality))
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     return False
 
 
@@ -470,11 +625,19 @@ def solve_board(board):
         board = check_blocks(board)
         if board_start is board:
             if try_harder == 0:
+<<<<<<< HEAD
                 if VERBOSE:
                     print("*** no cells placed..trying harder")
                 try_harder = 1
             elif try_harder == 1:
                 if VERBOSE:
+=======
+                if verbose:
+                    print("*** no cells placed..trying harder")
+                try_harder = 1
+            elif try_harder == 1:
+                if verbose:
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
                     print("*** can't solve")
                 break
         else:
@@ -490,12 +653,20 @@ def solve_puzzle(_puzzle, _answer):
     board = solve_board(make_board(_puzzle))
     result = get_string(board)
     if _answer != result:
+<<<<<<< HEAD
         if VERBOSE:
+=======
+        if verbose:
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
             print("*** Wrong answer\nExpected: %s\nActual  : %s" % (_answer, result))
         return False
 
     end = time.time()
+<<<<<<< HEAD
     if VERBOSE:
+=======
+    if verbose:
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         print("solve_puzzle took: %d seconds" % (end - start))
     return True
 
@@ -508,12 +679,21 @@ class SudokuTest(unittest.TestCase):
 
     def _test_func(self, _puzzle, _answer, method):
         board = make_board(_puzzle.replace('\n', ''))
+<<<<<<< HEAD
         global _SORT
         sorting = _SORT
         # NOTE: Tests with partial data (12...5.6) requires sorting to be enabled or tests will fail
         _SORT = _sorted
         actual = get_string(method(board))
         _SORT = sorting
+=======
+        global _sort
+        sorting = _sort
+        # NOTE: Tests with partial data (12...5.6) requires sorting to be enabled or tests will fail
+        _sort = _sorted
+        actual = get_string(method(board))
+        _sort = sorting
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         expected = _answer.replace('.', '0')
         if actual != expected:
             print("*** Wrong answer\nExpected: %s\nActual  : %s" % (expected, actual))
@@ -602,7 +782,11 @@ class SudokuTest(unittest.TestCase):
             '1..92....524.17..9......271.5...81.2...1.2...4127...9..6...9.1...1.36945.4..71.26',
             '1..923...524.17..9......271.5...81.2...1.2...4127...9..6...9.1...1.36945.4..71.26',
             partial(check_rows, try_harder=1))
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
     def test_column(self):
         self._test_func(
             # 1 value missing in column 1, place the 9
@@ -686,6 +870,7 @@ class SudokuTest(unittest.TestCase):
             return
 
         from itertools import islice
+<<<<<<< HEAD
         with open('sudoku.dat') as file:
             while True:
                 puzzle_solution = list(islice(file, 2))
@@ -693,6 +878,15 @@ class SudokuTest(unittest.TestCase):
                     break
                 expected = puzzle_solution[1].rstrip()
                 self.assertTrue(solve_puzzle(puzzle_solution[0].rstrip(), expected))
+=======
+        with open('sudoku.dat') as f:
+            while True:
+                ps = list(islice(f, 2))
+                if not ps:
+                    break
+                expected = ps[1].rstrip()
+                self.assertTrue(solve_puzzle(ps[0].rstrip(), expected))
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         print()
 
     def test_one(self):
@@ -706,9 +900,17 @@ class SudokuTest(unittest.TestCase):
 # noinspection PyPackageRequirements
 import nose
 if __name__ == '__main__':
+<<<<<<< HEAD
     ARGUMENTS = [
+=======
+    arguments = [
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
         '-s', '--nocapture', '-v',  # Don't capture stdout (show it in the console).
         '--with-coverage',  # Include unit test coverage
         '--tests=sudoku.py',
     ]
+<<<<<<< HEAD
     nose.main(argv=ARGUMENTS)
+=======
+    nose.main(argv=arguments)
+>>>>>>> 8314b2bc25b1d2d8cfaef682762ca91234bc9272
