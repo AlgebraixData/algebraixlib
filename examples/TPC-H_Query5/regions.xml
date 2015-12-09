@@ -1,0 +1,152 @@
+<regions>
+  <region>
+    <name>AFRICA</name>
+    <regionkey>0</regionkey>
+    <comment>lar deposits. blithely final packages cajole. regular waters are final requests. regular accounts are according to </comment>
+    <nation>
+      <name>ALGERIA</name>
+      <nationkey>0</nationkey>
+      <comment> haggle. carefully final deposits detect slyly agai</comment>
+    </nation>
+    <nation>
+      <name>ETHIOPIA</name>
+      <nationkey>5</nationkey>
+      <comment>ven packages wake quickly. regu</comment>
+    </nation>
+    <nation>
+      <name>KENYA</name>
+      <nationkey>14</nationkey>
+      <comment> pending excuses haggle furiously deposits. pending, express pinto beans wake fluffily past t</comment>
+    </nation>
+    <nation>
+      <name>MOROCCO</name>
+      <nationkey>15</nationkey>
+      <comment>rns. blithely bold courts among the closely regular packages use furiously bold platelets?</comment>
+    </nation>
+    <nation>
+      <name>MOZAMBIQUE</name>
+      <nationkey>16</nationkey>
+      <comment>s. ironic, unusual asymptotes wake blithely r</comment>
+    </nation>
+  </region>
+  <region>
+    <name>AMERICA</name>
+    <regionkey>1</regionkey>
+    <comment>hs use ironic, even requests. s</comment>
+    <nation>
+      <name>ARGENTINA</name>
+      <nationkey>1</nationkey>
+      <comment>al foxes promise slyly according to the regular accounts. bold requests alon</comment>
+    </nation>
+    <nation>
+      <name>BRAZIL</name>
+      <nationkey>2</nationkey>
+      <comment>y alongside of the pending deposits. carefully special packages are about the ironic forges. slyly special </comment>
+    </nation>
+    <nation>
+      <name>CANADA</name>
+      <nationkey>3</nationkey>
+      <comment>eas hang ironic, silent packages. slyly regular packages are furiously over the tithes. fluffily bold</comment>
+    </nation>
+    <nation>
+      <name>PERU</name>
+      <nationkey>17</nationkey>
+      <comment>platelets. blithely pending dependencies use fluffily across the even pinto beans. carefully silent accoun</comment>
+    </nation>
+    <nation>
+      <name>UNITED STATES</name>
+      <nationkey>24</nationkey>
+      <comment>y final packages. slow foxes cajole quickly. quickly silent platelets breach ironic accounts. unusual pinto be</comment>
+    </nation>
+  </region>
+  <region>
+    <name>ASIA</name>
+    <regionkey>2</regionkey>
+    <comment>ges. thinly even pinto beans ca</comment>
+    <nation>
+      <name>INDIA</name>
+      <nationkey>8</nationkey>
+      <comment>ss excuses cajole slyly across the packages. deposits print aroun</comment>
+    </nation>
+    <nation>
+      <name>INDONESIA</name>
+      <nationkey>9</nationkey>
+      <comment> slyly express asymptotes. regular deposits haggle slyly. carefully ironic hockey players sleep blithely. carefull</comment>
+    </nation>
+    <nation>
+      <name>JAPAN</name>
+      <nationkey>12</nationkey>
+      <comment>ously. final, express gifts cajole a</comment>
+    </nation>
+    <nation>
+      <name>CHINA</name>
+      <nationkey>18</nationkey>
+      <comment>c dependencies. furiously express notornis sleep slyly regular accounts. ideas sleep. depos</comment>
+    </nation>
+    <nation>
+      <name>VIETNAM</name>
+      <nationkey>21</nationkey>
+      <comment>hely enticingly express accounts. even, final </comment>
+    </nation>
+  </region>
+  <region>
+    <name>EUROPE</name>
+    <regionkey>3</regionkey>
+    <comment>ly final courts cajole furiously final excuse</comment>
+    <nation>
+      <name>FRANCE</name>
+      <nationkey>6</nationkey>
+      <comment>refully final requests. regular, ironi</comment>
+    </nation>
+    <nation>
+      <name>GERMANY</name>
+      <nationkey>7</nationkey>
+      <comment>l platelets. regular accounts x-ray: unusual, regular acco</comment>
+    </nation>
+    <nation>
+      <name>ROMANIA</name>
+      <nationkey>19</nationkey>
+      <comment>ular asymptotes are about the furious multipliers. express dependencies nag above the ironically ironic account</comment>
+    </nation>
+    <nation>
+      <name>RUSSIA</name>
+      <nationkey>22</nationkey>
+      <comment> requests against the platelets use never according to the quickly regular pint</comment>
+    </nation>
+    <nation>
+      <name>UNITED KINGDOM</name>
+      <nationkey>23</nationkey>
+      <comment>eans boost carefully special requests. accounts are. carefull</comment>
+    </nation>
+  </region>
+  <region>
+    <name>MIDDLE EAST</name>
+    <regionkey>4</regionkey>
+    <comment>uickly special accounts cajole carefully blithely close requests. carefully final asymptotes haggle furiousl</comment>
+    <nation>
+      <name>EGYPT</name>
+      <nationkey>4</nationkey>
+      <comment>y above the carefully unusual theodolites. final dugouts are quickly across the furiously regular d</comment>
+    </nation>
+    <nation>
+      <name>IRAN</name>
+      <nationkey>10</nationkey>
+      <comment>efully alongside of the slyly final dependencies. </comment>
+    </nation>
+    <nation>
+      <name>IRAQ</name>
+      <nationkey>11</nationkey>
+      <comment>nic deposits boost atop the quickly final requests? quickly regula</comment>
+    </nation>
+    <nation>
+      <name>JORDAN</name>
+      <nationkey>13</nationkey>
+      <comment>ic deposits are blithely about the carefully regular pa</comment>
+    </nation>
+    <nation>
+      <name>SAUDI ARABIA</name>
+      <nationkey>20</nationkey>
+      <comment>ts. silent requests haggle. closely express packages sleep across the blithely</comment>
+    </nation>
+  </region>
+</regions>

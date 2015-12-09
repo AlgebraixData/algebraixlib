@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<employee id="0034404">
+   <name first="john" last="doe"></name>
+   <project>
+      <name>GAaaS</name>
+   </project>
+   <project>
+      <name>Data Algebra</name>
+   </project>
+</employee>

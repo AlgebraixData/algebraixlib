@@ -1,0 +1,7 @@
+<:claudius> <a:spouseOf> <:gertrude> .
+<:claudius> <a:uncleOf> <:hamlet> .
+<:gertrude> <a:motherOf> <:hamlet> .
+<:hamlet> <a:friendOf> <:horatio> .
+<:hamlet> <a:friendOf> <:rosencrantz> .
+<:hamlet> <a:friendOf> <:guildenstern> .
+<:ophelia> <a:girlfriendOf> <:hamlet> .
