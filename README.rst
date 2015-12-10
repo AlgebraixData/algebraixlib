@@ -130,7 +130,7 @@ Documentation Build
 
 The documentation build requires the following libraries be installed:
 
-*   `Sphinx`_ (1.3 or later)
+*   `Sphinx`_ (1.3.2 or later)
 
 To run a documentation build, you need a local working copy of our complete `GitHub`_ repository.
 Then run `build.py`_ in the directory `docs`_::
