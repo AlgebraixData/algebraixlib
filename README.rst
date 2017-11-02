@@ -148,7 +148,7 @@ Legalese
 Copyright
 ---------
 
-Copyright(c) 2015 Algebraix Data Corporation.
+Copyright(c) 2017 Algebraix Data Corporation.
 
 License
 -------
