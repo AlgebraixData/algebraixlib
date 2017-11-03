@@ -1,7 +1,7 @@
 """Examples for using the Data Algebra library to solve RDF/SPARQL-style problems."""
 
-# $Id: rdf_pattern_match.py 22690 2015-07-27 20:23:37Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-27 15:23:37 -0500 (Mon, 27 Jul 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -19,7 +19,7 @@ import io
 import rdflib
 from time import time
 
-from algebraixlib.io.rdf import export_table, import_graph
+from algebraixlib.import_export.rdf import export_table, import_graph
 from algebraixlib.mathobjects import Set
 from algebraixlib.util.html import DataAlgebraHtmlDescriptor as HtmlDesc, math_object_as_html
 from algebraixlib.util.miscellaneous import open_webpage_from_html_str

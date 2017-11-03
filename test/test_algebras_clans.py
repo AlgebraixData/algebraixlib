@@ -1,7 +1,7 @@
 """Test the algebras.clans module."""
 
-# $Id: test_algebras_clans.py 23088 2015-10-01 16:18:41Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-10-01 11:18:41 -0500 (Thu, 01 Oct 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -22,8 +22,8 @@ import textwrap
 import unittest
 
 import algebraixlib.algebras.properties as _props
-from algebraixlib.io.csv import import_csv
-from algebraixlib.mathobjects import Atom, CacheStatus, Couplet, Set
+from algebraixlib.import_export.csv import import_csv
+from algebraixlib.mathobjects import Atom, Couplet, Set
 from algebraixlib.structure import CartesianProduct, GenesisSetA, GenesisSetM, PowerSet
 from algebraixlib.undef import RaiseOnUndef, Undef, UndefException
 

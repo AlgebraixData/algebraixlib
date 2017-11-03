@@ -7,8 +7,8 @@ can then be taken into account by the caller. In some cases it is an error, in o
 result is simply ignored.
 """
 
-# $Id: undef.py 23208 2015-10-20 21:59:45Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-10-20 16:59:45 -0500 (Tue, 20 Oct 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -22,7 +22,8 @@ result is simply ignored.
 # You should have received a copy of the GNU Lesser General Public License along with algebraixlib.
 # If not, see <http://www.gnu.org/licenses/>.
 # --------------------------------------------------------------------------------------------------
-from algebraixlib.mathobjects.utils import CacheStatus
+from algebraixlib.tmp_sqlda_op import tmp_sqlda_op
+from .cache_status import CacheStatus
 
 
 class Undef:
@@ -336,6 +337,7 @@ def make_or_raise_undef2(obj):
     return make_or_raise_undef()
 
 
+@tmp_sqlda_op(True)
 def make_undef():
     """Return `Undef()`. Used where a hashable instance that evaluates to `Undef()` is needed."""
     return Undef()

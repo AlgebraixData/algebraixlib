@@ -4,8 +4,8 @@ A :term:`multiclan` is also a :term:`multiset` (of :term:`relation`\s), and inhe
 of the :term:`algebra of multisets`. These are provided in :mod:`~.algebras.multisets`.
 """
 
-# $Id: multiclans.py 23150 2015-10-12 23:08:21Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-10-12 18:08:21 -0500 (Mon, 12 Oct 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -28,6 +28,8 @@ import algebraixlib.mathobjects as _mo
 import algebraixlib.extension as _extension
 import algebraixlib.structure as _structure
 import algebraixlib.undef as _undef
+
+from ..cache_status import CacheStatus
 
 
 # --------------------------------------------------------------------------------------------------
@@ -60,7 +62,7 @@ class Algebra:
         result = _extension.unary_multi_extend(multiclan, _functools.partial(
             _relations.transpose, _checked=False), _checked=False)
         if not result.is_empty:
-            result.cache_multiclan(_mo.CacheStatus.IS)
+            result.cache_multiclan(CacheStatus.IS)
             result.cache_absolute(multiclan.cached_absolute)
             result.cache_functional(multiclan.cached_right_functional)
             result.cache_right_functional(multiclan.cached_functional)
@@ -97,13 +99,13 @@ class Algebra:
         result = _extension.binary_multi_extend(multiclan1, multiclan2, _functools.partial(
             _relations.compose, _checked=False), _checked=False)
         if not result.is_empty:
-            result.cache_multiclan(_mo.CacheStatus.IS)
+            result.cache_multiclan(CacheStatus.IS)
             if multiclan1.cached_is_absolute and multiclan2.cached_is_absolute:
-                result.cache_absolute(_mo.CacheStatus.IS)
+                result.cache_absolute(CacheStatus.IS)
             if multiclan1.cached_is_functional and multiclan2.cached_is_functional:
-                result.cache_functional(_mo.CacheStatus.IS)
+                result.cache_functional(CacheStatus.IS)
             if multiclan1.cached_is_right_functional and multiclan2.cached_is_right_functional:
-                result.cache_right_functional(_mo.CacheStatus.IS)
+                result.cache_right_functional(CacheStatus.IS)
         return result
 
     @staticmethod
@@ -129,11 +131,11 @@ class Algebra:
         result = _extension.binary_multi_extend(mclan1, mclan2, _functools.partial(
             _sets.union, _checked=False), _checked=False)
         if not result.is_empty:
-            result.cache_multiclan(_mo.CacheStatus.IS)
+            result.cache_multiclan(CacheStatus.IS)
             if mclan1.cached_is_not_functional or mclan2.cached_is_not_functional:
-                result.cache_functional(_mo.CacheStatus.IS_NOT)
+                result.cache_functional(CacheStatus.IS_NOT)
             if mclan1.cached_is_not_right_functional or mclan2.cached_is_not_right_functional:
-                result.cache_right_functional(_mo.CacheStatus.IS_NOT)
+                result.cache_right_functional(CacheStatus.IS_NOT)
         return result
 
     @staticmethod
@@ -159,10 +161,10 @@ class Algebra:
         result = _extension.binary_multi_extend(mclan1, mclan2, _functools.partial(
             _relations.functional_union, _checked=False), _checked=False)
         if not result.is_empty:
-            result.cache_multiclan(_mo.CacheStatus.IS)
-            result.cache_functional(_mo.CacheStatus.IS)
+            result.cache_multiclan(CacheStatus.IS)
+            result.cache_functional(CacheStatus.IS)
             if mclan1.cached_is_not_right_functional or mclan2.cached_is_not_right_functional:
-                result.cache_right_functional(_mo.CacheStatus.IS_NOT)
+                result.cache_right_functional(CacheStatus.IS_NOT)
         return result
 
     @staticmethod
@@ -189,10 +191,10 @@ class Algebra:
         result = _extension.binary_multi_extend(multiclan1, multiclan2, _functools.partial(
             _relations.right_functional_union, _checked=False), _checked=False)
         if not result.is_empty:
-            result.cache_multiclan(_mo.CacheStatus.IS)
-            result.cache_right_functional(_mo.CacheStatus.IS)
+            result.cache_multiclan(CacheStatus.IS)
+            result.cache_right_functional(CacheStatus.IS)
             if multiclan1.cached_is_not_functional or multiclan2.cached_is_not_functional:
-                result.cache_functional(_mo.CacheStatus.IS_NOT)
+                result.cache_functional(CacheStatus.IS_NOT)
         return result
 
     @staticmethod
@@ -218,11 +220,11 @@ class Algebra:
         result = _extension.binary_multi_extend(multiclan1, multiclan2, _functools.partial(
             _sets.intersect, _checked=False), _checked=False)
         if not result.is_empty:
-            result.cache_multiclan(_mo.CacheStatus.IS)
+            result.cache_multiclan(CacheStatus.IS)
             if multiclan1.cached_is_functional or multiclan2.cached_is_functional:
-                result.cache_functional(_mo.CacheStatus.IS)
+                result.cache_functional(CacheStatus.IS)
             if multiclan1.cached_is_right_functional or multiclan2.cached_is_right_functional:
-                result.cache_right_functional(_mo.CacheStatus.IS)
+                result.cache_right_functional(CacheStatus.IS)
         return result
 
     @staticmethod
@@ -254,21 +256,21 @@ class Algebra:
         for elem, multi in result.data.items():
             result.data[elem] = multiclan1.data[elem]
         if not result.is_empty:
-            result.cache_multiclan(_mo.CacheStatus.IS)
+            result.cache_multiclan(CacheStatus.IS)
             if multiclan1.cached_is_functional or multiclan2.cached_is_functional:
-                result.cache_functional(_mo.CacheStatus.IS)
+                result.cache_functional(CacheStatus.IS)
             if multiclan1.cached_is_right_functional or multiclan2.cached_is_right_functional:
-                result.cache_right_functional(_mo.CacheStatus.IS)
+                result.cache_right_functional(CacheStatus.IS)
             if multiclan1.cached_is_reflexive:
-                result.cache_reflexive(_mo.CacheStatus.IS)
+                result.cache_reflexive(CacheStatus.IS)
             if multiclan1.cached_is_symmetric:
-                result.cache_symmetric(_mo.CacheStatus.IS)
+                result.cache_symmetric(CacheStatus.IS)
             if multiclan1.cached_is_transitive:
-                result.cache_transitive(_mo.CacheStatus.IS)
+                result.cache_transitive(CacheStatus.IS)
             if multiclan1.cached_is_regular:
-                result.cache_regular(_mo.CacheStatus.IS)
+                result.cache_regular(CacheStatus.IS)
             if multiclan1.cached_is_right_regular:
-                result.cache_right_regular(_mo.CacheStatus.IS)
+                result.cache_right_regular(CacheStatus.IS)
         return result
 
     @staticmethod
@@ -300,21 +302,21 @@ class Algebra:
         for elem, multi in result.data.items():
             result.data[elem] = multiclan2.data[elem]
         if not result.is_empty:
-            result.cache_multiclan(_mo.CacheStatus.IS)
+            result.cache_multiclan(CacheStatus.IS)
             if multiclan1.cached_is_functional:
-                result.cache_functional(_mo.CacheStatus.IS)
+                result.cache_functional(CacheStatus.IS)
             if multiclan1.cached_is_right_functional:
-                result.cache_right_functional(_mo.CacheStatus.IS)
+                result.cache_right_functional(CacheStatus.IS)
             if multiclan1.cached_is_reflexive:
-                result.cache_reflexive(_mo.CacheStatus.IS)
+                result.cache_reflexive(CacheStatus.IS)
             if multiclan1.cached_is_symmetric:
-                result.cache_symmetric(_mo.CacheStatus.IS)
+                result.cache_symmetric(CacheStatus.IS)
             if multiclan1.cached_is_transitive:
-                result.cache_transitive(_mo.CacheStatus.IS)
+                result.cache_transitive(CacheStatus.IS)
             if multiclan1.cached_is_regular:
-                result.cache_regular(_mo.CacheStatus.IS)
+                result.cache_regular(CacheStatus.IS)
             if multiclan1.cached_is_right_regular:
-                result.cache_right_regular(_mo.CacheStatus.IS)
+                result.cache_right_regular(CacheStatus.IS)
         return result
 
 
@@ -371,9 +373,9 @@ def is_member(obj: _mo.MathObject) -> bool:
     .. note:: This function may call :meth:`~.MathObject.get_ground_set` on ``obj``. The result of
         this operation is cached.
     """
-    if obj.cached_multiclan == _mo.CacheStatus.UNKNOWN:
+    if obj.cached_multiclan == CacheStatus.UNKNOWN:
         is_multiclan = obj.get_ground_set().is_subset(get_ground_set())
-        obj.cache_multiclan(_mo.CacheStatus.from_bool(is_multiclan))
+        obj.cache_multiclan(CacheStatus.from_bool(is_multiclan))
     return obj.cached_is_multiclan
 
 
@@ -399,15 +401,15 @@ def is_absolute_member(obj: _mo.MathObject) -> bool:
         # If known to not be a multiclan, it's also not an absolute multiclan. No further caching.
         return False
     # The `or` clause in this `if` statement is a safety thing. It should never hit.
-    if obj.cached_absolute == _mo.CacheStatus.UNKNOWN \
-            or obj.cached_multiclan == _mo.CacheStatus.UNKNOWN:
+    if obj.cached_absolute == CacheStatus.UNKNOWN \
+            or obj.cached_multiclan == CacheStatus.UNKNOWN:
         # The 'absolute' state has not yet been cached. Determine whether obj is an absolute
         # multiclan.
         is_absolute_mclan = obj.get_ground_set().is_subset(get_absolute_ground_set())
-        if obj.cached_multiclan == _mo.CacheStatus.UNKNOWN:
+        if obj.cached_multiclan == CacheStatus.UNKNOWN:
             if is_absolute_mclan:
                 # If it is an absolute multiclan, it is also a multiclan.
-                obj.cache_multiclan(_mo.CacheStatus.IS)
+                obj.cache_multiclan(CacheStatus.IS)
             else:
                 # If it is not an absolute multiclan, it may still be a multiclan.
                 is_mclan = is_member(obj)
@@ -417,7 +419,7 @@ def is_absolute_member(obj: _mo.MathObject) -> bool:
                     return False
         # At this point, cached_multiclan == IS. Cache whether this is an absolute multiclan.
         assert obj.cached_is_multiclan
-        obj.cache_absolute(_mo.CacheStatus.from_bool(is_absolute_mclan))
+        obj.cache_absolute(CacheStatus.from_bool(is_absolute_mclan))
     # At this point, cached_multiclan == IS. Return whether it is an absolute multiclan.
     return obj.cached_is_absolute
 
@@ -448,7 +450,7 @@ def get_lefts(mclan: 'P(P(M x M) x N)', _checked=True) -> 'P( M )':
             _relations.get_lefts(rel, _checked=False), left_set, _checked=False)
     if not left_set.is_empty:
         if mclan.cached_is_absolute:
-            left_set.cache_absolute(_mo.CacheStatus.IS)
+            left_set.cache_absolute(CacheStatus.IS)
     return left_set
 
 
@@ -475,7 +477,7 @@ def get_rights(mclan: 'P(P(M x M) x N)', _checked=True) -> 'P( M )':
             _relations.get_rights(rel, _checked=False), right_set, _checked=False)
     if not right_set.is_empty:
         if mclan.cached_is_absolute:
-            right_set.cache_absolute(_mo.CacheStatus.IS)
+            right_set.cache_absolute(CacheStatus.IS)
     return right_set
 
 
@@ -507,7 +509,7 @@ def get_rights_for_left(mclan: 'P(P(M x M) x N)', left: '( M )', _checked=True) 
             rights, _checked=False)
     if not rights.is_empty:
         if mclan.cached_is_absolute:
-            rights.cache_absolute(_mo.CacheStatus.IS)
+            rights.cache_absolute(CacheStatus.IS)
     return rights
 
 
@@ -524,10 +526,10 @@ def is_functional(mclan, _checked=True) -> bool:
         assert is_member_or_undef(mclan)
         if mclan is _undef.Undef():
             return _undef.make_or_raise_undef(2)
-    if mclan.cached_functional == _mo.CacheStatus.UNKNOWN:
+    if mclan.cached_functional == CacheStatus.UNKNOWN:
         # The empty set is already handled in Set().__init__ via flags initialization.
         functional = all(_relations.is_functional(rel, _checked=False) for rel in mclan.data)
-        mclan.cache_functional(_mo.CacheStatus.from_bool(functional))
+        mclan.cache_functional(CacheStatus.from_bool(functional))
     return mclan.cached_is_functional
 
 
@@ -544,11 +546,11 @@ def is_right_functional(mclan, _checked=True) -> bool:
         assert is_member_or_undef(mclan)
         if mclan is _undef.Undef():
             return _undef.make_or_raise_undef(2)
-    if mclan.cached_right_functional == _mo.CacheStatus.UNKNOWN:
+    if mclan.cached_right_functional == CacheStatus.UNKNOWN:
         # The empty set is already handled in Set().__init__ via flags initialization.
         right_functional = all(
             _relations.is_right_functional(rel, _checked=False) for rel in mclan.data)
-        mclan.cache_right_functional(_mo.CacheStatus.from_bool(right_functional))
+        mclan.cache_right_functional(CacheStatus.from_bool(right_functional))
     return mclan.cached_is_right_functional
 
 
@@ -565,20 +567,20 @@ def is_regular(mclan, _checked=True) -> bool:
         assert is_member_or_undef(mclan)
         if mclan is _undef.Undef():
             return _undef.make_or_raise_undef(2)
-    if mclan.cached_regular == _mo.CacheStatus.UNKNOWN:
+    if mclan.cached_regular == CacheStatus.UNKNOWN:
         # The empty set is already handled in Set().__init__ via flags initialization.
         if mclan.cached_is_not_functional:
-            mclan.cache_regular(_mo.CacheStatus.IS_NOT)
+            mclan.cache_regular(CacheStatus.IS_NOT)
             return False
         itr = iter(mclan.data)
         rel = next(itr)
         if not _relations.is_functional(rel):
-            mclan.cache_regular(_mo.CacheStatus.IS_NOT)
+            mclan.cache_regular(CacheStatus.IS_NOT)
             return False
         left_set = rel.get_left_set()
         regular = all(
             _relations.is_functional(rel) and left_set == rel.get_left_set() for rel in itr)
-        mclan.cache_regular(_mo.CacheStatus.from_bool(regular))
+        mclan.cache_regular(CacheStatus.from_bool(regular))
     return mclan.cached_is_regular
 
 
@@ -595,20 +597,20 @@ def is_right_regular(mclan, _checked=True) -> bool:
         assert is_member_or_undef(mclan)
         if mclan is _undef.Undef():
             return _undef.make_or_raise_undef(2)
-    if mclan.cached_right_regular == _mo.CacheStatus.UNKNOWN:
+    if mclan.cached_right_regular == CacheStatus.UNKNOWN:
         # The empty set is already handled in Set().__init__ via flags initialization.
         if mclan.cached_is_not_right_functional:
-            mclan.cache_right_regular(_mo.CacheStatus.IS_NOT)
+            mclan.cache_right_regular(CacheStatus.IS_NOT)
             return False
         itr = iter(mclan.data)
         rel = next(itr)
         if not _relations.is_right_functional(rel):
-            mclan.cache_right_regular(_mo.CacheStatus.IS_NOT)
+            mclan.cache_right_regular(CacheStatus.IS_NOT)
             return False
         right_set = rel.get_right_set()
         right_regular = all(
             _relations.is_right_functional(rel) and right_set == rel.get_right_set() for rel in itr)
-        mclan.cache_regular(_mo.CacheStatus.from_bool(right_regular))
+        mclan.cache_regular(CacheStatus.from_bool(right_regular))
     return mclan.cached_is_regular
 
 
@@ -625,10 +627,10 @@ def is_reflexive(mclan, _checked=True) -> bool:
         assert is_member_or_undef(mclan)
         if mclan is _undef.Undef():
             return _undef.make_or_raise_undef(2)
-    if mclan.cached_reflexive == _mo.CacheStatus.UNKNOWN:
+    if mclan.cached_reflexive == CacheStatus.UNKNOWN:
         reflexive = all(_relations.is_reflexive(rel, _checked=False) for rel in mclan.data)
-        mclan.cache_reflexive(_mo.CacheStatus.from_bool(reflexive))
-    return mclan.cached_reflexive == _mo.CacheStatus.IS
+        mclan.cache_reflexive(CacheStatus.from_bool(reflexive))
+    return mclan.cached_reflexive == CacheStatus.IS
 
 
 def is_symmetric(mclan, _checked=True) -> bool:
@@ -644,10 +646,10 @@ def is_symmetric(mclan, _checked=True) -> bool:
         assert is_member_or_undef(mclan)
         if mclan is _undef.Undef():
             return _undef.make_or_raise_undef(2)
-    if mclan.cached_symmetric == _mo.CacheStatus.UNKNOWN:
+    if mclan.cached_symmetric == CacheStatus.UNKNOWN:
         symmetric = all(_relations.is_symmetric(rel, _checked=False) for rel in mclan.data)
-        mclan.cache_symmetric(_mo.CacheStatus.from_bool(symmetric))
-    return mclan.cached_symmetric == _mo.CacheStatus.IS
+        mclan.cache_symmetric(CacheStatus.from_bool(symmetric))
+    return mclan.cached_symmetric == CacheStatus.IS
 
 
 def is_transitive(mclan, _checked=True) -> bool:
@@ -663,10 +665,10 @@ def is_transitive(mclan, _checked=True) -> bool:
         assert is_member_or_undef(mclan)
         if mclan is _undef.Undef():
             return _undef.make_or_raise_undef(2)
-    if mclan.cached_transitive == _mo.CacheStatus.UNKNOWN:
+    if mclan.cached_transitive == CacheStatus.UNKNOWN:
         transitive = all(_relations.is_transitive(rel, _checked=False) for rel in mclan.data)
-        mclan.cache_transitive(_mo.CacheStatus.from_bool(transitive))
-    return mclan.cached_transitive == _mo.CacheStatus.IS
+        mclan.cache_transitive(CacheStatus.from_bool(transitive))
+    return mclan.cached_transitive == CacheStatus.IS
 
 
 def project(mclan: 'P(P(M x M) x N)', *lefts) -> 'P(P(M x M) x N)':
@@ -868,9 +870,9 @@ def from_dict(dict1: dict) -> 'P(P(M x M) x N)':
     elements of ``dict1``."""
     rel = _relations.from_dict(dict1)
     mclan = _mo.Multiset(rel, direct_load=True)
-    mclan.cache_multiclan(_mo.CacheStatus.IS)
-    mclan.cache_functional(_mo.CacheStatus.IS)
-    mclan.cache_regular(_mo.CacheStatus.IS)
+    mclan.cache_multiclan(CacheStatus.IS)
+    mclan.cache_functional(CacheStatus.IS)
+    mclan.cache_regular(CacheStatus.IS)
     return mclan
 
 
@@ -884,10 +886,10 @@ def diag(*args, _checked=True) -> 'P(P(M x M) x N)':
     if rels is _undef.Undef():
         return _undef.make_or_raise_undef(2)
     clan = _mo.Multiset(rels, direct_load=True)
-    clan.cache_multiclan(_mo.CacheStatus.IS)
-    clan.cache_functional(_mo.CacheStatus.IS).cache_right_functional(_mo.CacheStatus.IS)
-    clan.cache_reflexive(_mo.CacheStatus.IS).cache_symmetric(_mo.CacheStatus.IS)
-    clan.cache_regular(_mo.CacheStatus.IS).cache_right_regular(_mo.CacheStatus.IS)
+    clan.cache_multiclan(CacheStatus.IS)
+    clan.cache_functional(CacheStatus.IS).cache_right_functional(CacheStatus.IS)
+    clan.cache_reflexive(CacheStatus.IS).cache_symmetric(CacheStatus.IS)
+    clan.cache_regular(CacheStatus.IS).cache_right_regular(CacheStatus.IS)
     return clan
 
 
@@ -902,14 +904,14 @@ def defined_at(mclan: 'P(P(M x M) x N)', left: '( M )', _checked=True):
         _checked=_checked)
     if result is _undef.Undef() or not result:
         return _undef.make_or_raise_undef2(result)
-    result.cache_multiclan(_mo.CacheStatus.IS)
+    result.cache_multiclan(CacheStatus.IS)
     if not result.is_empty:
         if mclan.cached_is_functional:
-            result.cache_functional(_mo.CacheStatus.IS)
+            result.cache_functional(CacheStatus.IS)
         if mclan.cached_is_right_functional:
-            result.cache_right_functional(_mo.CacheStatus.IS)
+            result.cache_right_functional(CacheStatus.IS)
         if mclan.cached_is_regular:
-            result.cache_regular(_mo.CacheStatus.IS)
+            result.cache_regular(CacheStatus.IS)
         if mclan.cached_is_right_regular:
-            result.cache_right_regular(_mo.CacheStatus.IS)
+            result.cache_right_regular(CacheStatus.IS)
     return result

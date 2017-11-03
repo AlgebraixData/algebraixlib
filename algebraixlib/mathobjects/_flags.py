@@ -1,8 +1,8 @@
 """This package-private module contains the class ``Flags`` that is used to cache certain properties
 of ``MathObject``s. This code is internal and transient."""
 
-# $Id: _flags.py 22803 2015-08-14 17:08:50Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-14 12:08:50 -0500 (Fri, 14 Aug 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -18,7 +18,7 @@ of ``MathObject``s. This code is internal and transient."""
 # --------------------------------------------------------------------------------------------------
 import ctypes as _ctypes
 
-from .utils import CacheStatus
+from ..cache_status import CacheStatus
 
 
 # --------------------------------------------------------------------------------------------------

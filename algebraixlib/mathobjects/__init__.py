@@ -38,8 +38,8 @@ imported. (Similarly, ``from mathobjects import ...`` can be used to import indi
 from the package.)
 """
 
-# $Id: __init__.py 23071 2015-09-29 20:12:10Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-09-29 15:12:10 -0500 (Tue, 29 Sep 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -61,4 +61,3 @@ from .mathobject import MathObject, is_mathobject_or_undef, raise_if_not_mathobj
     raise_if_not_mathobjects
 from .multiset import Multiset
 from .set import Set, make_set, make_set_unchecked
-from .utils import CacheStatus

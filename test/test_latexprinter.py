@@ -1,8 +1,8 @@
 """Test the util.latexPrinter module."""
 
-# $Id: test_latexprinter.py 22698 2015-07-28 17:09:23Z gfiedler $
+# $Id$
 
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 12:09:23 -0500 (Tue, 28 Jul 2015) $
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

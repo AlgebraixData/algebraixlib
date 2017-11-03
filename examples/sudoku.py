@@ -1,8 +1,8 @@
 """An example data algebra script.  Naively solve a Sudoku game using techniques a person would
 likely use.  This is a teaching exercise, not an attempt at writing the fastest solver possible."""
 
-# $Id: sudoku.py 22726 2015-08-04 14:12:37Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-04 09:12:37 -0500 (Tue, 04 Aug 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

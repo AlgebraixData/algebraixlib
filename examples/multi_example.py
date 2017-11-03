@@ -2,7 +2,7 @@
 multiples.
 """
 
-# $Id: multi_example.py 22799 2015-08-14 14:56:45Z gfiedler $
+# $Id$
 # Copyright Algebraix Data Corporation 2015 - $$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
@@ -168,8 +168,8 @@ apple,jane
 
 # Tables can be modeled as multisets of binary relations, which we call clans.
 from io import StringIO
-from algebraixlib.io.csv import import_csv
-from algebraixlib.io.csv import export_csv
+from algebraixlib.import_export.csv import import_csv
+from algebraixlib.import_export.csv import export_csv
 
 file = StringIO(sales_csv)
 sales_multiclan = import_csv(file, has_dup_rows=True)  # note the use of flag to return a multiclan

@@ -4,8 +4,8 @@ The main entry point is the function `math_object_to_latex`; it delegates to the
 conversion function according to the argument type.
 """
 
-# $Id: latexprinter.py 22800 2015-08-14 14:59:01Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-14 09:59:01 -0500 (Fri, 14 Aug 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

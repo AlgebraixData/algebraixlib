@@ -8,8 +8,8 @@ This module also provides the utility functions :func:`~.raise_if_not_mathobject
 of :class:`~.MathObject` (resp. is not a collection of such instances).
 """
 
-# $Id: mathobject.py 23141 2015-10-09 20:41:37Z wholler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-10-09 15:41:37 -0500 (Fri, 09 Oct 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -28,7 +28,7 @@ import abc as _abc
 import algebraixlib.structure as _structure
 import algebraixlib.undef as _undef
 
-from .utils import CacheStatus
+from ..cache_status import CacheStatus
 from ._flags import Flags as _Flags
 
 
@@ -106,6 +106,7 @@ class MathObject(_abc.ABC):
     def __init__(self, cached_flags: int=0):
         self._flags = _Flags(asint=cached_flags)
 
+    # noinspection PyUnusedLocal
     def __deepcopy__(self, _memo):
         """Override of deepcopy to return self - all MathObjects are immutable."""
         return self
@@ -133,6 +134,17 @@ class MathObject(_abc.ABC):
     def get_right_set(self) -> 'P( M )':  # pylint: disable=no-self-use
         """Return the :term:`right set` or `Undef()` if not applicable."""
         return _undef.make_or_raise_undef()
+
+    # ----------------------------------------------------------------------------------------------
+    # Helper functions for use in derived classes.
+
+    def _less_than(self, other) -> bool:
+        r"""Compare two `MathObject`\s of different types. They are ordered lexically by their
+        type names.
+        """
+        assert isinstance(other, MathObject)
+        assert type(self) != type(other)
+        return self.__class__.__name__ < other.__class__.__name__
 
     # ----------------------------------------------------------------------------------------------
     # (Python-)Special functions.

@@ -1,7 +1,7 @@
 """Test the algebras.couplets module."""
 
-# $Id: test_algebras_couplets.py 23070 2015-09-29 16:31:45Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-09-29 11:31:45 -0500 (Tue, 29 Sep 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

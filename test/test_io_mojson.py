@@ -1,7 +1,7 @@
 """Test the io.mojson module."""
 
-# $Id: test_io_mojson.py 23313 2015-11-09 22:25:37Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-11-09 16:25:37 -0600 (Mon, 09 Nov 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -22,7 +22,7 @@ import shutil
 import unittest
 
 from algebraixlib.mathobjects import Atom, Couplet, Set, Multiset
-from algebraixlib.io.mojson import ExportJson, ImportJson
+from algebraixlib.import_export.mojson import ExportJson, ImportJson
 
 
 class JsonTest(unittest.TestCase):

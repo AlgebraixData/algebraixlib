@@ -1,7 +1,7 @@
 """Test the undef module."""
 
-# $Id: test_undef.py 22724 2015-08-03 23:40:02Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-03 18:40:02 -0500 (Mon, 03 Aug 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

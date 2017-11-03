@@ -35,8 +35,8 @@ Additional modules:
     They redirect to the appropriate algebra.
 """
 
-# $Id: __init__.py 22735 2015-08-04 22:59:12Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-04 17:59:12 -0500 (Tue, 04 Aug 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

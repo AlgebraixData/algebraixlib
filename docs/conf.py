@@ -11,8 +11,7 @@ shown in comments.
 See also `The build configuration file <http://sphinx-doc.org/config.html>`_.
 """
 
-# $Id: conf.py 23480 2015-12-09 19:38:19Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-12-09 13:38:19 -0600 (Wed, 09 Dec 2015) $
+# Copyright Algebraix Data Corporation 2015-2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -40,8 +39,8 @@ author = "Algebraix Data Corporation"
 
 # The version info for the project you're documenting, acts as replacement for |version| and
 # |release|, also used in various other places throughout the built documents.
-version = '1.3'  # The short X.Y version.
-release = '1.3'  # The full version, including alpha/beta/rc tags.
+version = '1.4'  # The short X.Y version.
+release = '1.4b1'  # The full version, including alpha/beta/rc tags.
 
 # --------------------------------------------------------------------------------------------------
 # Project configuration
@@ -59,7 +58,7 @@ master_doc = 'index'
 exclude_patterns = ['_build/*']
 
 # Minimal Sphinx version. Accepts only the first two elements of the version number.
-needs_sphinx = '1.3'  # Default '1.0'.
+needs_sphinx = '1.5'
 
 # Sphinx extension modules.
 extensions = [  # Default []
@@ -102,9 +101,10 @@ html_theme = 'nature'
 import sphinx.environment
 from docutils.utils import get_source_line
 
-def _warn_node(self, msg, node):
+
+def _warn_node(self, msg, node, **kwargs):
     if not msg.startswith('nonlocal image URI found:'):
-        self._warnfunc(msg, '%s:%s' % get_source_line(node))
+        self._warnfunc(msg, '%s:%s' % get_source_line(node), **kwargs)
 
 sphinx.environment.BuildEnvironment.warn_node = _warn_node
 
@@ -147,7 +147,7 @@ def setup(app):
 # sphinx.ext.intersphinx ---------------------------------------------------------------------------
 
 # Reference the Python standard library.
-intersphinx_mapping = {'python': ('https://docs.python.org/3.4', None)}
+intersphinx_mapping = {'python': ('https://docs.python.org/3.6', None)}
 
 
 # sphinx.ext.todo ----------------------------------------------------------------------------------
@@ -240,7 +240,7 @@ pygments_style = 'sphinx'
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom, using the given
 # strftime format.
-# html_last_updated_fmt = '%b %d, %Y'
+html_last_updated_fmt = '%b %d, %Y'
 
 # If true, SmartyPants will be used to convert quotes and dashes to typographically correct
 # entities.

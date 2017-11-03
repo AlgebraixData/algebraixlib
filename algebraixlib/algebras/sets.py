@@ -1,7 +1,7 @@
 """This module contains the :term:`algebra of sets` and related functionality."""
 
-# $Id: sets.py 23081 2015-09-30 19:09:36Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-09-30 14:09:36 -0500 (Wed, 30 Sep 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -21,6 +21,8 @@ import functools as _functools
 import algebraixlib.mathobjects as _mo
 import algebraixlib.structure as _structure
 import algebraixlib.undef as _undef
+
+from ..cache_status import CacheStatus
 
 
 # --------------------------------------------------------------------------------------------------
@@ -58,46 +60,46 @@ class Algebra:
         if not result.is_empty:
             # Relation flags:
             if set1.cached_is_relation and set2.cached_is_relation:
-                result.cache_relation(_mo.CacheStatus.IS)
+                result.cache_relation(CacheStatus.IS)
                 if set1.cached_is_absolute and set2.cached_is_absolute:
-                    result.cache_absolute(_mo.CacheStatus.IS)
+                    result.cache_absolute(CacheStatus.IS)
                 elif set1.cached_is_not_absolute or set2.cached_is_not_absolute:
-                    result.cache_absolute(_mo.CacheStatus.IS_NOT)
+                    result.cache_absolute(CacheStatus.IS_NOT)
                 if set1.cached_is_not_functional or set2.cached_is_not_functional:
-                    result.cache_functional(_mo.CacheStatus.IS_NOT)
+                    result.cache_functional(CacheStatus.IS_NOT)
                 if set1.cached_is_not_right_functional or set2.cached_is_not_right_functional:
-                    result.cache_right_functional(_mo.CacheStatus.IS_NOT)
+                    result.cache_right_functional(CacheStatus.IS_NOT)
             elif set1.cached_is_not_relation or set2.cached_is_not_relation:
-                result.cache_relation(_mo.CacheStatus.IS_NOT)
+                result.cache_relation(CacheStatus.IS_NOT)
             # Clan flags:
             if set1.cached_is_clan and set2.cached_is_clan:
-                result.cache_clan(_mo.CacheStatus.IS)
+                result.cache_clan(CacheStatus.IS)
                 if set1.cached_is_absolute and set2.cached_is_absolute:
-                    result.cache_absolute(_mo.CacheStatus.IS)
+                    result.cache_absolute(CacheStatus.IS)
                 elif set1.cached_is_not_absolute or set2.cached_is_not_absolute:
-                    result.cache_absolute(_mo.CacheStatus.IS_NOT)
+                    result.cache_absolute(CacheStatus.IS_NOT)
                 if set1.cached_is_functional and set2.cached_is_functional:
-                    result.cache_functional(_mo.CacheStatus.IS)
+                    result.cache_functional(CacheStatus.IS)
                 elif set1.cached_is_not_functional or set2.cached_is_not_functional:
-                    result.cache_functional(_mo.CacheStatus.IS_NOT)
+                    result.cache_functional(CacheStatus.IS_NOT)
                 if set1.cached_is_right_functional and set2.cached_is_right_functional:
-                    result.cache_right_functional(_mo.CacheStatus.IS)
+                    result.cache_right_functional(CacheStatus.IS)
                 elif set1.cached_is_not_right_functional or set2.cached_is_not_right_functional:
-                    result.cache_right_functional(_mo.CacheStatus.IS_NOT)
+                    result.cache_right_functional(CacheStatus.IS_NOT)
                 if set1.cached_is_not_regular or set2.cached_is_not_regular:
-                    result.cache_regular(_mo.CacheStatus.IS_NOT)
+                    result.cache_regular(CacheStatus.IS_NOT)
                 if set1.cached_is_not_right_regular or set2.cached_is_not_right_regular:
-                    result.cache_right_regular(_mo.CacheStatus.IS_NOT)
+                    result.cache_right_regular(CacheStatus.IS_NOT)
             elif set1.cached_is_not_clan or set2.cached_is_not_clan:
-                result.cache_clan(_mo.CacheStatus.IS_NOT)
+                result.cache_clan(CacheStatus.IS_NOT)
 
             # Neither are clan and neither are rel
             if set1.cached_is_not_clan and set2.cached_is_not_clan\
                     and set1.cached_is_not_relation and set2.cached_is_not_relation:
                 if set1.cached_is_absolute and set2.cached_is_absolute:
-                    result.cache_absolute(_mo.CacheStatus.IS)
+                    result.cache_absolute(CacheStatus.IS)
                 elif set1.cached_is_not_absolute or set2.cached_is_not_absolute:
-                    result.cache_absolute(_mo.CacheStatus.IS_NOT)
+                    result.cache_absolute(CacheStatus.IS_NOT)
 
         return result
 
@@ -124,26 +126,26 @@ class Algebra:
         if not result.is_empty:
             # Relation flags:
             if set1.cached_is_relation or set2.cached_is_relation:
-                result.cache_relation(_mo.CacheStatus.IS)
+                result.cache_relation(CacheStatus.IS)
                 if set1.cached_is_absolute or set2.cached_is_absolute:
-                    result.cache_absolute(_mo.CacheStatus.IS)
+                    result.cache_absolute(CacheStatus.IS)
                 if set1.cached_is_functional or set2.cached_is_functional:
-                    result.cache_functional(_mo.CacheStatus.IS)
+                    result.cache_functional(CacheStatus.IS)
                 if set1.cached_is_right_functional or set2.cached_is_right_functional:
-                    result.cache_right_functional(_mo.CacheStatus.IS)
+                    result.cache_right_functional(CacheStatus.IS)
             # Clan flags:
             if set1.cached_is_clan or set2.cached_is_clan:
-                result.cache_clan(_mo.CacheStatus.IS)
+                result.cache_clan(CacheStatus.IS)
                 if set1.cached_is_absolute or set2.cached_is_absolute:
-                    result.cache_absolute(_mo.CacheStatus.IS)
+                    result.cache_absolute(CacheStatus.IS)
                 if set1.cached_is_functional or set2.cached_is_functional:
-                    result.cache_functional(_mo.CacheStatus.IS)
+                    result.cache_functional(CacheStatus.IS)
                 if set1.cached_is_right_functional or set2.cached_is_right_functional:
-                    result.cache_right_functional(_mo.CacheStatus.IS)
+                    result.cache_right_functional(CacheStatus.IS)
                 if set1.cached_is_regular or set2.cached_is_regular:
-                    result.cache_regular(_mo.CacheStatus.IS)
+                    result.cache_regular(CacheStatus.IS)
                 if set1.cached_is_right_regular or set2.cached_is_right_regular:
-                    result.cache_right_regular(_mo.CacheStatus.IS)
+                    result.cache_right_regular(CacheStatus.IS)
         return result
 
     @staticmethod
@@ -168,32 +170,32 @@ class Algebra:
         if not result.is_empty:
             # Relation flags:
             if set1.cached_is_relation:
-                result.cache_relation(_mo.CacheStatus.IS)
+                result.cache_relation(CacheStatus.IS)
                 if set1.cached_is_absolute:
-                    result.cache_absolute(_mo.CacheStatus.IS)
+                    result.cache_absolute(CacheStatus.IS)
                 if set1.cached_is_functional:
-                    result.cache_functional(_mo.CacheStatus.IS)
+                    result.cache_functional(CacheStatus.IS)
                 if set1.cached_is_right_functional:
-                    result.cache_right_functional(_mo.CacheStatus.IS)
+                    result.cache_right_functional(CacheStatus.IS)
             # Clan flags:
             if set1.cached_is_clan:
-                result.cache_clan(_mo.CacheStatus.IS)
+                result.cache_clan(CacheStatus.IS)
                 if set1.cached_is_absolute:
-                    result.cache_absolute(_mo.CacheStatus.IS)
+                    result.cache_absolute(CacheStatus.IS)
                 if set1.cached_is_functional:
-                    result.cache_functional(_mo.CacheStatus.IS)
+                    result.cache_functional(CacheStatus.IS)
                 if set1.cached_is_right_functional:
-                    result.cache_right_functional(_mo.CacheStatus.IS)
+                    result.cache_right_functional(CacheStatus.IS)
                 if set1.cached_is_reflexive:
-                    result.cache_reflexive(_mo.CacheStatus.IS)
+                    result.cache_reflexive(CacheStatus.IS)
                 if set1.cached_is_symmetric:
-                    result.cache_symmetric(_mo.CacheStatus.IS)
+                    result.cache_symmetric(CacheStatus.IS)
                 if set1.cached_is_transitive:
-                    result.cache_transitive(_mo.CacheStatus.IS)
+                    result.cache_transitive(CacheStatus.IS)
                 if set1.cached_is_regular:
-                    result.cache_regular(_mo.CacheStatus.IS)
+                    result.cache_regular(CacheStatus.IS)
                 if set1.cached_is_right_regular:
-                    result.cache_right_regular(_mo.CacheStatus.IS)
+                    result.cache_right_regular(CacheStatus.IS)
         return result
 
     @staticmethod
@@ -221,23 +223,23 @@ class Algebra:
             # Relation flags:
             if set1.cached_is_relation:
                 if set2.cached_is_absolute:
-                    set1.cache_absolute(_mo.CacheStatus.IS)
+                    set1.cache_absolute(CacheStatus.IS)
                 if set2.cached_is_functional:
-                    set1.cache_functional(_mo.CacheStatus.IS)
+                    set1.cache_functional(CacheStatus.IS)
                 if set2.cached_is_right_functional:
-                    set1.cache_right_functional(_mo.CacheStatus.IS)
+                    set1.cache_right_functional(CacheStatus.IS)
             # Clan flags:
             if set1.cached_is_clan:
                 if set2.cached_is_absolute:
-                    set1.cache_absolute(_mo.CacheStatus.IS)
+                    set1.cache_absolute(CacheStatus.IS)
                 if set2.cached_is_functional:
-                    set1.cache_functional(_mo.CacheStatus.IS)
+                    set1.cache_functional(CacheStatus.IS)
                 if set2.cached_is_right_functional:
-                    set1.cache_right_functional(_mo.CacheStatus.IS)
+                    set1.cache_right_functional(CacheStatus.IS)
                 if set2.cached_is_regular:
-                    set1.cache_regular(_mo.CacheStatus.IS)
+                    set1.cache_regular(CacheStatus.IS)
                 if set2.cached_is_right_regular:
-                    set1.cache_right_regular(_mo.CacheStatus.IS)
+                    set1.cache_right_regular(CacheStatus.IS)
         return set1
 
     @staticmethod
@@ -266,23 +268,23 @@ class Algebra:
             # Relation flags:
             if set1.cached_is_relation:
                 if set2.cached_is_not_absolute:
-                    set1.cache_absolute(_mo.CacheStatus.IS_NOT)
+                    set1.cache_absolute(CacheStatus.IS_NOT)
                 if set2.cached_is_not_functional:
-                    set1.cache_functional(_mo.CacheStatus.IS_NOT)
+                    set1.cache_functional(CacheStatus.IS_NOT)
                 if set2.cached_is_not_right_functional:
-                    set1.cache_right_functional(_mo.CacheStatus.IS_NOT)
+                    set1.cache_right_functional(CacheStatus.IS_NOT)
             # Clan flags:
             if set1.cached_is_clan:
                 if set2.cached_is_not_absolute:
-                    set1.cache_absolute(_mo.CacheStatus.IS_NOT)
+                    set1.cache_absolute(CacheStatus.IS_NOT)
                 if set2.cached_is_not_functional:
-                    set1.cache_functional(_mo.CacheStatus.IS_NOT)
+                    set1.cache_functional(CacheStatus.IS_NOT)
                 if set2.cached_is_not_right_functional:
-                    set1.cache_right_functional(_mo.CacheStatus.IS_NOT)
+                    set1.cache_right_functional(CacheStatus.IS_NOT)
                 if set2.cached_is_not_regular:
-                    set1.cache_regular(_mo.CacheStatus.IS_NOT)
+                    set1.cache_regular(CacheStatus.IS_NOT)
                 if set2.cached_is_not_right_regular:
-                    set1.cache_right_regular(_mo.CacheStatus.IS_NOT)
+                    set1.cache_right_regular(CacheStatus.IS_NOT)
         return set1
 
     # ----------------------------------------------------------------------------------------------
@@ -398,7 +400,7 @@ def is_absolute_member(obj: _mo.MathObject) -> bool:
         # If known to not be a set, it's also not an absolute set. No further checking or caching.
         return False
     # From this point on, `obj` is known to be a set.
-    if obj.cached_absolute == _mo.CacheStatus.UNKNOWN:
+    if obj.cached_absolute == CacheStatus.UNKNOWN:
         import algebraixlib.algebras.clans as _clans
         import algebraixlib.algebras.relations as _relations
 
@@ -409,7 +411,7 @@ def is_absolute_member(obj: _mo.MathObject) -> bool:
         if _relations.is_member(obj) or _clans.is_member(obj):
             return False
         is_absolute_set = all(elem.is_atom for elem in obj)
-        obj.cache_absolute(_mo.CacheStatus.from_bool(is_absolute_set))
+        obj.cache_absolute(CacheStatus.from_bool(is_absolute_set))
     # In order to determine whether this is an absolute set, we need to also examine whether this
     # is a relation or a clan (both are sets). Absolute relations and absolute clans are not
     # absolute sets.
@@ -447,13 +449,13 @@ def multify(set_: 'P( M )', _checked=True) -> 'P( M x N )':
         if set_.cached_is_not_relation and set_.cached_is_not_clan:
             # set_ is known to be a plain set.
             result.cache_absolute(set_.cached_absolute)
-            result.cache_functional(_mo.CacheStatus.N_A)
-            result.cache_right_functional(_mo.CacheStatus.N_A)
-            result.cache_reflexive(_mo.CacheStatus.N_A)
-            result.cache_symmetric(_mo.CacheStatus.N_A)
-            result.cache_transitive(_mo.CacheStatus.N_A)
-            result.cache_regular(_mo.CacheStatus.N_A)
-            result.cache_right_regular(_mo.CacheStatus.N_A)
+            result.cache_functional(CacheStatus.N_A)
+            result.cache_right_functional(CacheStatus.N_A)
+            result.cache_reflexive(CacheStatus.N_A)
+            result.cache_symmetric(CacheStatus.N_A)
+            result.cache_transitive(CacheStatus.N_A)
+            result.cache_regular(CacheStatus.N_A)
+            result.cache_right_regular(CacheStatus.N_A)
     return result
 
 
@@ -564,12 +566,12 @@ def power_set(set_: _mo.Set):
     result = _mo.Set(result)
     if not result.is_empty:
         if set_.cached_is_relation:
-            result.cache_clan(_mo.CacheStatus.IS)
+            result.cache_clan(CacheStatus.IS)
             result.cache_absolute(set_.cached_absolute)
             result.cache_functional(set_.cached_functional)
             result.cache_right_functional(set_.cached_right_functional)
-            result.cache_regular(_mo.CacheStatus.IS_NOT)
-            result.cache_right_regular(_mo.CacheStatus.IS_NOT)
+            result.cache_regular(CacheStatus.IS_NOT)
+            result.cache_right_regular(CacheStatus.IS_NOT)
     return result
 
 
@@ -584,10 +586,10 @@ def power_up(set_: _mo.Set):
     result = _mo.Set((_mo.Set(element) for element in set_), direct_load=True)
     if not result.is_empty:
         if set_.cached_is_relation:
-            result.cache_clan(_mo.CacheStatus.IS)
+            result.cache_clan(CacheStatus.IS)
             result.cache_absolute(set_.cached_absolute)
-            result.cache_functional(_mo.CacheStatus.IS)
-            result.cache_right_functional(_mo.CacheStatus.IS)
+            result.cache_functional(CacheStatus.IS)
+            result.cache_right_functional(CacheStatus.IS)
     return result
 
 
@@ -607,32 +609,32 @@ def restrict(set_: 'P( M )', selector: _collections.Callable) -> 'P( M )':
     if not result.is_empty:
         # Relation flags:
         if set_.cached_is_relation:
-            result.cache_relation(_mo.CacheStatus.IS)
+            result.cache_relation(CacheStatus.IS)
             if set_.cached_is_absolute:
-                result.cache_absolute(_mo.CacheStatus.IS)
+                result.cache_absolute(CacheStatus.IS)
             if set_.cached_is_functional:
-                result.cache_functional(_mo.CacheStatus.IS)
+                result.cache_functional(CacheStatus.IS)
             if set_.cached_is_right_functional:
-                result.cache_right_functional(_mo.CacheStatus.IS)
+                result.cache_right_functional(CacheStatus.IS)
         # Clan flags:
         if set_.cached_is_clan:
-            result.cache_clan(_mo.CacheStatus.IS)
+            result.cache_clan(CacheStatus.IS)
             if set_.cached_is_absolute:
-                result.cache_absolute(_mo.CacheStatus.IS)
+                result.cache_absolute(CacheStatus.IS)
             if set_.cached_is_functional:
-                result.cache_functional(_mo.CacheStatus.IS)
+                result.cache_functional(CacheStatus.IS)
             if set_.cached_is_right_functional:
-                result.cache_right_functional(_mo.CacheStatus.IS)
+                result.cache_right_functional(CacheStatus.IS)
             if set_.cached_is_reflexive:
-                result.cache_reflexive(_mo.CacheStatus.IS)
+                result.cache_reflexive(CacheStatus.IS)
             if set_.cached_is_symmetric:
-                result.cache_symmetric(_mo.CacheStatus.IS)
+                result.cache_symmetric(CacheStatus.IS)
             if set_.cached_is_transitive:
-                result.cache_transitive(_mo.CacheStatus.IS)
+                result.cache_transitive(CacheStatus.IS)
             if set_.cached_is_regular:
-                result.cache_regular(_mo.CacheStatus.IS)
+                result.cache_regular(CacheStatus.IS)
             if set_.cached_is_right_regular:
-                result.cache_right_regular(_mo.CacheStatus.IS)
+                result.cache_right_regular(CacheStatus.IS)
     return result
 
 

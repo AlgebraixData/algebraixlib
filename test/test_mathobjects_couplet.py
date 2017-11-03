@@ -1,7 +1,7 @@
 """Testing the mathobjects.couplet module."""
 
-# $Id: test_mathobjects_couplet.py 22763 2015-08-07 23:06:46Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-07 18:06:46 -0500 (Fri, 07 Aug 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -21,7 +21,8 @@ import unittest
 
 from algebraixlib.algebras.properties import is_functional, is_right_functional, is_bijective, \
     is_reflexive, is_transitive, is_equivalence_relation
-from algebraixlib.mathobjects import Atom, CacheStatus, Couplet, MathObject, Set
+from algebraixlib.mathobjects import Atom, Couplet, MathObject, Multiset, Set
+from algebraixlib.cache_status import CacheStatus
 from algebraixlib.structure import CartesianProduct, GenesisSetA, PowerSet
 from algebraixlib.undef import Undef
 
@@ -33,10 +34,10 @@ from data_mathobjects import basic_couplets
 _basic_couplet_struct = CartesianProduct(GenesisSetA(), GenesisSetA())
 _complex_couplet_struct = CartesianProduct(_basic_couplet_struct, PowerSet(GenesisSetA()))
 _basic_couplets_structs = {
-    '3x2': _basic_couplet_struct,
-    "'5'x'4'": _basic_couplet_struct,
-    "'7'x6": _basic_couplet_struct,
-    'Coupl x Set': _complex_couplet_struct
+    '2->3': _basic_couplet_struct,
+    "'4'->'5'": _basic_couplet_struct,
+    "6->'7'": _basic_couplet_struct,
+    'Coupl->Set': _complex_couplet_struct
 }
 
 
@@ -98,6 +99,19 @@ class CoupletTest(unittest.TestCase):
         c = Couplet(1, 2)
         self.assertTrue(a != c)
         self.assertTrue(c != a)
+
+    def test_less_than(self):
+        for value_key1, cp1 in basic_couplets.items():
+            for value_key2, cp2 in basic_couplets.items():
+                self.assertNotEqual(cp1 < cp2, NotImplemented)
+                self.assertNotEqual(cp2 < cp1, NotImplemented)
+                if cp1 == cp2:
+                    self.assertFalse(cp1 < cp2)
+                    self.assertFalse(cp2 < cp1)
+            for mo in [Atom(1)]:
+                self.assertTrue(mo < cp1)
+            for mo in [Multiset(1, 2, 3), Set(1, 2, 3)]:
+                self.assertTrue(cp1 < mo)
 
     def test_invalid_constructs(self):
         """Test invalid Couplets."""

@@ -1,7 +1,7 @@
 r"""Pretty-printing of `MathObject`\s."""
 
-# $Id: mathobjectprinter.py 22935 2015-09-03 21:54:38Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-09-03 16:54:38 -0500 (Thu, 03 Sep 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

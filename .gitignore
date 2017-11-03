@@ -14,3 +14,5 @@ docs/_build/
 #PyPI account information
 .pypirc
 algebraixlib.egg-info
+requirements.txt
+setup_data.py

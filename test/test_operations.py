@@ -1,7 +1,7 @@
 """Testing the operations module."""
 
-# $Id: test_operations.py 23087 2015-10-01 15:01:38Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-10-01 10:01:38 -0500 (Thu, 01 Oct 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

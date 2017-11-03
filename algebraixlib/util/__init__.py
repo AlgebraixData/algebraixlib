@@ -7,8 +7,8 @@ r"""This package contains utility modules:
 -   :mod:`~.test`: Test utilities.
 """
 
-# $Id: __init__.py 22692 2015-07-27 23:21:10Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-27 18:21:10 -0500 (Mon, 27 Jul 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

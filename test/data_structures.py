@@ -1,7 +1,7 @@
 """Structure example data for tests."""
 
-# $Id: data_structures.py 22698 2015-07-28 17:09:23Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 12:09:23 -0500 (Tue, 28 Jul 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

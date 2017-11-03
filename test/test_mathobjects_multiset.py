@@ -1,7 +1,7 @@
 """Test the mathobjects.set module."""
 
-# $Id: test_mathobjects_multiset.py 23191 2015-10-16 17:44:39Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-10-16 12:44:39 -0500 (Fri, 16 Oct 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -21,7 +21,8 @@ import unittest
 
 import collections as _collections
 
-from algebraixlib.mathobjects import Atom, CacheStatus, Couplet, Multiset, Set
+from algebraixlib.mathobjects import Atom, Couplet, Multiset, Set
+from algebraixlib.cache_status import CacheStatus
 from algebraixlib.structure import CartesianProduct, GenesisSetN, GenesisSetA, PowerSet, Structure
 from algebraixlib.undef import Undef
 

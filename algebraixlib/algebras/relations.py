@@ -4,8 +4,8 @@ A :term:`relation` is also a :term:`set` (of :term:`couplet`\s), and inherits al
 of the :term:`algebra of sets`. These are provided in :mod:`~.algebras.sets`.
 """
 
-# $Id: relations.py 23088 2015-10-01 16:18:41Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-10-01 11:18:41 -0500 (Thu, 01 Oct 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -27,6 +27,8 @@ import algebraixlib.mathobjects as _mo
 import algebraixlib.extension as _extension
 import algebraixlib.structure as _structure
 import algebraixlib.undef as _undef
+
+from ..cache_status import CacheStatus
 
 
 # --------------------------------------------------------------------------------------------------
@@ -59,7 +61,7 @@ class Algebra:
         result = _extension.unary_extend(rel, _functools.partial(
             _couplets.transpose, _checked=False), _checked=False)
         if not result.is_empty:
-            result.cache_relation(_mo.CacheStatus.IS)
+            result.cache_relation(CacheStatus.IS)
             result.cache_absolute(rel.cached_absolute)
             result.cache_functional(rel.cached_right_functional)
             result.cache_right_functional(rel.cached_functional)
@@ -92,13 +94,13 @@ class Algebra:
         result = _extension.binary_extend(rel1, rel2, _functools.partial(
             _couplets.compose, _checked=False), _checked=False)
         if not result.is_empty:
-            result.cache_relation(_mo.CacheStatus.IS)
+            result.cache_relation(CacheStatus.IS)
             if rel1.cached_is_absolute and rel2.cached_is_absolute:
-                result.cache_absolute(_mo.CacheStatus.IS)
+                result.cache_absolute(CacheStatus.IS)
             if rel1.cached_is_functional and rel2.cached_is_functional:
-                result.cache_functional(_mo.CacheStatus.IS)
+                result.cache_functional(CacheStatus.IS)
             if rel1.cached_is_right_functional and rel2.cached_is_right_functional:
-                result.cache_right_functional(_mo.CacheStatus.IS)
+                result.cache_right_functional(CacheStatus.IS)
         return result
 
     @staticmethod
@@ -145,7 +147,7 @@ class Algebra:
             assert is_member_or_undef(rel2)
             if rel1 is _undef.Undef() or rel2 is _undef.Undef():
                 return _undef.make_or_raise_undef(2)
-        rel_union = _sets.union(rel1, rel2, _checked=False).cache_relation(_mo.CacheStatus.IS)
+        rel_union = _sets.union(rel1, rel2, _checked=False).cache_relation(CacheStatus.IS)
         if not is_right_functional(rel_union, _checked=False):
             return _undef.make_or_raise_undef(2)
         return rel_union
@@ -194,9 +196,9 @@ def is_member(obj: _mo.MathObject) -> bool:
     .. note:: This function may call :meth:`~.MathObject.get_ground_set` on ``obj``. The result
         of this operation is cached.
     """
-    if obj.cached_relation == _mo.CacheStatus.UNKNOWN:
+    if obj.cached_relation == CacheStatus.UNKNOWN:
         is_relation = obj.get_ground_set().is_subset(get_ground_set())
-        obj.cache_relation(_mo.CacheStatus.from_bool(is_relation))
+        obj.cache_relation(CacheStatus.from_bool(is_relation))
     return obj.cached_is_relation
 
 
@@ -222,15 +224,15 @@ def is_absolute_member(obj: _mo.MathObject) -> bool:
         # If known to not be a relation, it's also not an absolute relation. No further caching.
         return False
     # The `or` clause in this `if` statement is a safety thing. It should never hit.
-    if obj.cached_absolute == _mo.CacheStatus.UNKNOWN \
-            or obj.cached_relation == _mo.CacheStatus.UNKNOWN:
+    if obj.cached_absolute == CacheStatus.UNKNOWN \
+            or obj.cached_relation == CacheStatus.UNKNOWN:
         # The 'absolute' state has not yet been cached. Determine whether obj is an absolute
         # relation.
         is_absolute_relation = obj.get_ground_set().is_subset(get_absolute_ground_set())
-        if obj.cached_relation == _mo.CacheStatus.UNKNOWN:
+        if obj.cached_relation == CacheStatus.UNKNOWN:
             if is_absolute_relation:
                 # If it is an absolute relation, it is also a relation.
-                obj.cache_relation(_mo.CacheStatus.IS)
+                obj.cache_relation(CacheStatus.IS)
             else:
                 # If it is not an absolute relation, it may still be a relation.
                 is_relation = is_member(obj)
@@ -240,7 +242,7 @@ def is_absolute_member(obj: _mo.MathObject) -> bool:
                     return False
         # At this point, cached_relation == IS. Cache whether this is an absolute relation.
         assert obj.cached_is_relation
-        obj.cache_absolute(_mo.CacheStatus.from_bool(is_absolute_relation))
+        obj.cache_absolute(CacheStatus.from_bool(is_absolute_relation))
     # At this point, cached_relation == IS. Return whether it is an absolute relation.
     return obj.cached_is_absolute
 
@@ -264,7 +266,7 @@ def get_lefts(rel: 'P(M x M)', _checked=True) -> 'P( M )':
     result = _mo.Set((e.left for e in rel), direct_load=True)
     if not result.is_empty:
         if rel.cached_is_absolute:
-            result.cache_absolute(_mo.CacheStatus.IS)
+            result.cache_absolute(CacheStatus.IS)
     return result
 
 
@@ -284,7 +286,7 @@ def get_rights(rel: 'P(M x M)', _checked=True) -> 'P( M )':
     result = _mo.Set((e.right for e in rel), direct_load=True)
     if not result.is_empty:
         if rel.cached_is_absolute:
-            result.cache_absolute(_mo.CacheStatus.IS)
+            result.cache_absolute(CacheStatus.IS)
     return result
 
 
@@ -311,7 +313,7 @@ def get_rights_for_left(rel: 'P(M x M)', left: '( M )', _checked=True) -> 'P( M 
     result = _mo.Set((elem.right for elem in rel if elem.left == left), direct_load=True)
     if not result.is_empty:
         if rel.cached_is_absolute:
-            result.cache_absolute(_mo.CacheStatus.IS)
+            result.cache_absolute(CacheStatus.IS)
     return result
 
 
@@ -394,10 +396,10 @@ def is_functional(rel, _checked=True) -> bool:
         assert is_member_or_undef(rel)
         if rel is _undef.Undef():
             return _undef.make_or_raise_undef(2)
-    if rel.cached_functional == _mo.CacheStatus.UNKNOWN:
+    if rel.cached_functional == CacheStatus.UNKNOWN:
         left_set = get_lefts(rel, _checked=False)
         functional = (left_set.cardinality == rel.cardinality)
-        rel.cache_functional(_mo.CacheStatus.from_bool(functional))
+        rel.cache_functional(CacheStatus.from_bool(functional))
     return rel.cached_is_functional
 
 
@@ -414,10 +416,10 @@ def is_right_functional(rel, _checked=True) -> bool:
         assert is_member_or_undef(rel)
         if rel is _undef.Undef():
             return _undef.make_or_raise_undef(2)
-    if rel.cached_right_functional == _mo.CacheStatus.UNKNOWN:
+    if rel.cached_right_functional == CacheStatus.UNKNOWN:
         right_set = get_rights(rel, _checked=False)
         right_functional = (right_set.cardinality == rel.cardinality)
-        rel.cache_right_functional(_mo.CacheStatus.from_bool(right_functional))
+        rel.cache_right_functional(CacheStatus.from_bool(right_functional))
     return rel.cached_is_right_functional
 
 
@@ -434,10 +436,10 @@ def is_reflexive(rel, _checked=True) -> bool:
         assert is_member_or_undef(rel)
         if rel is _undef.Undef():
             return _undef.make_or_raise_undef(2)
-    if rel.cached_reflexive == _mo.CacheStatus.UNKNOWN:
+    if rel.cached_reflexive == CacheStatus.UNKNOWN:
         reflexive = all(_couplets.is_reflexive(couplet, _checked=False) for couplet in rel)
-        rel.cache_reflexive(_mo.CacheStatus.from_bool(reflexive))
-    return rel.cached_reflexive == _mo.CacheStatus.IS
+        rel.cache_reflexive(CacheStatus.from_bool(reflexive))
+    return rel.cached_reflexive == CacheStatus.IS
 
 
 def is_symmetric(rel, _checked=True) -> bool:
@@ -453,11 +455,11 @@ def is_symmetric(rel, _checked=True) -> bool:
         assert is_member_or_undef(rel)
         if rel is _undef.Undef():
             return _undef.make_or_raise_undef(2)
-    if rel.cached_symmetric == _mo.CacheStatus.UNKNOWN:
+    if rel.cached_symmetric == CacheStatus.UNKNOWN:
         symmetric = all(rel.has_element(
             _couplets.transpose(couplet, _checked=False)) for couplet in rel)
-        rel.cache_symmetric(_mo.CacheStatus.from_bool(symmetric))
-    return rel.cached_symmetric == _mo.CacheStatus.IS
+        rel.cache_symmetric(CacheStatus.from_bool(symmetric))
+    return rel.cached_symmetric == CacheStatus.IS
 
 
 def is_transitive(rel, _checked=True) -> bool:
@@ -473,7 +475,7 @@ def is_transitive(rel, _checked=True) -> bool:
         assert is_member_or_undef(rel)
         if rel is _undef.Undef():
             return _undef.make_or_raise_undef(2)
-    if rel.cached_transitive == _mo.CacheStatus.UNKNOWN:
+    if rel.cached_transitive == CacheStatus.UNKNOWN:
         transitive = True
         for couplet1 in rel:
             for couplet2 in rel:
@@ -481,8 +483,8 @@ def is_transitive(rel, _checked=True) -> bool:
                     if not rel.has_element(_mo.Couplet(couplet2.left, couplet1.right)):
                         transitive = False
                         break
-        rel.cache_transitive(_mo.CacheStatus.from_bool(transitive))
-    return rel.cached_transitive == _mo.CacheStatus.IS
+        rel.cache_transitive(CacheStatus.from_bool(transitive))
+    return rel.cached_transitive == CacheStatus.IS
 
 
 def fill_lefts(rel: 'P(M x M)', renames: 'P(M x M)', _checked=True) -> 'P(M x M)':
@@ -578,17 +580,17 @@ def functional_add(func: 'P(M x M)', element: 'M x M') -> 'P(M x M)':
         return _undef.make_or_raise_undef2(element)
     if _sets.is_subset_of(_mo.Set(element.left), get_lefts(func)):
         return _undef.make_or_raise_undef(2)
-    element_func = _mo.Set(element).cache_relation(_mo.CacheStatus.IS)
+    element_func = _mo.Set(element).cache_relation(CacheStatus.IS)
     result = _sets.union(func, element_func)
     assert result.cached_is_relation and is_functional(result)
-    result.cache_functional(_mo.CacheStatus.IS)
+    result.cache_functional(CacheStatus.IS)
     return result
 
 
 def from_dict(dict1: dict) -> 'P(M x M)':
     r"""Return a :term:`relation` where the :term:`couplet`\s are the elements of ``dict1``."""
     return _mo.Set((_mo.Couplet(left, right) for left, right in dict1.items()), direct_load=True)\
-        .cache_relation(_mo.CacheStatus.IS).cache_functional(_mo.CacheStatus.IS)
+        .cache_relation(CacheStatus.IS).cache_functional(CacheStatus.IS)
 
 
 def diag(*args, _checked=True) -> 'P(M x M)':
@@ -597,9 +599,9 @@ def diag(*args, _checked=True) -> 'P(M x M)':
         if element is _undef.Undef():
             return _undef.make_or_raise_undef(2)
     rel = _mo.Set((_mo.Couplet(el, direct_load=not _checked) for el in args), direct_load=True)
-    rel.cache_relation(_mo.CacheStatus.IS)
-    rel.cache_functional(_mo.CacheStatus.IS).cache_right_functional(_mo.CacheStatus.IS)
-    rel.cache_reflexive(_mo.CacheStatus.IS).cache_symmetric(_mo.CacheStatus.IS)
+    rel.cache_relation(CacheStatus.IS)
+    rel.cache_functional(CacheStatus.IS).cache_right_functional(CacheStatus.IS)
+    rel.cache_reflexive(CacheStatus.IS).cache_symmetric(CacheStatus.IS)
     return rel
 
 

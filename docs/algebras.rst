@@ -1,6 +1,6 @@
 .. Algebraix Technology Core Library documentation.
-   $Id: algebras.rst 22671 2015-07-24 19:46:29Z mhaque $
-   Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-24 14:46:29 -0500 (Fri, 24 Jul 2015) $
+   $Id$
+   Copyright Algebraix Data Corporation 2015 - $Date$
 
    This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 

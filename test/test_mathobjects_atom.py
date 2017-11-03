@@ -1,7 +1,7 @@
 """Testing the mathobjects.atom module."""
 
-# $Id: test_mathobjects_atom.py 23427 2015-12-02 20:24:50Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-12-02 14:24:50 -0600 (Wed, 02 Dec 2015) $
+# $Id$
+# Copyright Algebraix Data Corporation 2015 - $Date$
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -21,7 +21,8 @@ import unittest
 
 from algebraixlib.algebras.properties import is_functional, is_right_functional, is_bijective, \
     is_reflexive, is_symmetric, is_transitive, is_equivalence_relation
-from algebraixlib.mathobjects import Atom, CacheStatus, Couplet, MathObject, Set
+from algebraixlib.mathobjects import Atom, Couplet, MathObject, Multiset, Set
+from algebraixlib.cache_status import CacheStatus
 from algebraixlib.structure import GenesisSetA
 from algebraixlib.undef import Undef
 
@@ -77,11 +78,9 @@ class AtomTest(unittest.TestCase):
 
     def test_equality(self):
         """Test equality concept of Atoms."""
-        for value_key1 in ['2', '2.0', "'2'"]:
-            atom1 = ba[value_key1]
+        for value_key1, atom1 in ba.items():
             self._equality_assert(atom1, atom1)
-            for value_key2 in ['2', '2.0', "'2'"]:
-                atom2 = ba[value_key2]
+            for value_key2, atom2 in ba.items():
                 if value_key1 == value_key2:
                     self._equality_assert(atom1, atom2)
                 else:
@@ -89,6 +88,17 @@ class AtomTest(unittest.TestCase):
         self.assertNotEqual(Atom(True), Atom(1))
         self.assertNotEqual(Atom(True), 1)
         self.assertFalse(Atom(True) == 1)
+
+    def test_less_than(self):
+        for value_key1, atom1 in ba.items():
+            for value_key2, atom2 in ba.items():
+                self.assertNotEqual(atom1 < atom2, NotImplemented)
+                self.assertNotEqual(atom2 < atom1, NotImplemented)
+                if atom1 == atom2:
+                    self.assertFalse(atom1 < atom2)
+                    self.assertFalse(atom2 < atom1)
+            for mo in [Couplet(1, 2), Multiset(1, 2, 3), Set(1, 2, 3)]:
+                self.assertTrue(atom1 < mo)
 
     def test_invalid_constructs(self):
         """Test invalid Atoms."""
