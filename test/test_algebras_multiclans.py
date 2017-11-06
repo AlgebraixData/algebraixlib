@@ -206,7 +206,6 @@ class MulticlansTest(unittest.TestCase):
         self.assertIs(defined_at(Undef(), Atom('a'), _checked=False), Undef())
         self.assertEqual(defined_at(c1, Atom('a'), _checked=False), c1)
 
-
     # ----------------------------------------------------------------------------------------------
 
     def _check_wrong_argument_type_unary(self, operation):

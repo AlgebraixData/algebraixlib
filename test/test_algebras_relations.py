@@ -163,7 +163,7 @@ class RelationsTest(unittest.TestCase):
     def test_get_rights_for_left(self):
         """Basic tests of relations.get_rights_for_left()."""
         rel1 = Set(Couplet('a', 1), Couplet('a', 2), Couplet('b', 3))
-        result = Set(1,2)
+        result = Set(1, 2)
         self.assertEqual(result, get_rights_for_left(rel1, 'a'))
         self.assertEqual(Set(), get_rights_for_left(rel1, Undef()))
         self.assertEqual(Set(), get_rights_for_left(rel1, Undef(), _checked=False))

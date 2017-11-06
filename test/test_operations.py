@@ -182,8 +182,10 @@ class OperationsTests(unittest.TestCase):
 
     def test_binary_multi_extend_errors(self):
         self.assertRaises(AttributeError, lambda: extension.binary_multi_extend(1, 2, sets.union))
-        self.assertRaises(AttributeError, lambda: extension.binary_multi_extend(Multiset(1), 2, sets.union))
-        self.assertRaises(AttributeError, lambda: extension.binary_multi_extend(1, Multiset(2), sets.union))
+        self.assertRaises(AttributeError, lambda: extension.binary_multi_extend(Multiset(1), 2,
+                                                                                sets.union))
+        self.assertRaises(AttributeError, lambda: extension.binary_multi_extend(1, Multiset(2),
+                                                                                sets.union))
 
 
 # --------------------------------------------------------------------------------------------------

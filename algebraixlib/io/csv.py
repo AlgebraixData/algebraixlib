@@ -66,7 +66,8 @@ def export_csv(absolute_clan_or_multiclan, file_or_path, ordered_lefts=None, sor
     # Generate dictionaries that associates left components with their right components for each
     # relation.
     clan_as_list_of_dicts = _convert_clan_to_list_of_dicts(
-        ordered_lefts, (absolute_clan_or_multiclan if sort_key is None else sorted(absolute_clan_or_multiclan, key=sort_key)))
+        ordered_lefts, (absolute_clan_or_multiclan if sort_key is None else sorted(
+            absolute_clan_or_multiclan, key=sort_key)))
     # Write the dictionaries.
     _csv_dict_writer(file_or_path, ordered_lefts, clan_as_list_of_dicts)
     return True

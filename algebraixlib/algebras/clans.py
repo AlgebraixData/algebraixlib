@@ -31,6 +31,7 @@ from ..cache_status import CacheStatus
 
 # --------------------------------------------------------------------------------------------------
 
+
 class Algebra:
     """Provide the operations and relations that are members of the :term:`algebra of clans`.
 
@@ -377,6 +378,7 @@ superstrict = Algebra.superstrict
 
 # --------------------------------------------------------------------------------------------------
 # Metadata functions.
+
 
 def get_name() -> str:
     """Return the name and :term:`ground set` of this :term:`algebra` in string form."""
