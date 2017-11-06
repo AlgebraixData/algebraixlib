@@ -21,6 +21,15 @@
 Release Notes for algebraixlib
 ==============================
 
+1.4
+---
+
+-   Moved ``CacheStatus`` into its own module and removed ``utils.py`` in ``mathobjects``.
+-   Moved all of the modules in ``io`` into ``import_export``.
+-   Allow ``import_json`` to take in floats.
+-   Better handling of less than functionality for couplets, multisets, and sets.
+-   Added a ``tmp_sqlda_op``  to handle nodes that are not "SQL-DA" operations.
+
 1.3
 ---
 
