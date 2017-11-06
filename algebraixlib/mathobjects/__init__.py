@@ -60,4 +60,3 @@ from .mathobject import MathObject, is_mathobject_or_undef, raise_if_not_mathobj
     raise_if_not_mathobjects
 from .multiset import Multiset
 from .set import Set, make_set, make_set_unchecked
-from .utils import CacheStatus

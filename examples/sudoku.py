@@ -19,7 +19,8 @@ import time
 from functools import partial
 import itertools
 
-from algebraixlib.mathobjects import Atom, CacheStatus, Couplet, Set
+from algebraixlib.cache_status import CacheStatus
+from algebraixlib.mathobjects import Atom, Couplet, Set
 import algebraixlib.algebras.relations as relations
 import algebraixlib.algebras.clans as clans
 import algebraixlib.algebras.sets as sets
