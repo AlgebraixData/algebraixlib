@@ -4,8 +4,7 @@ The data that we use in our IPython notebooks and the query code has already bee
 functions are only provided in case you want to run the tests (or similar code) on different data.
 """
 
-# $Id$
-# Copyright Algebraix Data Corporation 2015 - $Date$
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

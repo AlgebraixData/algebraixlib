@@ -1,7 +1,6 @@
 """Import data from XML."""
 
-# $Id: xml.py 22802 2015-08-14 16:31:22Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-14 11:31:22 -0500 (Fri, 14 Aug 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

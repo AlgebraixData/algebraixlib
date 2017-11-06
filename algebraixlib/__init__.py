@@ -15,8 +15,7 @@ Modules:
 -   :mod:`~.undef`: Facilities for representing and working with the concept of "undefined".
 """
 
-# $Id$
-# Copyright Algebraix Data Corporation 2015 - $Date$
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

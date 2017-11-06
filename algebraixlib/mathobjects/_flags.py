@@ -1,8 +1,7 @@
 """This package-private module contains the class ``Flags`` that is used to cache certain properties
 of ``MathObject``s. This code is internal and transient."""
 
-# $Id$
-# Copyright Algebraix Data Corporation 2015 - $Date$
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

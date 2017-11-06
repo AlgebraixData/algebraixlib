@@ -8,8 +8,7 @@ For the code that we used to create the modified data, see the file format_conve
 same directory.
 """
 
-# $Id$
-# Copyright Algebraix Data Corporation 2015 - $Date$
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

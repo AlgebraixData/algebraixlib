@@ -1,6 +1,5 @@
 .. Algebraix Technology Core Library documentation.
-   $Id: intro.rst 22797 2015-08-13 16:57:29Z mhaque $
-   Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-13 16:57:29 -0400 (Thu, 13 Aug 2015) $
+   Copyright Algebraix Data Corporation 2015 - 2017
 
 A Beginner's Introduction to Data Algebra
 =========================================

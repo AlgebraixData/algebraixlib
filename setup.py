@@ -2,7 +2,7 @@
 
 """Install 'algebraixlib' or build its installation package."""
 
-# Copyright Algebraix Data Corporation 2015-2016
+# Copyright Algebraix Data Corporation 2015-2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

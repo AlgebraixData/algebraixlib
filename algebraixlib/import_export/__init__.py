@@ -15,8 +15,7 @@ They are rather examples for how these formats can be represented in and convert
 missing details and features notwithstanding.
 """
 
-# $Id$
-# Copyright Algebraix Data Corporation 2015 - $Date$
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

@@ -4,8 +4,7 @@ A :term:`clan` is also a :term:`set` (of :term:`relation`\s), and inherits all o
 of the :term:`algebra of sets`. These are provided in :mod:`~.algebras.sets`.
 """
 
-# $Id$
-# Copyright Algebraix Data Corporation 2015 - $Date$
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

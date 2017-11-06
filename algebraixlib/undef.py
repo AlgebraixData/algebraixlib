@@ -7,8 +7,7 @@ can then be taken into account by the caller. In some cases it is an error, in o
 result is simply ignored.
 """
 
-# $Id$
-# Copyright Algebraix Data Corporation 2015 - $Date$
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

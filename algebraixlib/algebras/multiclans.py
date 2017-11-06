@@ -4,8 +4,7 @@ A :term:`multiclan` is also a :term:`multiset` (of :term:`relation`\s), and inhe
 of the :term:`algebra of multisets`. These are provided in :mod:`~.algebras.multisets`.
 """
 
-# $Id$
-# Copyright Algebraix Data Corporation 2015 - $Date$
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

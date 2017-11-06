@@ -4,7 +4,7 @@ This is separate here so that other places in our build system that need the alg
 can get it from here without actually running setup.py.
 """
 
-# Copyright Algebraix Data Corporation 2017
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # Confidential and proprietary. For internal use only.
 # --------------------------------------------------------------------------------------------------
