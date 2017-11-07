@@ -4,6 +4,7 @@ __pycache__/
 
 # Sphinx documentation
 docs/_build/
+docs/_source/
 
 # IPython notebooks
 .ipynb_checkpoints/
@@ -14,5 +15,3 @@ docs/_build/
 #PyPI account information
 .pypirc
 algebraixlib.egg-info
-requirements.txt
-setup_data.py
