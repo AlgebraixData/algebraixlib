@@ -1,5 +1,5 @@
-algebraixlib.mathobjects.set module
-===================================
+algebraixlib\.mathobjects\.set module
+=====================================
 
 .. automodule:: algebraixlib.mathobjects.set
     :members:

@@ -1,5 +1,5 @@
-algebraixlib.algebras.couplets module
-=====================================
+algebraixlib\.algebras\.couplets module
+=======================================
 
 .. automodule:: algebraixlib.algebras.couplets
     :members:

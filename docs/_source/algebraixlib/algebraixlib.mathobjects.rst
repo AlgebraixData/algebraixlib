@@ -1,5 +1,5 @@
-algebraixlib.mathobjects package
-================================
+algebraixlib\.mathobjects package
+=================================
 
 .. automodule:: algebraixlib.mathobjects
     :members:
@@ -16,5 +16,4 @@ Submodules
    algebraixlib.mathobjects.mathobject
    algebraixlib.mathobjects.multiset
    algebraixlib.mathobjects.set
-   algebraixlib.mathobjects.utils
 

@@ -1,5 +1,5 @@
-algebraixlib.extension module
-=============================
+algebraixlib\.extension module
+==============================
 
 .. automodule:: algebraixlib.extension
     :members:

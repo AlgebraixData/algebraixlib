@@ -1,5 +1,5 @@
-algebraixlib.util.rdf module
-============================
+algebraixlib\.util\.rdf module
+==============================
 
 .. automodule:: algebraixlib.util.rdf
     :members:

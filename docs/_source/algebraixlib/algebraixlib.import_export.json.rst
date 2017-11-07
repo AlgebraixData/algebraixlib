@@ -1,7 +1,7 @@
-algebraixlib\.algebras\.multiclans module
+algebraixlib\.import\_export\.json module
 =========================================
 
-.. automodule:: algebraixlib.algebras.multiclans
+.. automodule:: algebraixlib.import_export.json
     :members:
     :undoc-members:
     :show-inheritance:

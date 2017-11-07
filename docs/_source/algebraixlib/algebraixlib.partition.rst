@@ -1,5 +1,5 @@
-algebraixlib.partition module
-=============================
+algebraixlib\.partition module
+==============================
 
 .. automodule:: algebraixlib.partition
     :members:

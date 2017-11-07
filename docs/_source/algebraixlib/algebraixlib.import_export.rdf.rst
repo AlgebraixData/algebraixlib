@@ -1,7 +1,7 @@
-algebraixlib\.algebras\.relations module
+algebraixlib\.import\_export\.rdf module
 ========================================
 
-.. automodule:: algebraixlib.algebras.relations
+.. automodule:: algebraixlib.import_export.rdf
     :members:
     :undoc-members:
     :show-inheritance:

@@ -1,5 +1,5 @@
-algebraixlib.undef module
-=========================
+algebraixlib\.undef module
+==========================
 
 .. automodule:: algebraixlib.undef
     :members:

@@ -1,5 +1,5 @@
-algebraixlib.mathobjects.mathobject module
-==========================================
+algebraixlib\.mathobjects\.mathobject module
+============================================
 
 .. automodule:: algebraixlib.mathobjects.mathobject
     :members:

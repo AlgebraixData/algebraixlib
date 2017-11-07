@@ -34,13 +34,13 @@ import sys
 # Information about the project.
 project = 'Algebraix Technology Core Library'
 # noinspection PyShadowingBuiltins
-copyright = '2015, Algebraix Data Corporation'
+copyright = '2017, Algebraix Data Corporation'
 author = "Algebraix Data Corporation"
 
 # The version info for the project you're documenting, acts as replacement for |version| and
 # |release|, also used in various other places throughout the built documents.
 version = '1.4'  # The short X.Y version.
-release = '1.4b1'  # The full version, including alpha/beta/rc tags.
+release = '1.4'  # The full version, including alpha/beta/rc tags.
 
 # --------------------------------------------------------------------------------------------------
 # Project configuration
@@ -90,7 +90,7 @@ nitpick_ignore = [
     ('any', 'StringIO')]
 
 # If true, keep warnings as "system message" paragraphs in the built documents.
-keep_warnings = True
+keep_warnings = False
 
 # The theme to use for HTML and HTML Help pages. See choice of themes in
 # http://sphinx-doc.org/theming.html#builtin-themes.

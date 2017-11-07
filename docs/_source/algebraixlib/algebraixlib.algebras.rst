@@ -1,5 +1,5 @@
-algebraixlib.algebras package
-=============================
+algebraixlib\.algebras package
+==============================
 
 .. automodule:: algebraixlib.algebras
     :members:

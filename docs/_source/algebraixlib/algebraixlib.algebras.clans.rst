@@ -1,5 +1,5 @@
-algebraixlib.algebras.clans module
-==================================
+algebraixlib\.algebras\.clans module
+====================================
 
 .. automodule:: algebraixlib.algebras.clans
     :members:

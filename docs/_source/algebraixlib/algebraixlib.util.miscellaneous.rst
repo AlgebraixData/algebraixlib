@@ -1,5 +1,5 @@
-algebraixlib.util.miscellaneous module
-======================================
+algebraixlib\.util\.miscellaneous module
+========================================
 
 .. automodule:: algebraixlib.util.miscellaneous
     :members:

@@ -1,7 +1,7 @@
-algebraixlib\.algebras\.relations module
+algebraixlib\.import\_export\.csv module
 ========================================
 
-.. automodule:: algebraixlib.algebras.relations
+.. automodule:: algebraixlib.import_export.csv
     :members:
     :undoc-members:
     :show-inheritance:

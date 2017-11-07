@@ -1,5 +1,5 @@
-algebraixlib.mathobjects.atom module
-====================================
+algebraixlib\.mathobjects\.atom module
+======================================
 
 .. automodule:: algebraixlib.mathobjects.atom
     :members:

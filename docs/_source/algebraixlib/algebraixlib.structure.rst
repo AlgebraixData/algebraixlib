@@ -1,5 +1,5 @@
-algebraixlib.structure module
-=============================
+algebraixlib\.structure module
+==============================
 
 .. automodule:: algebraixlib.structure
     :members:

@@ -1,5 +1,5 @@
-algebraixlib.util package
-=========================
+algebraixlib\.util package
+==========================
 
 .. automodule:: algebraixlib.util
     :members:

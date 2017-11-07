@@ -1,5 +1,5 @@
-algebraixlib.util.html module
-=============================
+algebraixlib\.util\.html module
+===============================
 
 .. automodule:: algebraixlib.util.html
     :members:

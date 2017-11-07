@@ -1,5 +1,5 @@
-algebraixlib.mathobjects.couplet module
-=======================================
+algebraixlib\.mathobjects\.couplet module
+=========================================
 
 .. automodule:: algebraixlib.mathobjects.couplet
     :members:

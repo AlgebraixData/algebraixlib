@@ -1,5 +1,5 @@
-algebraixlib.mathobjects.multiset module
-========================================
+algebraixlib\.mathobjects\.multiset module
+==========================================
 
 .. automodule:: algebraixlib.mathobjects.multiset
     :members:

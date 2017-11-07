@@ -1,7 +1,7 @@
-algebraixlib\.algebras\.relations module
+algebraixlib\.import\_export\.xml module
 ========================================
 
-.. automodule:: algebraixlib.algebras.relations
+.. automodule:: algebraixlib.import_export.xml
     :members:
     :undoc-members:
     :show-inheritance:

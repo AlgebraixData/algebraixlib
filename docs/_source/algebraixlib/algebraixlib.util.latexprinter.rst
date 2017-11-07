@@ -1,5 +1,5 @@
-algebraixlib.util.latexprinter module
-=====================================
+algebraixlib\.util\.latexprinter module
+=======================================
 
 .. automodule:: algebraixlib.util.latexprinter
     :members:

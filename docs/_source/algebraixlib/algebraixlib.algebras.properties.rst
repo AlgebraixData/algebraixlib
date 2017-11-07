@@ -1,5 +1,5 @@
-algebraixlib.algebras.properties module
-=======================================
+algebraixlib\.algebras\.properties module
+=========================================
 
 .. automodule:: algebraixlib.algebras.properties
     :members:

@@ -1,5 +1,5 @@
-algebraixlib.util.mathobjectprinter module
-==========================================
+algebraixlib\.util\.mathobjectprinter module
+============================================
 
 .. automodule:: algebraixlib.util.mathobjectprinter
     :members:
