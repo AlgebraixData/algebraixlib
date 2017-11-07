@@ -1,7 +1,6 @@
 """Test utilities."""
 
-# $Id: test.py 22728 2015-08-04 17:55:42Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-04 12:55:42 -0500 (Tue, 04 Aug 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

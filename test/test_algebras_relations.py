@@ -1,7 +1,6 @@
 """Test the algebras.relations module."""
 
-# $Id: test_algebras_relations.py 23088 2015-10-01 16:18:41Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-10-01 11:18:41 -0500 (Thu, 01 Oct 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -164,7 +163,7 @@ class RelationsTest(unittest.TestCase):
     def test_get_rights_for_left(self):
         """Basic tests of relations.get_rights_for_left()."""
         rel1 = Set(Couplet('a', 1), Couplet('a', 2), Couplet('b', 3))
-        result = Set(1,2)
+        result = Set(1, 2)
         self.assertEqual(result, get_rights_for_left(rel1, 'a'))
         self.assertEqual(Set(), get_rights_for_left(rel1, Undef()))
         self.assertEqual(Set(), get_rights_for_left(rel1, Undef(), _checked=False))

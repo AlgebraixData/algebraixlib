@@ -8,8 +8,7 @@ For the code that we used to create the modified data, see the file format_conve
 same directory.
 """
 
-# $Id: TPC-H_Query5.py 22653 2015-07-23 16:33:00Z mhaque $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-23 11:33:00 -0500 (Thu, 23 Jul 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -30,9 +29,9 @@ import rdflib
 import algebraixlib.algebras.clans as clans
 import algebraixlib.algebras.relations as relations
 import algebraixlib.algebras.sets as sets
-import algebraixlib.io.csv as csv
-import algebraixlib.io.rdf as rdf
-import algebraixlib.io.xml as xml
+import algebraixlib.import_export.csv as csv
+import algebraixlib.import_export.rdf as rdf
+import algebraixlib.import_export.xml as xml
 from algebraixlib.mathobjects import Couplet, Set
 import algebraixlib.partition as partition
 from algebraixlib.util.miscellaneous import FunctionTimer

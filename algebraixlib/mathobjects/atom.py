@@ -3,8 +3,7 @@ r"""Provide the class :class:`Atom` that represents :term:`atom`\s and the funct
 :class:`Atom` instances.
 """
 
-# $Id: atom.py 23456 2015-12-07 15:10:19Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-12-07 09:10:19 -0600 (Mon, 07 Dec 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -18,11 +17,13 @@ r"""Provide the class :class:`Atom` that represents :term:`atom`\s and the funct
 # You should have received a copy of the GNU Lesser General Public License along with algebraixlib.
 # If not, see <http://www.gnu.org/licenses/>.
 # --------------------------------------------------------------------------------------------------
+import functools as _functools
+
 import algebraixlib.structure as _structure
 from algebraixlib.util.miscellaneous import get_hash as _get_hash
 
 from .mathobject import MathObject
-from .utils import CacheStatus
+from ..cache_status import CacheStatus
 from ._flags import Flags as _Flags
 
 
@@ -60,6 +61,7 @@ def _init_cache() -> int:
     return flags.asint
 
 
+@_functools.total_ordering
 class Atom(MathObject):
     """Represent a value (of a non-`MathObject`, hashable type) like numbers or strings.
 
@@ -159,9 +161,27 @@ class Atom(MathObject):
             return other.value != self.value
         return NotImplemented
 
+    # noinspection PyUnresolvedReferences
     def __lt__(self, other):
-        """A value-based comparison for less than. Return ``True`` if ``self < other``."""
-        return not isinstance(other, Atom) or (repr(self.value) < repr(other.value))
+        """A value-based comparison for less than. Return ``True`` if ``self < other``.
+
+        This implementation must be aligned with `__eq__`; an object must not be equal to and less
+        than another object at the same time.
+
+        :return Normally a `bool` (`True` if ``self`` is less than ``other``), or `NotImplemented`
+            if the types can't be compared.
+        """
+        if not isinstance(other, MathObject):
+            return NotImplemented
+        if other.is_atom:
+            try:
+                if self.type == other.type:
+                    return self.value < other.value
+            except TypeError:
+                pass
+            return repr(self.value) < repr(other.value)
+        else:
+            return super()._less_than(other)
 
     def __hash__(self):
         """Return a hash based on the value calculated during construction."""

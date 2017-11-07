@@ -1,7 +1,6 @@
 r"""Operations for partitioning :term:`set`\s and :term:`multiset`\s."""
 
-# $Id: partition.py 22991 2015-09-16 15:06:45Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-09-16 10:06:45 -0500 (Wed, 16 Sep 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

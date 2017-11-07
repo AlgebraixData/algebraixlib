@@ -1,7 +1,6 @@
 r"""Import :term:`regular` :term:`clan`\s from and export them to CSV data."""
 
-# $Id: csv.py 23480 2015-12-09 19:38:19Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-12-09 13:38:19 -0600 (Wed, 09 Dec 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -22,10 +21,12 @@ import algebraixlib.algebras.clans as _clans
 import algebraixlib.algebras.multiclans as _multiclans
 import algebraixlib.algebras.relations as _relations
 # noinspection PyProtectedMember
-import algebraixlib.io._util as _util
+import algebraixlib.import_export._util as _util
 import algebraixlib.mathobjects as _mo
 import algebraixlib.undef as _ud
 import algebraixlib.util.miscellaneous as _misc
+
+from ..cache_status import CacheStatus
 
 
 def export_csv(absolute_clan_or_multiclan, file_or_path, ordered_lefts=None, sort_key=None):
@@ -67,7 +68,8 @@ def export_csv(absolute_clan_or_multiclan, file_or_path, ordered_lefts=None, sor
     # Generate dictionaries that associates left components with their right components for each
     # relation.
     clan_as_list_of_dicts = _convert_clan_to_list_of_dicts(
-        ordered_lefts, (absolute_clan_or_multiclan if sort_key is None else sorted(absolute_clan_or_multiclan, key=sort_key)))
+        ordered_lefts, (absolute_clan_or_multiclan
+            if sort_key is None else sorted(absolute_clan_or_multiclan, key=sort_key)))
     # Write the dictionaries.
     _csv_dict_writer(file_or_path, ordered_lefts, clan_as_list_of_dicts)
     return True
@@ -174,25 +176,25 @@ def import_csv(csv_file_or_filepath, types: {}=None, skip_rows: int=0, index_col
             yield _mo.Set(
                 (_mo.Couplet(left=_util.get_left_cached(left), right=_mo.Atom(right),
                 direct_load=True) for left, right in filtered_row.items()), direct_load=True)\
-                .cache_relation(_mo.CacheStatus.IS).cache_functional(_mo.CacheStatus.IS)
+                .cache_relation(CacheStatus.IS).cache_functional(CacheStatus.IS)
 
     if hasattr(csv_file_or_filepath, "readlines"):  # Support StringIO.
         if has_dup_rows:
             return _mo.Multiset(_import_csv(csv_file_or_filepath),
                                 direct_load=True).cache_multiclan(
-                _mo.CacheStatus.IS).cache_functional(_mo.CacheStatus.IS).cache_regular(
-                _mo.CacheStatus.from_bool(import_csv.regular))
+                CacheStatus.IS).cache_functional(CacheStatus.IS).cache_regular(
+                CacheStatus.from_bool(import_csv.regular))
         else:
             return _mo.Set(_import_csv(csv_file_or_filepath), direct_load=True)\
-                .cache_clan(_mo.CacheStatus.IS).cache_functional(_mo.CacheStatus.IS)\
-                .cache_regular(_mo.CacheStatus.from_bool(import_csv.regular))
+                .cache_clan(CacheStatus.IS).cache_functional(CacheStatus.IS)\
+                .cache_regular(CacheStatus.from_bool(import_csv.regular))
     else:
         with open(csv_file_or_filepath, encoding='utf-8', errors='ignore') as file:
             if has_dup_rows:
                 return _mo.Multiset(_import_csv(file), direct_load=True).cache_multiclan(
-                    _mo.CacheStatus.IS).cache_functional(_mo.CacheStatus.IS).cache_regular(
-                    _mo.CacheStatus.from_bool(import_csv.regular))
+                    CacheStatus.IS).cache_functional(CacheStatus.IS).cache_regular(
+                    CacheStatus.from_bool(import_csv.regular))
             else:
                 return _mo.Set(_import_csv(file), direct_load=True)\
-                    .cache_clan(_mo.CacheStatus.IS).cache_functional(_mo.CacheStatus.IS)\
-                    .cache_regular(_mo.CacheStatus.from_bool(import_csv.regular))
+                    .cache_clan(CacheStatus.IS).cache_functional(CacheStatus.IS)\
+                    .cache_regular(CacheStatus.from_bool(import_csv.regular))

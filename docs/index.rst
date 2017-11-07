@@ -1,6 +1,5 @@
 .. Algebraix Technology Core Library documentation.
-   $Id: index.rst 22828 2015-08-20 19:35:19Z gfiedler $
-   Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-20 14:35:19 -0500 (Thu, 20 Aug 2015) $
+   Copyright Algebraix Data Corporation 2015 - 2017
 
    This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 

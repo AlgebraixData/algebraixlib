@@ -1,7 +1,6 @@
 """Facilities for extending operations from one :term:`algebra` to another."""
 
-# $Id: extension.py 23087 2015-10-01 15:01:38Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-10-01 10:01:38 -0500 (Thu, 01 Oct 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

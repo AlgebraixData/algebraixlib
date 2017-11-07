@@ -1,7 +1,6 @@
 """Examples for Data Algebra library."""
 
-# $Id: simple_pattern_match.py 22698 2015-07-28 17:09:23Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-28 12:09:23 -0500 (Tue, 28 Jul 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -19,12 +18,12 @@ import io
 import rdflib
 
 import algebraixlib.algebras.clans as clans
-from algebraixlib.io.rdf import import_graph
+from algebraixlib.import_export.rdf import import_graph
 from algebraixlib.util.html import DataAlgebraHtmlDescriptor as HtmlDesc, math_object_as_html
 from algebraixlib.util.miscellaneous import open_webpage_from_html_str
 from algebraixlib.util.rdf import match_and_project
 
-from examples.sampleRdfGraph import sample_graph
+from examples.sample_rdf_graph import sample_graph
 
 
 print_examples = True

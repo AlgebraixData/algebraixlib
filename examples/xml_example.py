@@ -1,9 +1,9 @@
-"""An example data algebra script to demonstrate that data algebra can be used to query XML. Here you will find a few
-simple examples of how to use algebraixlib to create data algebra queries that are equivalent to XPath and XQuery
-queries."""
+"""An example data algebra script to demonstrate that data algebra can be used to query XML. Here
+you will find a few simple examples of how to use algebraixlib to create data algebra queries
+that are equivalent to XPath and XQuery queries.
+"""
 
-# $Id: xml_example.py 22787 2015-08-12 16:20:01Z sjohnston $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-12 11:20:01 -0500 (Wed, 12 Aug 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -19,12 +19,12 @@ queries."""
 # --------------------------------------------------------------------------------------------------
 
 # Show the xml data, truncated, prettied
-from algebraixlib.io.xml import xml_to_str
+from algebraixlib.import_export.xml import xml_to_str
 pretty_xml = xml_to_str('TPC-H_Query5/regions.xml')
 print(pretty_xml)
 
 from algebraixlib.util.mathobjectprinter import mo_to_str
-from algebraixlib.io.xml import import_xml
+from algebraixlib.import_export.xml import import_xml
 regions_document = import_xml('TPC-H_Query5/regions.xml', convert_numerics=True)
 print('regions_document:\n' + mo_to_str(regions_document))
 
@@ -62,7 +62,8 @@ america_nations_names = america_region['nation']['name']
 print('america_nations_names:\n' + mo_to_str(america_nations_names))
 
 # Get all region key and nation name pairs
-# for $x in doc("regions.xml")/regions/region/nation/name return <pair>{$x/../../regionkey}{$x}</pair>
+# for $x in doc("regions.xml")/regions/region/nation/name
+#   return <pair>{$x/../../regionkey}{$x}</pair>
 from algebraixlib.mathobjects import Set
 from algebraixlib.algebras.clans import project, cross_union
 from algebraixlib.algebras.sets import union
@@ -80,18 +81,22 @@ for region in regions:
     region_key_nation_name_pairs = cross_union(region_key, region_nation_names)
     print('region_key_nation_name_pairs:\n' + mo_to_str(region_key_nation_name_pairs))
 
-    region_key_nation_name_pairs_accumulator = union(region_key_nation_name_pairs_accumulator, region_key_nation_name_pairs)
-    print('region_key_nation_name_pairs_accumulator:\n' + mo_to_str(region_key_nation_name_pairs_accumulator))
+    region_key_nation_name_pairs_accumulator = union(
+        region_key_nation_name_pairs_accumulator, region_key_nation_name_pairs)
+    print('region_key_nation_name_pairs_accumulator:\n' + mo_to_str(
+        region_key_nation_name_pairs_accumulator))
 
-print('region_key_nation_name_pairs_accumulator:\n' + mo_to_str(region_key_nation_name_pairs_accumulator))
+print('region_key_nation_name_pairs_accumulator:\n' + mo_to_str(
+    region_key_nation_name_pairs_accumulator))
 
 # Get all regions with a nation named "UNITED STATES"
-# for $x in doc("regions.xml")/regions/region/nation[name="UNITED STATES"] return <name>$x/../name</name>
-from algebraixlib.mathobjects.couplet import Couplet
+# for $x in doc("regions.xml")/regions/region/nation[name="UNITED STATES"]
+#   return <name>$x/../name</name>
 us_nation_name = from_dict({'name': 'UNITED STATES'})
 print('us_nation_name:\n' + mo_to_str(us_nation_name))
 
-us_region_key_nation_name_pair = superstrict(region_key_nation_name_pairs_accumulator, us_nation_name)
+us_region_key_nation_name_pair = superstrict(
+    region_key_nation_name_pairs_accumulator, us_nation_name)
 print('us_region_key_nation_name_pair:\n' + mo_to_str(us_region_key_nation_name_pair))
 
 us_region_key = project(us_region_key_nation_name_pair, 'regionkey')

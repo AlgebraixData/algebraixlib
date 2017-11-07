@@ -1,7 +1,6 @@
 """This module contains the :term:`algebra of couplets` and related functionality."""
 
-# $Id: couplets.py 23065 2015-09-28 22:30:21Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-09-28 17:30:21 -0500 (Mon, 28 Sep 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -18,6 +17,8 @@
 import algebraixlib.mathobjects as _mo
 import algebraixlib.structure as _structure
 import algebraixlib.undef as _undef
+
+from ..cache_status import CacheStatus
 
 
 # --------------------------------------------------------------------------------------------------
@@ -136,9 +137,9 @@ def is_absolute_member(obj: _mo.MathObject) -> bool:
         # If known to not be a couplet, it's also not an absolute couplet. No further caching.
         return False
     # From this point on, `obj` is known to be a couplet.
-    if obj.cached_absolute == _mo.CacheStatus.UNKNOWN:
+    if obj.cached_absolute == CacheStatus.UNKNOWN:
         is_absolute_couplet = obj.left.is_atom and obj.right.is_atom
-        obj.cache_absolute(_mo.CacheStatus.from_bool(is_absolute_couplet))
+        obj.cache_absolute(CacheStatus.from_bool(is_absolute_couplet))
     return obj.cached_is_absolute
 
 
@@ -158,7 +159,7 @@ def is_reflexive(couplet: '(M x M)', _checked=True) -> bool:
         assert is_member_or_undef(couplet)
         if couplet is _undef.Undef():
             return _undef.make_or_raise_undef(2)
-    if couplet.cached_reflexive == _mo.CacheStatus.UNKNOWN:
+    if couplet.cached_reflexive == CacheStatus.UNKNOWN:
         reflexive = (couplet.left == couplet.right)
-        couplet.cache_reflexive(_mo.CacheStatus.from_bool(reflexive))
-    return couplet.cached_reflexive == _mo.CacheStatus.IS
+        couplet.cache_reflexive(CacheStatus.from_bool(reflexive))
+    return couplet.cached_reflexive == CacheStatus.IS

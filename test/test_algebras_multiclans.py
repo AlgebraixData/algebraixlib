@@ -1,7 +1,6 @@
 """Test the algebras.clans module."""
 
-# $Id: test_algebras_multiclans.py 23088 2015-10-01 16:18:41Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-10-01 11:18:41 -0500 (Thu, 01 Oct 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -206,7 +205,6 @@ class MulticlansTest(unittest.TestCase):
         self.assertRaises(AssertionError, lambda: defined_at(c1, 'a', _checked=False))
         self.assertIs(defined_at(Undef(), Atom('a'), _checked=False), Undef())
         self.assertEqual(defined_at(c1, Atom('a'), _checked=False), c1)
-
 
     # ----------------------------------------------------------------------------------------------
 

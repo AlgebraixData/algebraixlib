@@ -1,7 +1,6 @@
 """Testing the io.xml module."""
 
-# $Id: test_io_xml.py 22614 2015-07-15 18:14:53Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-15 13:14:53 -0500 (Wed, 15 Jul 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -20,8 +19,8 @@ import io
 import os
 import unittest
 
-from algebraixlib.io.json import import_json
-from algebraixlib.io.xml import import_xml
+from algebraixlib.import_export.json import import_json
+from algebraixlib.import_export.xml import import_xml
 from algebraixlib.mathobjects import Atom, Couplet, Set
 
 

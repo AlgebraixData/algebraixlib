@@ -1,7 +1,6 @@
 """Miscellaneous utility functions and classes."""
 
-# $Id: miscellaneous.py 23464 2015-12-08 01:12:09Z sjohnston $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-12-07 19:12:09 -0600 (Mon, 07 Dec 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

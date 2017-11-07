@@ -1,7 +1,6 @@
 """Provide the class :class:`~.Multiset`; it represents a :term:`multiset`."""
 
-# $Id: multiset.py 23480 2015-12-09 19:38:19Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-12-09 13:38:19 -0600 (Wed, 09 Dec 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -16,6 +15,7 @@
 # If not, see <http://www.gnu.org/licenses/>.
 # --------------------------------------------------------------------------------------------------
 import collections as _collections
+import functools as _functools
 import types as _types
 
 import algebraixlib.structure as _structure
@@ -24,7 +24,7 @@ import algebraixlib.util.miscellaneous as _misc
 
 from .atom import auto_convert
 from .mathobject import MathObject, raise_if_not_mathobject
-from .utils import CacheStatus
+from ..cache_status import CacheStatus
 from ._flags import Flags as _Flags
 
 
@@ -80,6 +80,7 @@ def _init_cache_empty() -> int:
     return flags.asint
 
 
+@_functools.total_ordering
 class Multiset(MathObject):
     """A :term:`multiset` consisting of zero or more different `MathObject` instances."""
 
@@ -226,8 +227,20 @@ class Multiset(MathObject):
         return not isinstance(other, Multiset) or (self.data != other.data)
 
     def __lt__(self, other):
-        """A value-based comparison for less than. Return ``True`` if ``self < other``."""
-        return not isinstance(other, Multiset) or (repr(self) < repr(other))
+        """A value-based comparison for less than. Return ``True`` if ``self < other``.
+
+        This implementation must be aligned with `__eq__`; an object must not be equal to and less
+        than another object at the same time.
+
+        :return Normally a `bool` (`True` if ``self`` is less than ``other``), or `NotImplemented`
+            if the types can't be compared.
+        """
+        if not isinstance(other, MathObject):
+            return NotImplemented
+        if other.is_multiset:
+            return repr(self) < repr(other)
+        else:
+            return super()._less_than(other)
 
     def __contains__(self, item):
         """Return ``True`` if ``item`` is a member of this multiset. If ``item`` is not a
@@ -288,7 +301,7 @@ class Multiset(MathObject):
             self._getitem_redirect = _types.MethodType(Multiset._getitem_undef, self)
         return self._getitem_redirect(left)
 
-    def _getitem_muticlan(self, left):
+    def _getitem_multiclan(self, left):
         """Return a multiset with the rights of all the couplets in all relations that have a
         left of ``left``."""
         result = Multiset()

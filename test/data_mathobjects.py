@@ -1,7 +1,6 @@
 """Math object example data for tests."""
 
-# $Id: data_mathobjects.py 22742 2015-08-05 20:53:46Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-05 15:53:46 -0500 (Wed, 05 Aug 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -31,6 +30,10 @@ def _print_object_collection(name):
 
 #: Basic Atom instances.
 basic_atoms = {key: _create_test_object(Atom(val), key, val) for key, val in {
+    'False': False,
+    'True': True,
+    '0': 0,
+    '1': 1,
     '2': 2,
     '2.0': 2.0,
     "'2'": '2',
@@ -43,10 +46,10 @@ _print_object_collection('basic_atoms')
 
 #: Basic Couplet instances.
 basic_couplets = {key: _create_test_object(Couplet(**val), key, val) for key, val in {
-    '3x2': {'left': 2, 'right': 3},
-    "'5'x'4'": {'left': '4', 'right': '5'},
-    "'7'x6": {'left': Atom(6), 'right': Atom('7')},
-    'Coupl x Set': {'left': Couplet(8, 9), 'right': Set((10, Atom(11)))}
+    '2->3': {'left': 2, 'right': 3},
+    "'4'->'5'": {'left': '4', 'right': '5'},
+    "6->'7'": {'left': Atom(6), 'right': Atom('7')},
+    'Coupl->Set': {'left': Couplet(8, 9), 'right': Set((10, Atom(11)))}
 }.items()}
 _print_object_collection('basic_couplets')
 
@@ -67,14 +70,14 @@ basic_sets = {key: _create_test_object(Set(val), key, val) for key, val in {
 _print_object_collection('basic_sets')
 
 #: Basic Multiset instances.
-# basic_multisets = {key: _create_test_object(Multiset(val), key, val) for key, val in {
-#     'empty': [],
-#     'dict': dict([('a', 3), ('b', 2), ('c', 5)]),
-#     'num in dict': {Atom(1), Atom(2), Atom(3)},
-#     'str in array': [Atom(el) for el in 'abc'],
-#     'single alpha': 'A'
-# }.items()}
-# _print_object_collection('basic_multisets')
+basic_multisets = {key: _create_test_object(Multiset(val), key, val) for key, val in {
+    'empty': [],
+    'dict': dict([('a', 3), ('b', 2), ('c', 5)]),
+    'num in dict': {Atom(1), Atom(2), Atom(3)},
+    'str in array': [Atom(el) for el in 'abc'],
+    'single alpha': 'A'
+}.items()}
+_print_object_collection('basic_multisets')
 
 #: Relation instances for testing the relation algebra.
 algebra_relations = {key: _create_test_object(val, key) for key, val in {

@@ -1,7 +1,6 @@
 """Testing the operations module."""
 
-# $Id: test_operations.py 23087 2015-10-01 15:01:38Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-10-01 10:01:38 -0500 (Thu, 01 Oct 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -183,8 +182,10 @@ class OperationsTests(unittest.TestCase):
 
     def test_binary_multi_extend_errors(self):
         self.assertRaises(AttributeError, lambda: extension.binary_multi_extend(1, 2, sets.union))
-        self.assertRaises(AttributeError, lambda: extension.binary_multi_extend(Multiset(1), 2, sets.union))
-        self.assertRaises(AttributeError, lambda: extension.binary_multi_extend(1, Multiset(2), sets.union))
+        self.assertRaises(AttributeError, lambda: extension.binary_multi_extend(Multiset(1), 2,
+                                                                                sets.union))
+        self.assertRaises(AttributeError, lambda: extension.binary_multi_extend(1, Multiset(2),
+                                                                                sets.union))
 
 
 # --------------------------------------------------------------------------------------------------

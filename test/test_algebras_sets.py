@@ -1,7 +1,6 @@
 """Test the algebras.sets module."""
 
-# $Id: test_algebras_sets.py 23076 2015-09-30 14:44:35Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-09-30 09:44:35 -0500 (Wed, 30 Sep 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -19,7 +18,8 @@ import inspect
 import os
 import unittest
 
-from algebraixlib.mathobjects import Atom, CacheStatus, Couplet, Set, Multiset
+from algebraixlib.mathobjects import Atom, Couplet, Set, Multiset
+from algebraixlib.cache_status import CacheStatus
 from algebraixlib.structure import GenesisSetA, GenesisSetM, PowerSet
 from algebraixlib.undef import Undef, RaiseOnUndef, UndefException
 import algebraixlib.extension as _extension
@@ -28,6 +28,9 @@ from algebraixlib.algebras.sets import \
     get_ground_set, get_absolute_ground_set, get_name, is_member, is_absolute_member, \
     union, big_union, intersect, big_intersect, minus, power_set, power_up, restrict, \
     is_subset_of, is_superset_of, single, some, substrict, superstrict, multify
+
+# noinspection PyUnresolvedReferences
+from data_mathobjects import basic_sets
 
 
 _set1 = Set('a', 'b', 'c')
@@ -234,6 +237,17 @@ class SetsTest(unittest.TestCase):
 
         self.assertEqual(restrict(s1, lambda x: x.value < 3), Set(1, 2))
         self.assertEqual(restrict(s1, lambda x: x.value > 1), Set(2, 3))
+
+    def test_less_than(self):
+        for value_key1, set1 in basic_sets.items():
+            for value_key2, set2 in basic_sets.items():
+                self.assertNotEqual(set1 < set2, NotImplemented)
+                self.assertNotEqual(set2 < set1, NotImplemented)
+                if set1 == set2:
+                    self.assertFalse(set1 < set2)
+                    self.assertFalse(set2 < set1)
+            for mo in [Atom(1), Couplet(1, 2), Multiset(1, 2, 3)]:
+                self.assertTrue(mo < set1)
 
     def _check_argument_types_unary_undef(self, operation):
         """Negative tests for set algebra unary operations with Undef()."""

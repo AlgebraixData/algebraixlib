@@ -1,7 +1,6 @@
 """Test the algebras.sets module."""
 
-# $Id: test_algebras_multisets.py 23083 2015-09-30 19:49:29Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-09-30 14:49:29 -0500 (Wed, 30 Sep 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -31,6 +30,9 @@ from algebraixlib.algebras.multisets import \
     get_ground_set, get_absolute_ground_set, get_name, is_member, is_absolute_member, \
     union, big_union, intersect, big_intersect, minus, add, demultify, \
     is_subset_of, is_superset_of, single, some, substrict, superstrict
+
+# noinspection PyUnresolvedReferences
+from data_mathobjects import basic_multisets
 
 
 _set1 = Multiset('a', 'b', 'c')
@@ -192,6 +194,19 @@ class MultiSetsTest(unittest.TestCase):
         self.assertIs(some(Multiset()), Undef())
         self.assertEqual(some(_set1m2), Atom('a'))
         self.assertTrue(some(_set1) in _set1)
+
+    def test_less_than(self):
+        for value_key1, ms1 in basic_multisets.items():
+            for value_key2, ms2 in basic_multisets.items():
+                self.assertNotEqual(ms1 < ms2, NotImplemented)
+                self.assertNotEqual(ms2 < ms1, NotImplemented)
+                if ms1 == ms2:
+                    self.assertFalse(ms1 < ms2)
+                    self.assertFalse(ms2 < ms1)
+            for mo in [Atom(1), Couplet(1, 2)]:
+                self.assertTrue(mo < ms1)
+            for mo in [Set(1, 2, 3)]:
+                self.assertTrue(ms1 < mo)
 
     def _check_wrong_argument_types_unary(self, operation):
         """Negative tests for set algebra unary operations."""

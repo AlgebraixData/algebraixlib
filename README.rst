@@ -1,6 +1,5 @@
 .. Algebraix Technology Core Library documentation.
-   $Id: README.rst 23069 2015-09-29 16:28:32Z gfiedler $
-   Copyright Algebraix Data Corporation 2015 - $Date: 2015-09-29 11:28:32 -0500 (Tue, 29 Sep 2015) $
+   Copyright Algebraix Data Corporation 2015 - 2017
 
    This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 
@@ -59,7 +58,7 @@ Documentation and Support
     `[data-algebra]`_.
 *   Contact us by `email`_.
 
-See also our `GitHub project page`_. In addition, there is a book forthcoming about data algebra.
+See also our `GitHub project page`_. In addition, there is a `book`_ about data algebra.
 
 
 Detailed Instructions
@@ -68,7 +67,7 @@ Detailed Instructions
 Requirements
 ------------
 
-*   `Python`_: Tested with 3.4.3. Likely to run with Python 3.4.x and later. It may run with earlier
+*   `Python`_: Tested with 3.6.1. Likely to run with Python 3.6.x and later. It may run with earlier
     Python 3 versions, but you may run into issues. Does not run with any version of Python before
     Python 3.
 
@@ -77,7 +76,7 @@ Requirements
         `How to install both Python 2.x and Python 3.x in Windows 7 (Stack Overflow)`_ and
         `A Python Launcher For Windows (Python Insider)`_.
 
-*   `Jupyter Notebook`_: Tested with Jupyter 4.0 (used in the Jupyter notebook tutorials and
+*   `Jupyter Notebook`_: Tested with Jupyter 5.2 (used in the Jupyter notebook tutorials and
     examples).
 
     *   See `Jupyter Installation`_ for instructions how to install the Jupyter notebook
@@ -171,6 +170,8 @@ GNU Lesser General Public License for more details.
     http://algebraixlib.readthedocs.org/en/latest/intro.html
 .. _A Python Launcher For Windows (Python Insider):
     http://blog.python.org/2011/07/python-launcher-for-windows_11.html
+.. _book:
+    https://algebraixdata.com/resources/the-algebra-of-data/
 .. _build.py:
     https://github.com/AlgebraixData/algebraixlib/blob/master/docs/build.py
 .. _coverage:

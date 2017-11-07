@@ -15,8 +15,7 @@ Keyword arguments:
 -   --skipload, -s: Skip the loading of the index file in the system default browser.
 """
 
-# $Id: build.py 23067 2015-09-29 15:14:09Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-09-29 10:14:09 -0500 (Tue, 29 Sep 2015) $
+# Copyright Algebraix Data Corporation 2015-2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -68,7 +67,7 @@ _build_output_dir = '_build'
 
 # Sphinx build -------------------------------------------------------------------------------------
 
-def build_documentation(working_dir,
+def _build_documentation(working_dir,
         source_packages, builders, apidoc_format=_apidoc_format,
         rst_base_dir=_rst_base_dir, rst_temp_dir=_rst_temp_dir, build_output_dir=_build_output_dir,
         skip_apidoc=_skip_apidoc, skip_load_in_browser=False, load_file=None,
@@ -86,12 +85,12 @@ def build_documentation(working_dir,
             for dir_name in os.listdir(directory)
                 if os.path.isdir(os.path.join(directory, dir_name))]
 
-    def sync_dir(temp_dir, file_names, rst_base_dir, rst_temp_dir):
+    def sync_dir(temp_dir, file_names, rst_base_dir_, rst_temp_dir_):
         """Sync the in ``temp_dir`` with the corresponding files under ``_rst_base_dir``. The
         list of files should match ``file_names``."""
-        rel_dir = os.path.relpath(temp_dir, rst_temp_dir)
-        source_dir = os.path.join(rst_temp_dir, rel_dir)
-        target_dir = os.path.join(rst_base_dir, rel_dir)
+        rel_dir = os.path.relpath(temp_dir, rst_temp_dir_)
+        source_dir = os.path.join(rst_temp_dir_, rel_dir)
+        target_dir = os.path.join(rst_base_dir_, rel_dir)
 
         if os.path.isdir(target_dir):
             target_subdirs = get_dirs_in_dir(target_dir)
@@ -169,16 +168,10 @@ def build_documentation(working_dir,
             if os.path.isdir(rst_temp_dir):
                 shutil.rmtree(rst_temp_dir)
 
-        # Run sphinx. Convert all .rst files to target formats (_builders) into _build_output_dir.
+        # Run sphinx. Convert all .rst files to target formats (builders) into _build_output_dir.
         for builder in builders:
             cmd_opts = ['-b', builder, '.', build_output_dir]
-            res = None
-            # Work-around for Sphinx bug https://github.com/sphinx-doc/sphinx/issues/1974
-            # The bug is in milestone https://github.com/sphinx-doc/sphinx/milestones/1.3.2
-            for ii in range(20):
-                res = sphinx.build_main(['sphinx-build'] + cmd_opts)
-                if res == 0:
-                    break
+            res = sphinx.build_main(['sphinx-build'] + cmd_opts)
             if res != 0:
                 raise RuntimeError('sphinx-build call failed for builder ' + builder)
 
@@ -200,11 +193,21 @@ def get_arg_parser():
     return parser
 
 
+def build_documentation(**kwargs):
+    if 'working_dir' not in kwargs:
+        kwargs['working_dir'] = '.'
+    _build_documentation(
+        source_packages=_source_packages,
+        builders=_builders,
+        load_file='index',
+        **kwargs)
+
+
 # Running as script --------------------------------------------------------------------------------
 
-if __name__ == '__main__':
+def main():
     args = get_arg_parser().parse_args()
+    build_documentation(rebuild=args.rebuild, skip_load_in_browser=args.skipload)
 
-    build_documentation(working_dir='.',
-        source_packages=_source_packages, builders=_builders,
-        rebuild=args.rebuild, load_file='index', skip_load_in_browser=args.skipload)
+if __name__ == '__main__':
+    main()

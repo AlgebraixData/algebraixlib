@@ -1,8 +1,7 @@
 """An example data algebra script.  Naively solve a Sudoku game using techniques a person would
 likely use.  This is a teaching exercise, not an attempt at writing the fastest solver possible."""
 
-# $Id: sudoku.py 22726 2015-08-04 14:12:37Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-04 09:12:37 -0500 (Tue, 04 Aug 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -20,7 +19,8 @@ import time
 from functools import partial
 import itertools
 
-from algebraixlib.mathobjects import Atom, CacheStatus, Couplet, Set
+from algebraixlib.cache_status import CacheStatus
+from algebraixlib.mathobjects import Atom, Couplet, Set
 import algebraixlib.algebras.relations as relations
 import algebraixlib.algebras.clans as clans
 import algebraixlib.algebras.sets as sets

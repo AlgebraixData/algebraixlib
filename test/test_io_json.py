@@ -1,7 +1,6 @@
 """Testing the io.json module."""
 
-# $Id: test_io_json.py 22810 2015-08-19 16:56:00Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-19 11:56:00 -0500 (Wed, 19 Aug 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -21,7 +20,7 @@ import os
 import unittest
 
 import algebraixlib.algebras.relations as relations
-from algebraixlib.io.json import import_json
+from algebraixlib.import_export.json import import_json
 from algebraixlib.mathobjects import Set
 
 

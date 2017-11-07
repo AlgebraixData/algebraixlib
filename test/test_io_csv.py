@@ -1,7 +1,6 @@
 """Testing the io.csv module."""
 
-# $Id: test_io_csv.py 23480 2015-12-09 19:38:19Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-12-09 13:38:19 -0600 (Wed, 09 Dec 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -19,8 +18,9 @@ import inspect
 import os
 import unittest
 
-from algebraixlib.io.csv import import_csv, export_csv
-from algebraixlib.mathobjects import CacheStatus, Couplet, Set, Multiset
+from algebraixlib.import_export.csv import import_csv, export_csv
+from algebraixlib.mathobjects import Couplet, Set, Multiset
+from algebraixlib.cache_status import CacheStatus
 
 
 class IoCsvTests(unittest.TestCase):

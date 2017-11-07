@@ -1,7 +1,6 @@
 """This module contains the :term:`algebra of multisets` and related functionality."""
 
-# $Id: multisets.py 23087 2015-10-01 15:01:38Z jaustell $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-10-01 10:01:38 -0500 (Thu, 01 Oct 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -21,6 +20,8 @@ import algebraixlib.algebras.sets as _sets
 import algebraixlib.mathobjects as _mo
 import algebraixlib.structure as _structure
 import algebraixlib.undef as _undef
+
+from ..cache_status import CacheStatus
 
 
 # --------------------------------------------------------------------------------------------------
@@ -58,26 +59,26 @@ class Algebra:
         if not result.is_empty:
             # Multiclan flags:
             if multiset1.cached_is_multiclan and multiset2.cached_is_multiclan:
-                result.cache_multiclan(_mo.CacheStatus.IS)
+                result.cache_multiclan(CacheStatus.IS)
                 if multiset1.cached_is_absolute and multiset2.cached_is_absolute:
-                    result.cache_absolute(_mo.CacheStatus.IS)
+                    result.cache_absolute(CacheStatus.IS)
                 elif multiset1.cached_is_not_absolute or multiset2.cached_is_not_absolute:
-                    result.cache_absolute(_mo.CacheStatus.IS_NOT)
+                    result.cache_absolute(CacheStatus.IS_NOT)
                 if multiset1.cached_is_functional and multiset2.cached_is_functional:
-                    result.cache_functional(_mo.CacheStatus.IS)
+                    result.cache_functional(CacheStatus.IS)
                 elif multiset1.cached_is_not_functional or multiset2.cached_is_not_functional:
-                    result.cache_functional(_mo.CacheStatus.IS_NOT)
+                    result.cache_functional(CacheStatus.IS_NOT)
                 if multiset1.cached_is_right_functional and multiset2.cached_is_right_functional:
-                    result.cache_right_functional(_mo.CacheStatus.IS)
+                    result.cache_right_functional(CacheStatus.IS)
                 elif multiset1.cached_is_not_right_functional \
                         or multiset2.cached_is_not_right_functional:
-                    result.cache_right_functional(_mo.CacheStatus.IS_NOT)
+                    result.cache_right_functional(CacheStatus.IS_NOT)
                 if multiset1.cached_is_not_regular or multiset1.cached_is_not_regular:
-                    result.cache_regular(_mo.CacheStatus.IS_NOT)
+                    result.cache_regular(CacheStatus.IS_NOT)
                 if multiset1.cached_is_not_right_regular or multiset1.cached_is_not_right_regular:
-                    result.cache_right_regular(_mo.CacheStatus.IS_NOT)
+                    result.cache_right_regular(CacheStatus.IS_NOT)
             elif multiset1.cached_is_not_multiclan or multiset2.cached_is_not_multiclan:
-                result.cache_multiclan(_mo.CacheStatus.IS_NOT)
+                result.cache_multiclan(CacheStatus.IS_NOT)
         return result
 
     @staticmethod
@@ -102,17 +103,17 @@ class Algebra:
         if not result.is_empty:
             # Multiclan flags:
             if multiset1.cached_is_multiclan or multiset2.cached_is_multiclan:
-                result.cache_multiclan(_mo.CacheStatus.IS)
+                result.cache_multiclan(CacheStatus.IS)
                 if multiset1.cached_is_absolute or multiset2.cached_is_absolute:
-                    result.cache_absolute(_mo.CacheStatus.IS)
+                    result.cache_absolute(CacheStatus.IS)
                 if multiset1.cached_is_functional or multiset2.cached_is_functional:
-                    result.cache_functional(_mo.CacheStatus.IS)
+                    result.cache_functional(CacheStatus.IS)
                 if multiset1.cached_is_right_functional or multiset2.cached_is_right_functional:
-                    result.cache_right_functional(_mo.CacheStatus.IS)
+                    result.cache_right_functional(CacheStatus.IS)
                 if multiset1.cached_is_regular or multiset2.cached_is_regular:
-                    result.cache_regular(_mo.CacheStatus.IS)
+                    result.cache_regular(CacheStatus.IS)
                 if multiset1.cached_is_right_regular or multiset2.cached_is_right_regular:
-                    result.cache_right_regular(_mo.CacheStatus.IS)
+                    result.cache_right_regular(CacheStatus.IS)
         return result
 
     @staticmethod
@@ -137,17 +138,17 @@ class Algebra:
         if not result.is_empty:
             # Multiclan flags:
             if multiset1.cached_is_multiclan:
-                result.cache_multiclan(_mo.CacheStatus.IS)
+                result.cache_multiclan(CacheStatus.IS)
                 if multiset1.cached_is_absolute:
-                    result.cache_absolute(_mo.CacheStatus.IS)
+                    result.cache_absolute(CacheStatus.IS)
                 if multiset1.cached_is_functional:
-                    result.cache_functional(_mo.CacheStatus.IS)
+                    result.cache_functional(CacheStatus.IS)
                 if multiset1.cached_is_right_functional:
-                    result.cache_right_functional(_mo.CacheStatus.IS)
+                    result.cache_right_functional(CacheStatus.IS)
                 if multiset1.cached_is_regular:
-                    result.cache_regular(_mo.CacheStatus.IS)
+                    result.cache_regular(CacheStatus.IS)
                 if multiset1.cached_is_right_regular:
-                    result.cache_right_regular(_mo.CacheStatus.IS)
+                    result.cache_right_regular(CacheStatus.IS)
         return result
 
     @staticmethod
@@ -173,26 +174,26 @@ class Algebra:
         if not result.is_empty:
             # Multiclan flags:
             if multiset1.cached_is_multiclan and multiset2.cached_is_multiclan:
-                result.cache_multiclan(_mo.CacheStatus.IS)
+                result.cache_multiclan(CacheStatus.IS)
                 if multiset1.cached_is_absolute and multiset2.cached_is_absolute:
-                    result.cache_absolute(_mo.CacheStatus.IS)
+                    result.cache_absolute(CacheStatus.IS)
                 elif multiset1.cached_is_not_absolute or multiset2.cached_is_not_absolute:
-                    result.cache_absolute(_mo.CacheStatus.IS_NOT)
+                    result.cache_absolute(CacheStatus.IS_NOT)
                 if multiset1.cached_is_functional and multiset2.cached_is_functional:
-                    result.cache_functional(_mo.CacheStatus.IS)
+                    result.cache_functional(CacheStatus.IS)
                 elif multiset1.cached_is_not_functional or multiset2.cached_is_not_functional:
-                    result.cache_functional(_mo.CacheStatus.IS_NOT)
+                    result.cache_functional(CacheStatus.IS_NOT)
                 if multiset1.cached_is_right_functional and multiset2.cached_is_right_functional:
-                    result.cache_right_functional(_mo.CacheStatus.IS)
+                    result.cache_right_functional(CacheStatus.IS)
                 elif multiset1.cached_is_not_right_functional \
                         or multiset2.cached_is_not_right_functional:
-                    result.cache_right_functional(_mo.CacheStatus.IS_NOT)
+                    result.cache_right_functional(CacheStatus.IS_NOT)
                 if multiset1.cached_is_not_regular or multiset1.cached_is_not_regular:
-                    result.cache_regular(_mo.CacheStatus.IS_NOT)
+                    result.cache_regular(CacheStatus.IS_NOT)
                 if multiset1.cached_is_not_right_regular or multiset1.cached_is_not_right_regular:
-                    result.cache_right_regular(_mo.CacheStatus.IS_NOT)
+                    result.cache_right_regular(CacheStatus.IS_NOT)
             elif multiset1.cached_is_not_multiclan or multiset2.cached_is_not_multiclan:
-                result.cache_multiclan(_mo.CacheStatus.IS_NOT)
+                result.cache_multiclan(CacheStatus.IS_NOT)
         return result
 
     @staticmethod
@@ -219,15 +220,15 @@ class Algebra:
             # Multiclan flags:
             if multiset1.cached_is_multiclan:
                 if multiset2.cached_is_absolute:
-                    multiset1.cache_absolute(_mo.CacheStatus.IS)
+                    multiset1.cache_absolute(CacheStatus.IS)
                 if multiset2.cached_is_functional:
-                    multiset1.cache_functional(_mo.CacheStatus.IS)
+                    multiset1.cache_functional(CacheStatus.IS)
                 if multiset2.cached_is_right_functional:
-                    multiset1.cache_right_functional(_mo.CacheStatus.IS)
+                    multiset1.cache_right_functional(CacheStatus.IS)
                 if multiset2.cached_is_regular:
-                    multiset1.cache_regular(_mo.CacheStatus.IS)
+                    multiset1.cache_regular(CacheStatus.IS)
                 if multiset2.cached_is_right_regular:
-                    multiset1.cache_right_regular(_mo.CacheStatus.IS)
+                    multiset1.cache_right_regular(CacheStatus.IS)
         return multiset1
 
     @staticmethod
@@ -255,15 +256,15 @@ class Algebra:
             # Multiclan flags:
             if multiset1.cached_is_clan:
                 if multiset2.cached_is_not_absolute:
-                    multiset1.cache_absolute(_mo.CacheStatus.IS_NOT)
+                    multiset1.cache_absolute(CacheStatus.IS_NOT)
                 if multiset2.cached_is_not_functional:
-                    multiset1.cache_functional(_mo.CacheStatus.IS_NOT)
+                    multiset1.cache_functional(CacheStatus.IS_NOT)
                 if multiset2.cached_is_not_right_functional:
-                    multiset1.cache_right_functional(_mo.CacheStatus.IS_NOT)
+                    multiset1.cache_right_functional(CacheStatus.IS_NOT)
                 if multiset2.cached_is_not_regular:
-                    multiset1.cache_regular(_mo.CacheStatus.IS_NOT)
+                    multiset1.cache_regular(CacheStatus.IS_NOT)
                 if multiset2.cached_is_not_right_regular:
-                    multiset1.cache_right_regular(_mo.CacheStatus.IS_NOT)
+                    multiset1.cache_right_regular(CacheStatus.IS_NOT)
         return multiset1
 
     # ----------------------------------------------------------------------------------------------
@@ -392,7 +393,7 @@ def is_absolute_member(obj: _mo.MathObject) -> bool:
         # caching.
         return False
     # From this point on, `obj` is known to be a multiset.
-    if obj.cached_absolute == _mo.CacheStatus.UNKNOWN:
+    if obj.cached_absolute == CacheStatus.UNKNOWN:
         # In order to find out whether this is an absolute multiset, we need to know whether `obj`
         # is a multiclan (also a multiset). If it is one, it is not an absolute multiset -- but
         # we also don't know whether it is an absolute multiclan. So we return `False` but don't
@@ -400,7 +401,7 @@ def is_absolute_member(obj: _mo.MathObject) -> bool:
         if _multiclans.is_member(obj):
             return False
         is_absolute_multiset = all(elem.is_atom for elem in obj.data)
-        obj.cache_absolute(_mo.CacheStatus.from_bool(is_absolute_multiset))
+        obj.cache_absolute(CacheStatus.from_bool(is_absolute_multiset))
     # In order to determine whether this is an absolute multiset, we need to also examine whether
     # this is a multiclan (also a multisets). Absolute multiclans are not absolute multisets.
     return obj.cached_is_absolute and not obj.cached_is_multiclan

@@ -1,7 +1,9 @@
-"""Various utilities for the :mod:`~.mathobjects` package."""
+"""Defines CacheStatus class, a quaternary-valued type used to represent several algebraic
+properties (such as left-functional) that may apply to MathObjects or classes supporting the
+MathObjects interface (such as Undef).
+"""
 
-# $Id: utils.py 22803 2015-08-14 17:08:50Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-14 12:08:50 -0500 (Fri, 14 Aug 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

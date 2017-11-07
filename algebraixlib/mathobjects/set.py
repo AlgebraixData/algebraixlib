@@ -1,7 +1,6 @@
 r"""Provide the class :class:`~.Set`; it represents a :term:`set`."""
 
-# $Id: set.py 23480 2015-12-09 19:38:19Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-12-09 13:38:19 -0600 (Wed, 09 Dec 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -16,15 +15,17 @@ r"""Provide the class :class:`~.Set`; it represents a :term:`set`."""
 # If not, see <http://www.gnu.org/licenses/>.
 # --------------------------------------------------------------------------------------------------
 import collections as _collections
+import functools as _functools
 import types as _types
 
 import algebraixlib.structure as _structure
 import algebraixlib.undef as _undef
 import algebraixlib.util.miscellaneous as _misc
+from algebraixlib.tmp_sqlda_op import tmp_sqlda_op
 
 from .atom import auto_convert, Atom
 from .mathobject import MathObject, raise_if_not_mathobject
-from .utils import CacheStatus
+from ..cache_status import CacheStatus
 from ._flags import Flags as _Flags
 
 
@@ -104,16 +105,19 @@ def _init_cache_empty() -> int:
     return flags.asint
 
 
+@tmp_sqlda_op(True)
 def make_set(*args):
     """Factory wrapper to create a :class:`~.Set`."""
     return Set(*(arg for arg in args if arg is not _undef.Undef()))
 
 
+@tmp_sqlda_op(True)
 def make_set_unchecked(*args):
     """Factory wrapper to create a :class:`~.Set` (unchecked version)."""
     return Set(*(arg for arg in args if arg is not _undef.Undef()), direct_load=True)
 
 
+@_functools.total_ordering
 class Set(MathObject):
     """A :term:`set` containing zero or more different `MathObject` instances."""
 
@@ -229,8 +233,20 @@ class Set(MathObject):
         return not isinstance(other, Set) or (self.data != other.data)
 
     def __lt__(self, other):
-        """A value-based comparison for less than. Return ``True`` if ``self < other``."""
-        return not isinstance(other, Set) or (repr(self) < repr(other))
+        """A value-based comparison for less than. Return ``True`` if ``self < other``.
+
+        This implementation must be aligned with `__eq__`; an object must not be equal to and less
+        than another object at the same time.
+
+        :return Normally a `bool` (`True` if ``self`` is less than ``other``), or `NotImplemented`
+            if the types can't be compared.
+        """
+        if not isinstance(other, MathObject):
+            return NotImplemented
+        if other.is_set:
+            return repr(self) < repr(other)
+        else:
+            return super()._less_than(other)
 
     def __contains__(self, item):
         """Return ``True`` if ``item`` is a member of this set. If ``item`` is not a `MathObject`,

@@ -1,6 +1,5 @@
 .. Algebraix Technology Core Library documentation.
-    $Id: RELEASES.rst 23482 2015-12-09 20:08:02Z jcasiraghi $
-    Copyright Algebraix Data Corporation 2015 - $Date: 2015-12-09 14:08:02 -0600 (Wed, 09 Dec 2015) $
+    Copyright Algebraix Data Corporation 2015 - 2017
 
     This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 
@@ -21,6 +20,15 @@
 
 Release Notes for algebraixlib
 ==============================
+
+1.4
+---
+
+-   Moved ``CacheStatus`` into its own module and removed ``utils.py`` in ``mathobjects``.
+-   Moved all of the modules in ``io`` into ``import_export``.
+-   Allow ``import_json`` to take in floats.
+-   Better handling of less than functionality for couplets, multisets, and sets.
+-   Added a ``tmp_sqlda_op``  to handle nodes that are not "SQL-DA" operations.
 
 1.3
 ---

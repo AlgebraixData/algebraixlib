@@ -4,8 +4,7 @@ The accessors here check what algebra a given `MathObject` belongs to, then call
 function of this algebra.
 """
 
-# $Id: properties.py 22804 2015-08-14 17:43:32Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-14 12:43:32 -0500 (Fri, 14 Aug 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -26,6 +25,8 @@ import algebraixlib.algebras.relations as _relations
 import algebraixlib.mathobjects as _mo
 import algebraixlib.undef as _undef
 
+from ..cache_status import CacheStatus
+
 
 # --------------------------------------------------------------------------------------------------
 
@@ -42,16 +43,16 @@ def is_functional(mo: _mo.MathObject, _checked: bool=True) -> bool:
             return _undef.make_or_raise_undef()
 
     # Check cache status.
-    if mo.cached_functional == _mo.CacheStatus.IS:
+    if mo.cached_functional == CacheStatus.IS:
         return True
-    if mo.cached_functional == _mo.CacheStatus.IS_NOT:
+    if mo.cached_functional == CacheStatus.IS_NOT:
         return False
-    if mo.cached_functional == _mo.CacheStatus.N_A:
+    if mo.cached_functional == CacheStatus.N_A:
         return _undef.make_or_raise_undef(2)
 
     # Check type (functional is only defined on Sets and Multisets) and algebra memberships.
     if not mo.is_set and not mo.is_multiset:
-        mo.cache_functional(_mo.CacheStatus.N_A)
+        mo.cache_functional(CacheStatus.N_A)
         return _undef.make_or_raise_undef(2)
     if _relations.is_member(mo):
         return _relations.is_functional(mo, _checked=False)
@@ -63,11 +64,11 @@ def is_functional(mo: _mo.MathObject, _checked: bool=True) -> bool:
     # Check higher (not yet defined) algebras.
     functional = _is_powerset_property(mo, _clans.get_ground_set(), is_functional)
     if functional is not _undef.Undef():
-        mo.cache_functional(_mo.CacheStatus.from_bool(functional))
+        mo.cache_functional(CacheStatus.from_bool(functional))
         return functional
 
     # Nothing applied: 'functional' is not defined.
-    mo.cache_functional(_mo.CacheStatus.N_A)
+    mo.cache_functional(CacheStatus.N_A)
     return _undef.make_or_raise_undef(2)
 
 
@@ -84,16 +85,16 @@ def is_right_functional(mo: _mo.MathObject, _checked: bool=True) -> bool:
             return _undef.make_or_raise_undef()
 
     # Check cache status.
-    if mo.cached_right_functional == _mo.CacheStatus.IS:
+    if mo.cached_right_functional == CacheStatus.IS:
         return True
-    if mo.cached_right_functional == _mo.CacheStatus.IS_NOT:
+    if mo.cached_right_functional == CacheStatus.IS_NOT:
         return False
-    if mo.cached_right_functional == _mo.CacheStatus.N_A:
+    if mo.cached_right_functional == CacheStatus.N_A:
         return _undef.make_or_raise_undef(2)
 
     # Check type (right-functional is only defined on Sets and Multisets) and algebra memberships.
     if not mo.is_set and not mo.is_multiset:
-        mo.cache_right_functional(_mo.CacheStatus.N_A)
+        mo.cache_right_functional(CacheStatus.N_A)
         return _undef.make_or_raise_undef(2)
     if _relations.is_member(mo):
         return _relations.is_right_functional(mo, _checked=False)
@@ -105,11 +106,11 @@ def is_right_functional(mo: _mo.MathObject, _checked: bool=True) -> bool:
     # Check higher (not yet defined) algebras.
     right_functional = _is_powerset_property(mo, _clans.get_ground_set(), is_right_functional)
     if right_functional is not _undef.Undef():
-        mo.cache_right_functional(_mo.CacheStatus.from_bool(right_functional))
+        mo.cache_right_functional(CacheStatus.from_bool(right_functional))
         return right_functional
 
     # Nothing applied: 'right-functional' is not defined.
-    mo.cache_right_functional(_mo.CacheStatus.N_A)
+    mo.cache_right_functional(CacheStatus.N_A)
     return _undef.make_or_raise_undef(2)
 
 
@@ -151,18 +152,18 @@ def is_reflexive(mo: _mo.MathObject, _checked: bool=True) -> bool:
             return _undef.make_or_raise_undef()
 
     # Check cache status.
-    if mo.cached_reflexive == _mo.CacheStatus.IS:
+    if mo.cached_reflexive == CacheStatus.IS:
         return True
-    if mo.cached_reflexive == _mo.CacheStatus.IS_NOT:
+    if mo.cached_reflexive == CacheStatus.IS_NOT:
         return False
-    if mo.cached_reflexive == _mo.CacheStatus.N_A:
+    if mo.cached_reflexive == CacheStatus.N_A:
         return _undef.make_or_raise_undef(2)
 
     # Check types and algebra memberships.
     if _couplets.is_member(mo):
         return _couplets.is_reflexive(mo, _checked=False)
     if not mo.is_set and not mo.is_multiset:
-        mo.cache_reflexive(_mo.CacheStatus.N_A)
+        mo.cache_reflexive(CacheStatus.N_A)
         return _undef.make_or_raise_undef(2)
     if _relations.is_member(mo):
         return _relations.is_reflexive(mo, _checked=False)
@@ -174,11 +175,11 @@ def is_reflexive(mo: _mo.MathObject, _checked: bool=True) -> bool:
     # Check higher (not yet defined) algebras.
     reflexive = _is_powerset_property(mo, _clans.get_ground_set(), is_reflexive)
     if reflexive is not _undef.Undef():
-        mo.cache_reflexive(_mo.CacheStatus.from_bool(reflexive))
+        mo.cache_reflexive(CacheStatus.from_bool(reflexive))
         return reflexive
 
     # Nothing applied: 'reflexive' is not defined.
-    mo.cache_reflexive(_mo.CacheStatus.N_A)
+    mo.cache_reflexive(CacheStatus.N_A)
     return _undef.make_or_raise_undef(2)
 
 
@@ -195,16 +196,16 @@ def is_symmetric(mo: _mo.MathObject, _checked: bool=True) -> bool:
             return _undef.make_or_raise_undef()
 
     # Check cache status.
-    if mo.cached_symmetric == _mo.CacheStatus.IS:
+    if mo.cached_symmetric == CacheStatus.IS:
         return True
-    if mo.cached_symmetric == _mo.CacheStatus.IS_NOT:
+    if mo.cached_symmetric == CacheStatus.IS_NOT:
         return False
-    if mo.cached_symmetric == _mo.CacheStatus.N_A:
+    if mo.cached_symmetric == CacheStatus.N_A:
         return _undef.make_or_raise_undef(2)
 
     # Check type (symmetric is only defined on Sets and Multisets) and algebra memberships.
     if not mo.is_set and not mo.is_multiset:
-        mo.cache_symmetric(_mo.CacheStatus.N_A)
+        mo.cache_symmetric(CacheStatus.N_A)
         return _undef.make_or_raise_undef(2)
     if _relations.is_member(mo):
         return _relations.is_symmetric(mo, _checked=False)
@@ -216,11 +217,11 @@ def is_symmetric(mo: _mo.MathObject, _checked: bool=True) -> bool:
     # Check higher (not yet defined) algebras.
     symmetric = _is_powerset_property(mo, _relations.get_ground_set(), is_symmetric)
     if symmetric is not _undef.Undef():
-        mo.cache_symmetric(_mo.CacheStatus.from_bool(symmetric))
+        mo.cache_symmetric(CacheStatus.from_bool(symmetric))
         return symmetric
 
     # Nothing applied: 'symmetric' is not defined.
-    mo.cache_symmetric(_mo.CacheStatus.N_A)
+    mo.cache_symmetric(CacheStatus.N_A)
     return _undef.make_or_raise_undef(2)
 
 
@@ -237,16 +238,16 @@ def is_transitive(mo: _mo.MathObject, _checked: bool=True) -> bool:
             return _undef.make_or_raise_undef()
 
     # Check cache status.
-    if mo.cached_transitive == _mo.CacheStatus.IS:
+    if mo.cached_transitive == CacheStatus.IS:
         return True
-    if mo.cached_transitive == _mo.CacheStatus.IS_NOT:
+    if mo.cached_transitive == CacheStatus.IS_NOT:
         return False
-    if mo.cached_transitive == _mo.CacheStatus.N_A:
+    if mo.cached_transitive == CacheStatus.N_A:
         return _undef.make_or_raise_undef(2)
 
     # Check type (transitive is only defined on Sets and Multisets) and algebra memberships.
     if not mo.is_set and not mo.is_multiset:
-        mo.cache_transitive(_mo.CacheStatus.N_A)
+        mo.cache_transitive(CacheStatus.N_A)
         return _undef.make_or_raise_undef(2)
     if _relations.is_member(mo):
         return _relations.is_transitive(mo, _checked=False)
@@ -258,11 +259,11 @@ def is_transitive(mo: _mo.MathObject, _checked: bool=True) -> bool:
     # Check higher (not yet defined) algebras.
     transitive = _is_powerset_property(mo, _relations.get_ground_set(), is_transitive)
     if transitive is not _undef.Undef():
-        mo.cache_transitive(_mo.CacheStatus.from_bool(transitive))
+        mo.cache_transitive(CacheStatus.from_bool(transitive))
         return transitive
 
     # Nothing applied: 'transitive' is not defined.
-    mo.cache_transitive(_mo.CacheStatus.N_A)
+    mo.cache_transitive(CacheStatus.N_A)
     return _undef.make_or_raise_undef(2)
 
 
@@ -308,16 +309,16 @@ def is_regular(mo: _mo.MathObject, _checked: bool=True) -> bool:
             return _undef.make_or_raise_undef()
 
     # Check cache status.
-    if mo.cached_regular == _mo.CacheStatus.IS:
+    if mo.cached_regular == CacheStatus.IS:
         return True
-    if mo.cached_regular == _mo.CacheStatus.IS_NOT:
+    if mo.cached_regular == CacheStatus.IS_NOT:
         return False
-    if mo.cached_regular == _mo.CacheStatus.N_A:
+    if mo.cached_regular == CacheStatus.N_A:
         return _undef.make_or_raise_undef(2)
 
     # Check type (regular is only defined on Sets and Multisets) and algebra memberships.
     if not mo.is_set and not mo.is_multiset:
-        mo.cache_regular(_mo.CacheStatus.N_A)
+        mo.cache_regular(CacheStatus.N_A)
         return _undef.make_or_raise_undef(2)
     if _clans.is_member(mo):
         return _clans.is_regular(mo, _checked=False)
@@ -329,17 +330,17 @@ def is_regular(mo: _mo.MathObject, _checked: bool=True) -> bool:
         mo_iter = iter(mo)
         elem1 = next(mo_iter)
         if not is_regular(elem1):
-            mo.cache_regular(_mo.CacheStatus.IS_NOT)
+            mo.cache_regular(CacheStatus.IS_NOT)
             return False
         elem1_lefts = elem1.get_lefts()
         regular = all(
             is_regular(elem, _checked=False) and elem.get_lefts() == elem1_lefts
             for elem in mo_iter)
-        mo.cache_regular(_mo.CacheStatus.from_bool(regular))
+        mo.cache_regular(CacheStatus.from_bool(regular))
         return mo.cached_is_regular
 
     # Nothing applied: 'regular' is not defined.
-    mo.cache_regular(_mo.CacheStatus.N_A)
+    mo.cache_regular(CacheStatus.N_A)
     return _undef.make_or_raise_undef(2)
 
 
@@ -356,16 +357,16 @@ def is_right_regular(mo: _mo.MathObject, _checked: bool=True) -> bool:
             return _undef.make_or_raise_undef()
 
     # Check cache status.
-    if mo.cached_right_regular == _mo.CacheStatus.IS:
+    if mo.cached_right_regular == CacheStatus.IS:
         return True
-    if mo.cached_right_regular == _mo.CacheStatus.IS_NOT:
+    if mo.cached_right_regular == CacheStatus.IS_NOT:
         return False
-    if mo.cached_right_regular == _mo.CacheStatus.N_A:
+    if mo.cached_right_regular == CacheStatus.N_A:
         return _undef.make_or_raise_undef(2)
 
     # Check type (right-regular is only defined on Sets and Multisets) and algebra memberships.
     if not mo.is_set and not mo.is_multiset:
-        mo.cache_right_regular(_mo.CacheStatus.N_A)
+        mo.cache_right_regular(CacheStatus.N_A)
         return _undef.make_or_raise_undef(2)
     if _clans.is_member(mo):
         return _clans.is_right_regular(mo, _checked=False)
@@ -377,17 +378,17 @@ def is_right_regular(mo: _mo.MathObject, _checked: bool=True) -> bool:
         mo_iter = iter(mo)
         elem1 = next(mo_iter)
         if not is_right_regular(elem1):
-            mo.cache_right_regular(_mo.CacheStatus.IS_NOT)
+            mo.cache_right_regular(CacheStatus.IS_NOT)
             return False
         elem1_rights = elem1.get_rights()
         right_regular = all(
             is_right_regular(elem, _checked=False) and elem.get_rights() == elem1_rights
             for elem in mo_iter)
-        mo.cache_right_regular(_mo.CacheStatus.from_bool(right_regular))
+        mo.cache_right_regular(CacheStatus.from_bool(right_regular))
         return mo.cached_is_right_regular
 
     # Nothing applied: 'right-regular' is not defined.
-    mo.cache_right_regular(_mo.CacheStatus.N_A)
+    mo.cache_right_regular(CacheStatus.N_A)
     return _undef.make_or_raise_undef(2)
 
 

@@ -1,7 +1,6 @@
 """Provide the class :class:`~.Couplet`; it represents a :term:`couplet`."""
 
-# $Id: couplet.py 23480 2015-12-09 19:38:19Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-12-09 13:38:19 -0600 (Wed, 09 Dec 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -15,13 +14,16 @@
 # You should have received a copy of the GNU Lesser General Public License along with algebraixlib.
 # If not, see <http://www.gnu.org/licenses/>.
 # --------------------------------------------------------------------------------------------------
+import functools as _functools
+
 import algebraixlib.structure as _structure
 import algebraixlib.undef as _undef
 import algebraixlib.util.miscellaneous as _misc
+from algebraixlib.tmp_sqlda_op import tmp_sqlda_op
 
 from .atom import auto_convert
 from .mathobject import MathObject
-from .utils import CacheStatus
+from ..cache_status import CacheStatus
 from ._flags import Flags as _Flags
 
 
@@ -48,6 +50,7 @@ def _init_cache() -> int:
     return flags.asint
 
 
+@tmp_sqlda_op(True)
 def make_couplet(*args):
     """Factory wrapper to create a :class:`~.Couplet`."""
     for arg in args:
@@ -56,6 +59,7 @@ def make_couplet(*args):
     return Couplet(*args)
 
 
+@tmp_sqlda_op(True)
 def make_couplet_unchecked(*args):
     """Factory wrapper to create a :class:`~.Couplet` (unchecked version)."""
     for arg in args:
@@ -64,6 +68,7 @@ def make_couplet_unchecked(*args):
     return Couplet(*args, direct_load=True)
 
 
+@_functools.total_ordering
 class Couplet(MathObject):
     """A :term:`couplet` containing a :term:`left component` and a :term:`right component`."""
 
@@ -132,8 +137,20 @@ class Couplet(MathObject):
             or (self.left != other.left) or (self.right != other.right)
 
     def __lt__(self, other):
-        """A value-based comparison for less than. Return ``True`` if ``self < other``."""
-        return not isinstance(other, Couplet) or (repr(self) < repr(other))
+        """A value-based comparison for less than. Return ``True`` if ``self < other``.
+
+        This implementation must be aligned with `__eq__`; an object must not be equal to and less
+        than another object at the same time.
+
+        :return Normally a `bool` (`True` if ``self`` is less than ``other``), or `NotImplemented`
+            if the types can't be compared.
+        """
+        if not isinstance(other, MathObject):
+            return NotImplemented
+        if other.is_couplet:
+            return repr(self) < repr(other)
+        else:
+            return super()._less_than(other)
 
     def __hash__(self):
         """Return a hash based on the value that is calculated on demand and cached."""

@@ -1,7 +1,6 @@
 """Test the mathobjects.set module."""
 
-# $Id: test_mathobjects_set.py 22799 2015-08-14 14:56:45Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-08-14 09:56:45 -0500 (Fri, 14 Aug 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -26,12 +25,12 @@ from algebraixlib.algebras.properties import is_functional, is_right_functional,
 import algebraixlib.algebras.relations as relations
 import algebraixlib.algebras.sets as sets
 from algebraixlib.mathobjects import Atom, Couplet, MathObject, Set
-from algebraixlib.mathobjects.utils import CacheStatus
+from algebraixlib.cache_status import CacheStatus
 from algebraixlib.structure import CartesianProduct, GenesisSetA, PowerSet, Structure
 from algebraixlib.undef import Undef
 
 # noinspection PyProtectedMember
-from algebraixlib.io.csv import _convert_clan_to_list_of_dicts, export_csv
+from algebraixlib.import_export.csv import _convert_clan_to_list_of_dicts, export_csv
 # noinspection PyUnresolvedReferences
 from data_mathobjects import basic_sets, basic_clans, algebra_clans, basic_hordes
 

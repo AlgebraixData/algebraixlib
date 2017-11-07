@@ -57,8 +57,7 @@ API
 
 """
 
-# $Id: structure.py 23191 2015-10-16 17:44:39Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-10-16 12:44:39 -0500 (Fri, 16 Oct 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

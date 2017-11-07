@@ -1,6 +1,5 @@
 .. Algebraix Technology Core Library documentation.
-   $Id: extension.rst 22669 2015-07-24 18:14:54Z mhaque $
-   Copyright Algebraix Data Corporation 2015 - $Date: 2015-07-24 13:14:54 -0500 (Fri, 24 Jul 2015) $
+   Copyright Algebraix Data Corporation 2015 - 2017
 
    This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 

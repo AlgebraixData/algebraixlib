@@ -15,8 +15,7 @@ They are rather examples for how these formats can be represented in and convert
 missing details and features notwithstanding.
 """
 
-# $Id: __init__.py 23313 2015-11-09 22:25:37Z gfiedler $
-# Copyright Algebraix Data Corporation 2015 - $Date: 2015-11-09 16:25:37 -0600 (Mon, 09 Nov 2015) $
+# Copyright Algebraix Data Corporation 2015 - 2017
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
