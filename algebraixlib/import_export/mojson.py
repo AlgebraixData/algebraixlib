@@ -24,9 +24,6 @@ Supported types:
 # You should have received a copy of the GNU Lesser General Public License along with algebraixlib.
 # If not, see <http://www.gnu.org/licenses/>.
 # --------------------------------------------------------------------------------------------------
-# TODO Encode/decode the flags? Currently we don't persist the cached flags.
-
-# --------------------------------------------------------------------------------------------------
 import json as _json
 
 import algebraixlib.mathobjects as _mo

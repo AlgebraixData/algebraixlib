@@ -687,7 +687,6 @@ def project(mclan: 'P(P(M x M) x N)', *lefts) -> 'P(P(M x M) x N)':
     return mclan
 
 
-# TODO Add unit tests for all the new functions.
 def _to_listgen_check_args(mclan: 'P(P(M x M) x N)', offset: '( A )', limit: '( A )',
         _checked: bool=True) -> ():
     """Check the arguments of `multiclan_to_listgen` and `order_slice_to_listgen`. Return a tuple
