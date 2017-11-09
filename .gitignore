@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+*.pyc
 
 
 # Sphinx documentation
@@ -15,3 +16,10 @@ docs/_source/
 #PyPI account information
 .pypirc
 algebraixlib.egg-info
+
+# Build artifacts
+build/
+dist/
+
+# Test artifacts
+.coverage
