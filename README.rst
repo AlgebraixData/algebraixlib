@@ -16,9 +16,6 @@
    This file is not included via toctree. Mark it as orphan to suppress the warning that it isn't
    included in any toctree.
 
-:orphan:
-
-|logo|_
 
 algebraixlib
 ============
@@ -46,20 +43,7 @@ README file in our `examples`_ directory for direct links. For this you don't ne
 download anything. You can also start with the simpler hello_world.py. However, you'll lose out
 on some math and need to read up on it in our documentation at `Read the Docs`_. )
 
-Documentation and Support
--------------------------
-
-*   Find documentation at `Read the Docs`_.
-*   Find the ``pip`` installer on `PyPI`_.
-*   Find the source code, the bugtracker and contribute on `GitHub`_.
-*   Find tutorials and example code in the `examples`_ directory on GitHub.
-*   Post questions about algebraixlib on `Stack Overflow`_ using the tag `[algebraixlib]`_.
-*   Post questions about the mathematics of data algebra on `math.stackexchange`_ using the tag
-    `[data-algebra]`_.
-*   Contact us by `email`_.
-
-See also our `GitHub project page`_. In addition, there is a `book`_ about data algebra.
-
+For more documentation information, see `Documentation and Support`_.
 
 Detailed Instructions
 =====================
@@ -140,6 +124,19 @@ Then run `build.py`_ in the directory `docs`_::
 > cd trunk/docs
 > python build.py
 
+Documentation and Support
+-------------------------
+
+*   Find documentation at `Read the Docs`_.
+*   Find the ``pip`` installer on `PyPI`_.
+*   Find the source code, the bugtracker and contribute on `GitHub`_.
+*   Find tutorials and example code in the `examples`_ directory on GitHub.
+*   Post questions about algebraixlib on `Stack Overflow`_ using the tag `[algebraixlib]`_.
+*   Post questions about the mathematics of data algebra on `math.stackexchange`_ using the tag
+    `[data-algebra]`_.
+*   Contact us by `email`_.
+
+See also our `GitHub project page`_. In addition, there is a `book`_ about data algebra.
 
 Legalese
 ========
