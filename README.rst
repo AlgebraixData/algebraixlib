@@ -1,3 +1,5 @@
+A Data Algebra® library for database management and computer modeling
+
 .. Algebraix Technology Core Library documentation.
    Copyright Permission.io, Inc. (formerly known as Algebraix Data Corporation), Copyright (c) 2022.
 
