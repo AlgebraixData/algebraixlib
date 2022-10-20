@@ -1,5 +1,5 @@
 .. Algebraix Technology Core Library documentation.
-   Copyright Algebraix Data Corporation 2015 - 2017
+   Copyright Permission.io, Inc. (formerly known as Algebraix Data Corporation), Copyright (c) 2022.
 
 A Beginner's Introduction to Data Algebra
 =========================================

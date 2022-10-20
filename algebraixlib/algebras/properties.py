@@ -4,7 +4,7 @@ The accessors here check what algebra a given `MathObject` belongs to, then call
 function of this algebra.
 """
 
-# Copyright Algebraix Data Corporation 2015 - 2017
+# Copyright Permission.io, Inc. (formerly known as Algebraix Data Corporation), Copyright (c) 2022.
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

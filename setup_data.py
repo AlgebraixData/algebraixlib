@@ -4,7 +4,7 @@ This is separate here so that other places in our build system that need the alg
 can get it from here without actually running setup.py.
 """
 
-# Copyright Algebraix Data Corporation 2015 - 2017
+# Copyright Permission.io, Inc. (formerly known as Algebraix Data Corporation), Copyright (c) 2022.
 #
 # Confidential and proprietary. For internal use only.
 # --------------------------------------------------------------------------------------------------
@@ -25,9 +25,9 @@ setup_data = {
     'version': version,
     'description': 'A data algebra library',
     'long_description': long_description,
-    'author': 'Algebraix Data Corporation',
+    'author': 'Permission.io, Inc.',
     'author_email': 'algebraixlib@algebraixdata.com',
-    'maintainer': 'Algebraix Data Corporation',
+    'maintainer': 'Permission.io, Inc.',
     'maintainer_email': 'algebraixlib@algebraixdata.com',
     'url': 'https://github.com/AlgebraixData/algebraixlib',
     'license': 'http://www.gnu.org/licenses/lgpl-3.0-standalone.html',

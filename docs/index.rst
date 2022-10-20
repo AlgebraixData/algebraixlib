@@ -1,5 +1,5 @@
 .. Algebraix Technology Core Library documentation.
-   Copyright Algebraix Data Corporation 2015 - 2017
+   Copyright Permission.io, Inc. (formerly known as Algebraix Data Corporation), Copyright (c) 2022.
 
    This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 
@@ -26,7 +26,7 @@ of data algebra. You find us:
     the package.
 -   On `GitHub`_. Here you find "Getting Started" quick-start instructions, the full sources and
     can use the bug tracker.
--   On Algebraix Data's `GitHub project page`_. Here you find support information.
+-   On Permission.io, Inc.'s `GitHub project page`_. Here you find support information.
 
 Also check out our tutorials and example code in the `examples`_ directory on GitHub.
 

@@ -1,6 +1,6 @@
 r"""Operations for partitioning :term:`set`\s and :term:`multiset`\s."""
 
-# Copyright Algebraix Data Corporation 2015 - 2017
+# Copyright Permission.io, Inc. (formerly known as Algebraix Data Corporation), Copyright (c) 2022.
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

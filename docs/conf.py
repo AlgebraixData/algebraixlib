@@ -11,7 +11,7 @@ shown in comments.
 See also `The build configuration file <http://sphinx-doc.org/config.html>`_.
 """
 
-# Copyright Algebraix Data Corporation 2015-2017
+# Copyright Permission.io, Inc. (formerly known as Algebraix Data Corporation), Copyright (c) 2022.
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
@@ -34,8 +34,8 @@ import sys
 # Information about the project.
 project = 'Algebraix Technology Core Library'
 # noinspection PyShadowingBuiltins
-copyright = '2017, Algebraix Data Corporation'
-author = "Algebraix Data Corporation"
+copyright = 'Copyright Permission.io, Inc. (formerly known as Algebraix Data Corporation), Copyright (c) 2022.'
+author = "Permission.io, Inc."
 
 # The version info for the project you're documenting, acts as replacement for |version| and
 # |release|, also used in various other places throughout the built documents.
@@ -317,7 +317,7 @@ latex_documents = [
         master_doc,                         # Source start file.
         'mathobjectspy.tex',                # Target name.
         'mathobjects.py Documentation',     # Title.
-        'Algebraix Data Corporation',       # Author.
+        'Permission.io, Inc.',              # Author.
         'manual'                            # Document class.
     ),
 ]

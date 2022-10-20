@@ -1,4 +1,4 @@
-# Copyright Algebraix Data Corporation 2015 - 2017
+# Copyright Permission.io, Inc. (formerly known as Algebraix Data Corporation), Copyright (c) 2022.
 #
 # Confidential and proprietary. For internal use only.
 # --------------------------------------------------------------------------------------------------

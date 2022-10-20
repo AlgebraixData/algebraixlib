@@ -8,7 +8,7 @@ This module also provides the utility functions :func:`~.raise_if_not_mathobject
 of :class:`~.MathObject` (resp. is not a collection of such instances).
 """
 
-# Copyright Algebraix Data Corporation 2015 - 2017
+# Copyright Permission.io, Inc. (formerly known as Algebraix Data Corporation), Copyright (c) 2022.
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #

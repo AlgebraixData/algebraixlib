@@ -15,7 +15,7 @@ Keyword arguments:
 -   --skipload, -s: Skip the loading of the index file in the system default browser.
 """
 
-# Copyright Algebraix Data Corporation 2015-2017
+# Copyright Permission.io, Inc. (formerly known as Algebraix Data Corporation), Copyright (c) 2022.
 #
 # This file is part of algebraixlib <http://github.com/AlgebraixData/algebraixlib>.
 #
