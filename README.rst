@@ -18,8 +18,6 @@ A Data Algebra® library for database management and computer modeling
    This file is not included via toctree. Mark it as orphan to suppress the warning that it isn't
    included in any toctree.
 
-:orphan:
-
 |logo|_
 
 algebraixlib
@@ -228,6 +226,6 @@ GNU Lesser General Public License for more details.
     https://github.com/AlgebraixData/algebraixlib/tree/master/test
 .. _Version 3 of the GNU Lesser General Public License:
     http://www.gnu.org/licenses/lgpl-3.0-standalone.html
-
-.. |logo| image:: https://raw.githubusercontent.com/AlgebraixData/algebraixlib/gh-pages/ALGBX-Logo-Color-150DPI.png
+.. |logo| image:: https://github.com/AlgebraixData/algebraixlib/blob/master/images/permission.jpg?raw=true
+  :width: 120
 .. _logo: http://www.algebraixdata.com/technology/#algebraix-library

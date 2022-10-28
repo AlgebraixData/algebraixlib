@@ -74,5 +74,5 @@ Indices and Tables
 * :ref:`search`
 * :doc:`todo`
 
-.. |logo| image:: https://raw.githubusercontent.com/AlgebraixData/algebraixlib/gh-pages/ALGBX-Logo-Color-150DPI.png
+.. |logo| image:: https://github.com/AlgebraixData/algebraixlib/blob/master/images/permission.jpg?raw=true
 .. _logo: http://www.algebraixdata.com/technology/#algebraix-library
